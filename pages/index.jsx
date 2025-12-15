@@ -30,7 +30,7 @@ const Home = () => {
             exit="hidden"
             className="max-w-sm xl:max-w-xl mx-auto xl:mx-0 mb-10 xl:mb-16 text-base sm:text-lg"
           >
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptate,
+            aa ipsum dolor sit amet consectetur, adipisicing elit. Voluptate,
             exercitationem harum, quia nulla temporibus deleniti libero veniam
             vero beatae numquam ducimus illum ab similique ipsam tempore fugit
             quod laudantium debitis.
@@ -71,7 +71,7 @@ const Home = () => {
           animate="show"
           exit="hidden"
           transition={{ duration: 1, ease: "easeInOut" }}
-          className="w-full xl:w-[737px] h-[50%] max-w-[737px] max-h-[678px] absolute top-0 left-0 xl:hidden mt-10" // Added margin-top for space between text and image
+          className="w-full xl:w-[737px] h-[50%] max-w-[737px] max-h-[678px] absolute top-0 left-0 xl:hidden mt-10"
         >
           <Avatar />
         </motion.div>
@@ -83,7 +83,7 @@ const Home = () => {
           animate="show"
           exit="hidden"
           transition={{ duration: 1, ease: "easeInOut" }}
-          className="w-full h-full max-w-[737px] max-h-[678px] absolute -bottom-32 lg:bottom-0 lg:right-[8%] xl:flex hidden mb-16" // Added margin-bottom for space
+          className="w-full h-full max-w-[737px] max-h-[678px] absolute -bottom-32 lg:bottom-0 lg:right-[8%] xl:flex hidden mb-16"
         >
           <Avatar />
         </motion.div>
