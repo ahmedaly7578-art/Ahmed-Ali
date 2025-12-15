@@ -16,7 +16,7 @@ const Home = () => {
             initial="hidden"
             animate="show"
             exit="hidden"
-            className="h1"
+            className="h1 text-3xl sm:text-4xl md:text-5xl xl:text-6xl font-bold mb-6"
           >
             Transforming Ideas <br /> Into{" "}
             <span className="text-accent">Digital Reality</span>
@@ -28,9 +28,9 @@ const Home = () => {
             initial="hidden"
             animate="show"
             exit="hidden"
-            className="max-w-sm xl:max-w-xl mx-auto xl:mx-0 mb-10 xl:mb-16"
+            className="max-w-sm xl:max-w-xl mx-auto xl:mx-0 mb-10 xl:mb-16 text-base sm:text-lg"
           >
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptate,
+            AHMED ipsum dolor sit amet consectetur, adipisicing elit. Voluptate,
             exercitationem harum, quia nulla temporibus deleniti libero veniam
             vero beatae numquam ducimus illum ab similique ipsam tempore fugit
             quod laudantium debitis.
@@ -53,7 +53,7 @@ const Home = () => {
       </div>
 
       {/* image */}
-      <div className="w-full h-full absolute right-0 bottom-0 xl:w-[1280px]">
+      <div className="w-full h-full xl:w-[1280px] xl:h-full absolute right-0 bottom-0">
         {/* bg img */}
         <div
           role="img"
@@ -83,7 +83,7 @@ const Home = () => {
           animate="show"
           exit="hidden"
           transition={{ duration: 1, ease: "easeInOut" }}
-          className="w-full h-[50%] max-w-[737px] max-h-[678px] absolute top-0 left-0 xl:hidden"
+          className="w-full xl:w-[737px] h-[50%] max-w-[737px] max-h-[678px] absolute top-0 left-0 xl:hidden"
         >
           <Avatar />
         </motion.div>
