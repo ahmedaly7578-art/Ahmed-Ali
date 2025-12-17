@@ -39,7 +39,7 @@ const Home = () => {
             initial="hidden"
             animate="show"
             exit="hidden"
-            className="w-full max-w-sm mb-8"
+            className="w-full max-w-sm mb-8 xl:mb-0"
           >
             <Avatar />
           </motion.div>
