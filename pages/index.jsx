@@ -19,8 +19,8 @@ const Home = () => {
             exit="hidden"
             className="mb-6 text-center"
           >
-        
-          <motion.div
+        <p className="mb-4">Transforming Ideas</p>
+          <motion.div>
             variants={fadeIn("down", 0.2)}
             initial="hidden"
             animate="show"
@@ -61,7 +61,7 @@ const Home = () => {
             exit="hidden"
             className="text-sm text-center mb-8 text-gray-300 leading-relaxed"
           >
-            MM ipsum dolor sit amet consectetur, adipisicing elit. Voluptate,
+            ss da dolor sit amet consectetur, adipisicing elit. Voluptate,
             exercitationem harum, quia nulla temporibus deleniti libero veniam
             vero beatae numquam ducimus illum ab similique ipsam tempore fugit
             quod laudantium debitis.
