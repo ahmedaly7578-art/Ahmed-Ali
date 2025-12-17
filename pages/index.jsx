@@ -19,8 +19,7 @@ const Home = () => {
             exit="hidden"
             className="mb-6 text-center"
           >
-<h2 className="text-white font-bold text-xl"></h2>
-          {/* Icons */}
+        
           <motion.div
             variants={fadeIn("down", 0.2)}
             initial="hidden"
@@ -30,8 +29,8 @@ const Home = () => {
           >
             
           </motion.div>
-<h2 className="text-white font-bold text-xl"></h2>
 
+Transforming Ideas <br /> Into{" "}
           {/* Avatar Image */}
           <motion.div
             variants={fadeIn("up", 0.3)}
