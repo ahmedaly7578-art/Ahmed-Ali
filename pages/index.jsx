@@ -6,7 +6,7 @@ import { fadeIn } from "../variants";
 
 const Home = () => {
   return (
-    <div className="bg-primary/60 h-full">
+    <div className="bg-primary/60 min-h-screen">
       {/* Mobile Layout */}
       <div className="xl:hidden w-full bg-gradient-to-b from-primary/10 via-black/30 to-black/10">
         {/* Container with scroll */}
@@ -17,7 +17,7 @@ const Home = () => {
             initial="hidden"
             animate="show"
             exit="hidden"
-            className="mb-6"
+            className="mb-6 text-center"
           >
             <h2 className="text-white font-bold text-xl">ethan smith</h2>
           </motion.div>
@@ -28,7 +28,7 @@ const Home = () => {
             initial="hidden"
             animate="show"
             exit="hidden"
-            className="flex gap-4 mb-8"
+            className="flex gap-4 mb-8 justify-center"
           >
             <button className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition">
               📱
@@ -78,7 +78,7 @@ const Home = () => {
             exit="hidden"
             className="text-sm text-center mb-8 text-gray-300 leading-relaxed"
           >
-            aa ipsum dolor sit amet consectetur, adipisicing elit. Voluptate,
+            skr ipsum dolor sit amet consectetur, adipisicing elit. Voluptate,
             exercitationem harum, quia nulla temporibus deleniti libero veniam
             vero beatae numquam ducimus illum ab similique ipsam tempore fugit
             quod laudantium debitis.
@@ -118,7 +118,7 @@ const Home = () => {
             exit="hidden"
             className="max-w-xl mb-16 text-lg"
           >
-            aa ipsum dolor sit amet consectetur, adipisicing elit. Voluptate,
+            skr ipsum dolor sit amet consectetur, adipisicing elit. Voluptate,
             exercitationem harum, quia nulla temporibus deleniti libero veniam
             vero beatae numquam ducimus illum ab similique ipsam tempore fugit
             quod laudantium debitis.
