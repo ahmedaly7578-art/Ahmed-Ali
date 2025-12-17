@@ -19,7 +19,7 @@ const Home = () => {
             exit="hidden"
             className="mb-6 text-center"
           >
-            <h2 className="text-white font-bold text-xl">ethan smith</h2>
+           
           </motion.div>
 
           {/* Icons */}
