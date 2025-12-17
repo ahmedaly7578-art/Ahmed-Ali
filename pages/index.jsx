@@ -19,7 +19,7 @@ const Home = () => {
             exit="hidden"
             className="mb-6 text-center"
           >
-            
+            {/* Logo or Title */}
           </motion.div>
 
           {/* Icons */}
@@ -30,7 +30,7 @@ const Home = () => {
             exit="hidden"
             className="flex gap-4 mb-8 justify-center"
           >
-            
+            {/* Icons Here */}
           </motion.div>
 
           {/* Avatar Image */}
@@ -39,7 +39,7 @@ const Home = () => {
             initial="hidden"
             animate="show"
             exit="hidden"
-            className="w-full max-w-sm mb-8 xl:mb-0"
+            className="w-full max-w-sm mb-8 mt-8 xl:mt-0 xl:mb-0" // Adjust margin for mobile
           >
             <Avatar />
           </motion.div>
@@ -64,7 +64,7 @@ const Home = () => {
             exit="hidden"
             className="text-sm text-center mb-8 text-gray-300 leading-relaxed"
           >
-            STR ipsum dolor sit amet consectetur, adipisicing elit. Voluptate,
+            sss ipsum dolor sit amet consectetur, adipisicing elit. Voluptate,
             exercitationem harum, quia nulla temporibus deleniti libero veniam
             vero beatae numquam ducimus illum ab similique ipsam tempore fugit
             quod laudantium debitis.
@@ -85,7 +85,7 @@ const Home = () => {
       {/* Desktop Layout */}
       <div className="hidden xl:block w-full h-full bg-gradient-to-r from-primary/10 via-black/30 to-black/10">
         <div className="text-center flex flex-col justify-center xl:pt-40 xl:text-left h-full container mx-auto px-4">
-          {/* title */}
+          {/* Title */}
           <motion.h1
             variants={fadeIn("down", 0.2)}
             initial="hidden"
@@ -96,7 +96,8 @@ const Home = () => {
             Transforming Ideas <br /> Into{" "}
             <span className="text-accent">Digital Reality</span>
           </motion.h1>
-          {/* subtitle */}
+
+          {/* Subtitle */}
           <motion.p
             variants={fadeIn("down", 0.3)}
             initial="hidden"
@@ -104,12 +105,13 @@ const Home = () => {
             exit="hidden"
             className="max-w-xl mb-16 text-lg"
           >
-            Ha ipsum dolor sit amet consectetur, adipisicing elit. Voluptate,
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptate,
             exercitationem harum, quia nulla temporibus deleniti libero veniam
             vero beatae numquam ducimus illum ab similique ipsam tempore fugit
             quod laudantium debitis.
           </motion.p>
-          {/* btn */}
+
+          {/* Button */}
           <motion.div
             variants={fadeIn("down", 0.4)}
             initial="hidden"
@@ -120,7 +122,7 @@ const Home = () => {
           </motion.div>
         </div>
 
-        {/* image */}
+        {/* Image */}
         <div className="w-full h-full xl:w-[1280px] xl:h-full absolute right-0 bottom-0">
           {/* bg img */}
           <div
@@ -130,7 +132,7 @@ const Home = () => {
           />
           {/* particles */}
           <ParticlesContainer />
-          {/* avatar on desktop */}
+          {/* Avatar on desktop */}
           <motion.div
             variants={fadeIn("up", 0.5)}
             initial="hidden"
