@@ -1,132 +1,45 @@
 import { motion } from "framer-motion";
+
 import ParticlesContainer from "../components/ParticlesContainer";
 import ProjectsBtn from "../components/ProjectsBtn";
 import Avatar from "../components/Avatar";
+
 import { fadeIn } from "../variants";
 
 const Home = () => {
   return (
-    <div className="bg-primary/60 h-full relative xl:h-full">
-      {/* Mobile Layout */}
-      <div className="xl:hidden w-full flex flex-col bg-gradient-to-r from-primary/10 via-black/30 to-black/10 min-h-screen overflow-y-auto pb-20">
-        <div className="flex flex-col items-center px-4 pt-6">
-          {/* Logo */}
-          <motion.h2
-            variants={fadeIn("down", 0.1)}
-            initial="hidden"
-            animate="show"
-            exit="hidden"
-            className="text-white font-bold text-xl mt-4 mb-4"
-          >
-            ethan <span className="font-light">smith.</span>
-          </motion.h2>
-
-          {/* Icons */}
-          <motion.div
-            variants={fadeIn("down", 0.2)}
-            initial="hidden"
-            animate="show"
-            exit="hidden"
-            className="flex gap-3 mb-6"
-          >
-            <a href="#" className="w-8 h-8 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center text-xs">
-              📱
-            </a>
-            <a href="#" className="w-8 h-8 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center text-xs">
-              📷
-            </a>
-            <a href="#" className="w-8 h-8 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center text-xs">
-              f
-            </a>
-            <a href="#" className="w-8 h-8 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center text-xs">
-              ⚙
-            </a>
-            <a href="#" className="w-8 h-8 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center text-xs">
-              📌
-            </a>
-            <a href="#" className="w-8 h-8 rounded-full bg-accent flex items-center justify-center text-xs">
-              🔗
-            </a>
-          </motion.div>
-
-          {/* Avatar Image */}
-          <motion.div
-            variants={fadeIn("up", 0.3)}
-            initial="hidden"
-            animate="show"
-            exit="hidden"
-            className="w-full max-w-xs mb-6"
-          >
-            <Avatar />
-          </motion.div>
-
-          {/* Title */}
-          <motion.h1
-            variants={fadeIn("down", 0.4)}
-            initial="hidden"
-            animate="show"
-            exit="hidden"
-            className="text-2xl font-bold text-center mb-4 leading-tight"
-          >
-            Transforming Ideas <br /> Into{" "}
-            <span className="text-accent">Digital Reality</span>
-          </motion.h1>
-
-          {/* Subtitle */}
-          <motion.p
-            variants={fadeIn("down", 0.5)}
-            initial="hidden"
-            animate="show"
-            exit="hidden"
-            className="text-xs text-center mb-6 text-gray-400 leading-relaxed"
-          >
-            sssss ipsum dolor sit amet consectetur, adipisicing elit. Voluptate,
-            exercitationem harum, quia nulla temporibus deleniti libero veniam
-            vero beatae numquam ducimus illum ab similique ipsam tempore fugit
-            quod laudantium debitis.
-          </motion.p>
-
-          {/* Button */}
-          <motion.div
-            variants={fadeIn("down", 0.6)}
-            initial="hidden"
-            animate="show"
-            exit="hidden"
-          >
-            <ProjectsBtn />
-          </motion.div>
-        </div>
-      </div>
-
-      {/* Desktop Layout */}
-      <div className="hidden xl:block w-full h-full bg-gradient-to-r from-primary/10 via-black/30 to-black/10">
-        <div className="text-center flex flex-col justify-center xl:pt-40 xl:text-left h-full container mx-auto px-4">
+    <div className="bg-primary/60 h-full">
+      {/* text */}
+      <div className="w-full h-full bg-gradient-to-r from-primary/10 via-black/30 to-black/10">
+        <div className="text-center flex flex-col justify-center xl:pt-40 xl:text-left h-full container mx-auto">
           {/* title */}
           <motion.h1
             variants={fadeIn("down", 0.2)}
             initial="hidden"
             animate="show"
             exit="hidden"
-            className="h1 text-3xl sm:text-4xl md:text-5xl xl:text-6xl font-bold mb-6"
+            className="h1"
           >
             Transforming Ideas <br /> Into{" "}
             <span className="text-accent">Digital Reality</span>
           </motion.h1>
+
           {/* subtitle */}
           <motion.p
             variants={fadeIn("down", 0.3)}
             initial="hidden"
             animate="show"
             exit="hidden"
-            className="max-w-sm xl:max-w-xl mx-auto xl:mx-0 mb-10 xl:mb-16 text-base sm:text-lg"
+            className="max-w-sm xl:max-w-xl mx-auto xl:mx-0 mb-10 xl:mb-16"
           >
-            sssss ipsum dolor sit amet consectetur, adipisicing elit. Voluptate,
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptate,
             exercitationem harum, quia nulla temporibus deleniti libero veniam
             vero beatae numquam ducimus illum ab similique ipsam tempore fugit
             quod laudantium debitis.
           </motion.p>
+
           {/* btn */}
-          <div className="flex justify-center xl:hidden relative mb-10">
+          <div className="flex justify-center xl:hidden relative">
             <ProjectsBtn />
           </div>
           <motion.div
@@ -141,23 +54,25 @@ const Home = () => {
         </div>
       </div>
       {/* image */}
-      <div className="hidden xl:block w-full h-full xl:w-[1280px] xl:h-full absolute right-0 bottom-0">
+      <div className="w-[1280px] h-full absolute right-0 bottom-0">
         {/* bg img */}
         <div
           role="img"
           className="bg-none xl:bg-explosion xl:bg-cover xl:bg-right xl:bg-no-repeat w-full h-full absolute mix-blend-color-dodge translate-z-0"
           aria-hidden
         />
+
         {/* particles */}
         <ParticlesContainer />
-        {/* avatar on desktop */}
+
+        {/* avatar */}
         <motion.div
           variants={fadeIn("up", 0.5)}
           initial="hidden"
           animate="show"
           exit="hidden"
           transition={{ duration: 1, ease: "easeInOut" }}
-          className="w-full h-full max-w-[737px] max-h-[678px] absolute -bottom-32 lg:bottom-0 lg:right-[8%] xl:flex hidden mb-16"
+          className="w-full h-full max-w-[737px] max-h-[678px] absolute -bottom-32 lg:bottom-0 lg:right-[8%]"
         >
           <Avatar />
         </motion.div>
