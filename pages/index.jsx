@@ -19,7 +19,7 @@ const Home = () => {
             exit="hidden"
             className="mb-6 text-center"
           >
-           <h2 className="text-white font-bold text-xl"></h2>
+            <h2 className="text-white font-bold text-xl">ethan smith</h2>
           </motion.div>
 
           {/* Icons */}
@@ -30,7 +30,7 @@ const Home = () => {
             exit="hidden"
             className="flex gap-4 mb-8 justify-center"
           >
-          
+            
           </motion.div>
 
           {/* Avatar Image */}
@@ -64,7 +64,7 @@ const Home = () => {
             exit="hidden"
             className="text-sm text-center mb-8 text-gray-300 leading-relaxed"
           >
-            skr ipsum dolor sit amet consectetur, adipisicing elit. Voluptate,
+            aa ipsum dolor sit amet consectetur, adipisicing elit. Voluptate,
             exercitationem harum, quia nulla temporibus deleniti libero veniam
             vero beatae numquam ducimus illum ab similique ipsam tempore fugit
             quod laudantium debitis.
@@ -104,7 +104,7 @@ const Home = () => {
             exit="hidden"
             className="max-w-xl mb-16 text-lg"
           >
-            skr ipsum dolor sit amet consectetur, adipisicing elit. Voluptate,
+            aa ipsum dolor sit amet consectetur, adipisicing elit. Voluptate,
             exercitationem harum, quia nulla temporibus deleniti libero veniam
             vero beatae numquam ducimus illum ab similique ipsam tempore fugit
             quod laudantium debitis.
