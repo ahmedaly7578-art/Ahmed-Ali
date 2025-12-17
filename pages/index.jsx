@@ -30,21 +30,7 @@ const Home = () => {
             exit="hidden"
             className="flex gap-4 mb-8 justify-center"
           >
-            <button className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition">
-              📱
-            </button>
-            <button className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition">
-              👤
-            </button>
-            <button className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition">
-              📊
-            </button>
-            <button className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition">
-              📈
-            </button>
-            <button className="w-10 h-10 rounded-full bg-accent flex items-center justify-center transition">
-              🔗
-            </button>
+          
           </motion.div>
 
           {/* Avatar Image */}
