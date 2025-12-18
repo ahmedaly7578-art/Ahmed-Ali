@@ -2,6 +2,13 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import CountUp from "react-countup";
 import {
+  SiGoogleanalytics,
+  SiMixpanel,
+  SiGoogledatastudio,
+} from "react-icons/si";
+import { FaFlask, FaChartLine } from "react-icons/fa";
+
+import {
   SiGoogleads,
   SiMeta,
   SiTiktok,
@@ -23,7 +30,11 @@ export const aboutData = [
       },
       {
         title: "Tracking & CRO",
-        icons: [SiGoogleads, SiMeta, SiTiktok, SiSnapchat],
+        icons: [SiGoogleanalytics,
+    SiMixpanel,
+    SiGoogledatastudio,
+    FaFlask,
+    FaChartLine,],
       },
     ],
   },
