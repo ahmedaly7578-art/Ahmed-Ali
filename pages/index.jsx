@@ -52,8 +52,8 @@ const Home = () => {
             exit="hidden"
             className="h1 text-3xl font-bold text-center mb-4"
           >
-            Transforming Ideas <br /> Into{" "}
-            <span className="text-accent">Digital Reality</span>
+            Turning Ad Spend <br /> Into{" "}
+            <span className="text-accent">Scalable Profit</span>
           </motion.h1>
 
           {/* Subtitle */}
@@ -64,10 +64,8 @@ const Home = () => {
             exit="hidden"
             className="text-sm text-center mb-8 text-gray-300 leading-relaxed"
           >
-            sss ipsum dolor sit amet consectetur, adipisicing elit. Voluptate,
-            exercitationem harum, quia nulla temporibus deleniti libero veniam
-            vero beatae numquam ducimus illum ab similique ipsam tempore fugit
-            quod laudantium debitis.
+             Smart, data-driven campaigns built to deliver real, scalable growth.
+
           </motion.p>
 
           {/* Button */}
@@ -93,8 +91,8 @@ const Home = () => {
             exit="hidden"
             className="h1"
           >
-            Transforming Ideas <br /> Into{" "}
-            <span className="text-accent">Digital Reality</span>
+            Turning Ad Spend <br /> Into{" "}
+            <span className="text-accent">Scalable Profit</span>
           </motion.h1>
 
           {/* subtitle */}
@@ -105,10 +103,11 @@ const Home = () => {
             exit="hidden"
             className="max-w-sm xl:max-w-xl mx-auto xl:mx-0 mb-10 xl:mb-16"
           >
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptate,
-            exercitationem harum, quia nulla temporibus deleniti libero veniam
-            vero beatae numquam ducimus illum ab similique ipsam tempore fugit
-            quod laudantium debitis.
+            I turn your ad spend into real, scalable profit by creating smart,
+             data-driven campaigns that actually work. Through continuous testing,
+            clear insights, and thoughtful optimization, I make sure every 
+            dollar you invest drives measurable growth.
+
           </motion.p>
 
           {/* btn */}
