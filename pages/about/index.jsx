@@ -113,24 +113,14 @@ const About = () => {
 
       {/* avatar img */}
       <motion.div
-  variants={fadeIn("right", 0.2)}
-  initial="hidden"
-  animate="show"
-  exit="hidden"
-  className="
-    relative
-    flex
-    justify-center
-    mb-12
-
-    xl:absolute
-    xl:bottom-0
-    xl:-left-[370px]
-    xl:mb-0
-  "
->
-  <Avatar />
-</motion.div>
+        variants={fadeIn("right", 0.2)}
+        initial="hidden"
+        animate="show"
+        exit="hidden"
+        className="hidden xl:flex absolute bottom-0 -left-[370px]"
+      >
+        <Avatar />
+      </motion.div>
 
 
       <div className="container mx-auto h-full flex flex-col items-center xl:flex-row gap-x-6">
