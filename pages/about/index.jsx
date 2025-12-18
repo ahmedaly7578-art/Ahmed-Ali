@@ -66,27 +66,25 @@ const About = () => {
 
       {/* avatar img - MOBILE (side) + DESKTOP (original) */}
       <motion.div
-        variants={fadeIn("right", 0.2)}
-        initial="hidden"
-        animate="show"
-        exit="hidden"
-        className="
-          flex justify-start -ml-16 mb-10 pointer-events-none select-none
-          xl:hidden
-        "
-      >
-        <Avatar />
-      </motion.div>
+  variants={fadeIn("right", 0.2)}
+  initial="hidden"
+  animate="show"
+  exit="hidden"
+  className="
+    relative
+    -ml-24
+    w-[85%]
+    mb-10
+    pointer-events-none
+    select-none
 
-      <motion.div
-        variants={fadeIn("right", 0.2)}
-        initial="hidden"
-        animate="show"
-        exit="hidden"
-        className="hidden xl:flex absolute bottom-0 -left-[240px] pointer-events-none select-none"
-      >
-        <Avatar />
-      </motion.div>
+    xl:hidden
+  "
+>
+  <Avatar />
+</motion.div>
+
+      
 
       <div className="container mx-auto h-full flex flex-col items-center xl:flex-row gap-x-6 px-4 xl:px-0">
         {/* text */}
