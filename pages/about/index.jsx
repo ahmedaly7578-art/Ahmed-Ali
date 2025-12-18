@@ -2,6 +2,15 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import CountUp from "react-countup";
 import {
+  SiGoogleads,
+  SiMeta,
+  SiTiktok,
+  SiSnapchat,
+  SiGoogleanalytics,
+  Silookerstudio,
+  Simixpanel,
+} from "react-icons/si";
+import {
   FaCss3,
   FaFigma,
   FaHtml5,
@@ -26,25 +35,28 @@ export const aboutData = [
     title: "skills",
     info: [
       {
-        title: "Web Development",
+        title: "Performance Media Buying",
         icons: [
-          FaHtml5,
-          FaCss3,
-          FaJs,
-          FaReact,
-          SiNextdotjs,
-          SiFramer,
-          FaWordpress,
+          SiGoogleads,
+          SiMeta,
+          SiTiktok,
+          SiSnapchat,
         ],
       },
       {
-        title: "UI/UX Design",
-        icons: [FaFigma, SiAdobexd, SiAdobephotoshop],
+        title: "Tracking & CRO",
+        
+        icons: [
+          SiGoogleads,
+          SiMeta,
+          SiTiktok,
+          SiSnapchat,
+        ],
       },
     ],
   },
   {
-    title: "awards",
+    title: "Achievements",
     info: [
       {
         title: "Webby Awards - Honoree",
@@ -105,7 +117,7 @@ const About = () => {
         initial="hidden"
         animate="show"
         exit="hidden"
-        className="hidden xl:flex absolute bottom-0 -left-[370px]"
+        className="hidden xl:flex absolute bottom-0 -left-[240px]"
       >
         <Avatar />
       </motion.div>
@@ -120,8 +132,8 @@ const About = () => {
             exit="hidden"
             className="h2"
           >
-            Captivating <span className="text-accent">stories</span> birth
-            magnificent designs.
+            Strategic <span className="text-accent">Insights</span> create
+            scalable growth.
           </motion.h2>
           <motion.p
             variants={fadeIn("right", 0.4)}
@@ -129,9 +141,10 @@ const About = () => {
             animate="show"
             className="max-w-[500px] mx-auto xl:mx-0 mb-6 xl:mb-12 px-2 xl:px-0"
           >
-            10 years ago, I begin freelancing as a developer. Since then, I've
-            done remote work for agencies, consulted for startups, and
-            collabrated on digital products for business and consumer use.
+             I help brands turn data into direction, and ad spend into meaningful growth.
+            With a blend of strategic insight, careful optimization, and performance-focused
+            execution,I build campaigns that scale, connect with the right audience, and deliver
+            results that actually matter.
           </motion.p>
 
           {/* counters */}
