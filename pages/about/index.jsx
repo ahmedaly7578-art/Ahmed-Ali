@@ -33,7 +33,7 @@ export const aboutData = [
         icons: [SiGoogleanalytics,
     SiMixpanel,
     SiGoogledatastudio,
-    FaFlask,
+    
     FaChartLine,],
       },
     ],
