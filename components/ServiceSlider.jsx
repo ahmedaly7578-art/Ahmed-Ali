@@ -4,42 +4,39 @@ import {
   RxMixerHorizontal,
   RxRocket,
   RxLoop,
-  RxArrowTopRight,
+  RxArrowTopRight, // ← إضافة
 } from "react-icons/rx";
 import { FreeMode, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
-
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";
 
 const serviceData = [
   {
-        Icon: RxBarChart,
-
+    Icon: RxBarChart,
     title: "E-commerce Growth Strategy",
-    description: "End-to-end growth planning including product strategy, offer structuring, budget allocation, and scalable campaign frameworks.",
+    description: "Strategic growth planning for sustainable scaling and profitability.",
   },
   {
-        Icon: RxRocket,
-
+    Icon: RxRocket,
     title: "Performance Advertising",
-    description: "Data-driven ad campaigns focused on generating profitable sales and high-quality leads across Meta, TikTok, Snapchat, and other digital platforms.",
+    description: "Data-driven ad campaigns for maximum ROI across all platforms.",
   },
   {
     Icon: RxTarget,
     title: "Tracking & Data Analytics",
-    description: "Advanced tracking setup (Pixels, Events, Analytics) to measure every conversion and make optimization decisions based on real data.",
+    description: "Advanced tracking systems for actionable insights and optimization.",
   },
   {
     Icon: RxMixerHorizontal,
     title: "Conversion Rate Optimization",
-    description: "Improving landing pages, product pages, and user journey to increase conversion rates and maximize revenue from existing traffic.",
+    description: "Systematic testing to boost conversions and revenue.",
   },
   {
     Icon: RxLoop,
     title: "Retargeting & Scaling Systems",
-    description: "Structured retargeting funnels and scaling strategies designed to recover lost customers and grow winning campaigns efficiently.",
+    description: "Automated campaigns to re-engage and scale profitably.",
   },
 ];
 
@@ -70,13 +67,11 @@ const ServiceSlider = () => {
             <div className="text-4xl text-accent mb-4">
               <item.Icon aria-hidden />
             </div>
-
             {/* title & description */}
             <div className="mb-8">
               <div className="mb-2 text-lg">{item.title}</div>
               <p className="max-w-[350px] leading-normal">{item.description}</p>
             </div>
-
             {/* arrow */}
             <div className="text-3xl">
               <RxArrowTopRight
