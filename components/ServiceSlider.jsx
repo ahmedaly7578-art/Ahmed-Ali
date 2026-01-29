@@ -15,12 +15,12 @@ import "swiper/css/pagination";
 
 const serviceData = [
   {
-    Icon: RxRocket,
+    
     title: "E-commerce Growth Strategy",
     description: "End-to-end growth planning including product strategy, offer structuring, budget allocation, and scalable campaign frameworks.",
   },
   {
-    Icon: RxTrendingUp,
+    
     title: "Performance Advertising",
     description: "Data-driven ad campaigns focused on generating profitable sales and high-quality leads across Meta, TikTok, Snapchat, and other digital platforms.",
   },
