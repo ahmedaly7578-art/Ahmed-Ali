@@ -16,13 +16,15 @@ const serviceData = [
         Icon: RxDesktop,
 
     title: "E-commerce Growth Strategy",
-    description: "End-to-end growth planning including product strategy, offer structuring, budget allocation, and scalable campaign frameworks.",
+    description: "Strategic growth planning 
+for sustainable scaling",
   },
   {
         Icon: RxDesktop,
 
     title: "Performance Advertising",
-    description: "Data-driven ad campaigns focused on generating profitable sales and high-quality leads across Meta, TikTok, Snapchat, and other digital platforms.",
+    description: "Data-driven ad campaigns 
+for maximum ROI",
   },
   {
     Icon: RxDesktop,
