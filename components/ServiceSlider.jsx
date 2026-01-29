@@ -1,6 +1,6 @@
 import {
-  RxCrop,
-  RxPencil2,
+  RxRocket,
+  RxTrendingUp,
   RxDesktop,
   RxReader,
   RxRocket,
@@ -15,29 +15,29 @@ import "swiper/css/pagination";
 
 const serviceData = [
   {
-    Icon: RxCrop,
-    title: "Branding",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    Icon: RxRocket,
+    title: "E-commerce Growth Strategy",
+    description: "End-to-end growth planning including product strategy, offer structuring, budget allocation, and scalable campaign frameworks.",
   },
   {
-    Icon: RxPencil2,
-    title: "Design",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    Icon: RxTrendingUp,
+    title: "Performance Advertising",
+    description: "Data-driven ad campaigns focused on generating profitable sales and high-quality leads across Meta, TikTok, Snapchat, and other digital platforms.",
   },
   {
     Icon: RxDesktop,
-    title: "Development",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    title: "Tracking & Data Analytics",
+    description: "Advanced tracking setup (Pixels, Events, Analytics) to measure every conversion and make optimization decisions based on real data.",
   },
   {
     Icon: RxReader,
-    title: "Copywriting",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    title: "Conversion Rate Optimization",
+    description: "Improving landing pages, product pages, and user journey to increase conversion rates and maximize revenue from existing traffic.",
   },
   {
     Icon: RxRocket,
-    title: "SEO",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    title: "Retargeting & Scaling Systems",
+    description: "Structured retargeting funnels and scaling strategies designed to recover lost customers and grow winning campaigns efficiently.",
   },
 ];
 
