@@ -14,22 +14,22 @@ const workSlides = {
         {
           title: "title",
           path: "/thumb1.jpg",
-          link: "pages/work/Casepage.jsx",
+          link: "/work/Casepage",
         },
         {
           title: "title",
           path: "/thumb2.jpg",
-          link: "pages/work/Casepage.jsx",
+          link: "/work/Casepage",
         },
         {
           title: "title",
           path: "/thumb3.jpg",
-          link: "pages/work/Casepage.jsx",
+          link: "/work/Casepage",
         },
         {
           title: "title",
           path: "/thumb4.jpg",
-          link: "pages/work/Casepage.jsx",
+          link: "/work/Casepage",
         },
       ],
     },
