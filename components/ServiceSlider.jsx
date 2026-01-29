@@ -1,6 +1,4 @@
 import {
-  RxRocket,
-  RxTrendingUp,
   RxDesktop,
   RxReader,
   RxRocket,
