@@ -4,6 +4,7 @@ import {
   RxMixerHorizontal,
   RxRocket,
   RxLoop,
+  RxArrowTopRight,
 } from "react-icons/rx";
 import { FreeMode, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
