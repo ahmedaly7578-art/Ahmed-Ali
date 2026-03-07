@@ -1,566 +1,441 @@
-import { motion, useScroll, useTransform, useInView, AnimatePresence } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
+import Image from "next/image";
+import { motion, useInView } from "framer-motion";
+import { useRef, useEffect, useState } from "react";
 import { RxArrowTopRight } from "react-icons/rx";
+import { useRouter } from "next/router";
 
-// ─── Fade variants ────────────────────────────────────────────────────────────
-const fadeIn = (direction = "up", delay = 0) => ({
-  hidden: {
-    opacity: 0,
-    y: direction === "up" ? 40 : direction === "down" ? -40 : 0,
-    x: direction === "left" ? 40 : direction === "right" ? -40 : 0,
-  },
-  show: {
-    opacity: 1,
-    y: 0,
-    x: 0,
-    transition: { duration: 0.7, delay, ease: [0.25, 0.46, 0.45, 0.94] },
-  },
-});
-
-// ─── Animated Counter ─────────────────────────────────────────────────────────
-const Counter = ({ value, suffix = "" }) => {
-  const [count, setCount] = useState(0);
+/* ── animated number counter ── */
+const Counter = ({ target, prefix = "", suffix = "" }) => {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true });
-  const numeric = parseFloat(value.replace(/[^0-9.]/g, ""));
+  const [val, setVal] = useState(0);
 
   useEffect(() => {
     if (!inView) return;
-    let start = 0;
-    const end = numeric;
-    const duration = 1800;
-    const step = (end / duration) * 16;
-    const timer = setInterval(() => {
-      start += step;
-      if (start >= end) { setCount(end); clearInterval(timer); }
-      else setCount(parseFloat(start.toFixed(1)));
-    }, 16);
-    return () => clearInterval(timer);
-  }, [inView, numeric]);
+    let raf;
+    const start = performance.now();
+    const duration = 1600;
+    const step = (now) => {
+      const p = Math.min((now - start) / duration, 1);
+      const ease = 1 - Math.pow(1 - p, 3);
+      setVal(Math.floor(ease * target));
+      if (p < 1) raf = requestAnimationFrame(step);
+    };
+    raf = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(raf);
+  }, [inView, target]);
 
   return (
     <span ref={ref}>
-      {value.startsWith("$") ? "$" : ""}
-      {count % 1 === 0 ? Math.floor(count).toLocaleString() : count}
-      {suffix}
+      {prefix}{val.toLocaleString()}{suffix}
     </span>
   );
 };
 
-// ─── Section wrapper with scroll reveal ──────────────────────────────────────
-const Section = ({ children, delay = 0, className = "" }) => {
+/* ── reveal on scroll ── */
+const Reveal = ({ children, delay = 0, dir = "up", className = "" }) => {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const inView = useInView(ref, { once: true, margin: "-60px" });
   return (
     <motion.div
       ref={ref}
-      initial="hidden"
-      animate={inView ? "show" : "hidden"}
-      variants={fadeIn("up", delay)}
       className={className}
+      initial={{
+        opacity: 0,
+        y: dir === "up" ? 28 : 0,
+        x: dir === "left" ? 28 : dir === "right" ? -28 : 0,
+      }}
+      animate={inView ? { opacity: 1, y: 0, x: 0 } : {}}
+      transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
     </motion.div>
   );
 };
 
-// ─── Data ─────────────────────────────────────────────────────────────────────
-const caseStudy = {
-  title: "Bags & Shoes",
-  subtitle: "From 1.8x to 6.36x ROAS — Scaling a Saudi Fashion Brand on Snapchat",
-  industry: "E-commerce",
-  platform: "Snapchat",
-  country: "Saudi Arabia",
-  duration: "Campaign Period",
-  objective: "Conversion Campaign",
-  services: ["Performance Ads", "Snapchat Ads", "Retargeting", "CRO"],
+const MetaRow = ({ label, value, bold = false }) => (
+  <div style={{ marginBottom: 6, fontSize: 14, lineHeight: 1.6 }}>
+    <span style={{ color: "rgba(255,255,255,0.5)" }}>{label}: </span>
+    <span style={{ color: "#fff", fontWeight: bold ? 700 : 500 }}>{value}</span>
+  </div>
+);
 
-  challenge: {
-    title: "The Challenge",
-    description:
-      "A fast-growing fashion brand selling bags and shoes in Saudi Arabia was struggling with high cost-per-purchase and an untapped Snapchat audience. Their existing campaigns lacked retargeting depth, precise event tracking, and creative strategy tailored for the platform — resulting in weak ROAS and unsustainable acquisition costs.",
-    metrics: [
-      { label: "Starting ROAS", value: "1.8x" },
-      { label: "Avg. CPP", value: "$12.6" },
-      { label: "Platform", value: "Snapchat" },
-    ],
-  },
+const SectionHeading = ({ children }) => (
+  <h2 style={{
+    fontSize: "clamp(1.3rem, 2.2vw, 1.8rem)",
+    fontWeight: 800,
+    marginBottom: 18,
+    letterSpacing: "-0.02em",
+    color: "#fff",
+  }}>
+    {children}
+  </h2>
+);
 
-  solution: {
-    title: "Our Strategy",
-    points: [
-      {
-        title: "Platform-Native Creative",
-        description:
-          "Produced Snapchat-first vertical video ads using UGC-style storytelling that felt organic in the feed — boosting thumb-stop rate by over 3x.",
-      },
-      {
-        title: "Pixel & Event Architecture",
-        description:
-          "Rebuilt the Snap Pixel with server-side events for ADD_CART, PURCHASE, and VIEW_CONTENT — enabling smarter algorithmic optimization.",
-      },
-      {
-        title: "Audience Segmentation",
-        description:
-          "Layered lookalikes on top of high-intent retargeting pools segmented by recency and product category for bags vs. shoes.",
-      },
-      {
-        title: "Bid & Budget Optimization",
-        description:
-          "Shifted from manual CPM to Target Cost bidding with aggressive scaling windows on winning ad sets — reducing CPP from $45 to $12.6.",
-      },
-    ],
-  },
-
-  results: {
-    title: "The Results",
-    metrics: [
-      { label: "ROAS", value: "6.36x", change: "+253%" },
-      { label: "Total Orders", value: "2,437", change: "Purchases" },
-      { label: "Total Sales", value: "734,974 SAR", change: "Revenue" },
-      { label: "Total Spend", value: "$30,782", change: "Ad Spend" },
-    ],
-  },
-
-  testimonial: {
-    text: "The Snapchat results blew us away. We scaled from struggling campaigns to 6x ROAS — and we're still growing month over month.",
-    author: "Brand Manager",
-    role: "Bags & Shoes — Saudi Arabia",
-  },
-};
-
-// ─── Main Component ───────────────────────────────────────────────────────────
-const CaseStudyPage = () => {
-  const heroRef = useRef(null);
-  const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
-  const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+export default function CaseStudyPage() {
+  const router = useRouter();
 
   return (
-    <div
-      className="min-h-screen text-white overflow-x-hidden"
-      style={{
-        background: "linear-gradient(135deg, #0f0a1e 0%, #1a0f3a 40%, #0d1a2e 100%)",
-        fontFamily: "'Sora', 'DM Sans', sans-serif",
-      }}
-    >
-      {/* ── Ambient BG glows ── */}
-      <div className="fixed inset-0 pointer-events-none z-0">
-        <div
-          className="absolute top-[-20%] left-[-10%] w-[600px] h-[600px] rounded-full opacity-20"
-          style={{ background: "radial-gradient(circle, #7c3aed 0%, transparent 70%)", filter: "blur(80px)" }}
-        />
-        <div
-          className="absolute bottom-[10%] right-[-10%] w-[500px] h-[500px] rounded-full opacity-15"
-          style={{ background: "radial-gradient(circle, #06b6d4 0%, transparent 70%)", filter: "blur(100px)" }}
-        />
-        <div
-          className="absolute top-[50%] left-[50%] w-[400px] h-[400px] rounded-full opacity-10"
-          style={{ background: "radial-gradient(circle, #a855f7 0%, transparent 70%)", filter: "blur(60px)", transform: "translate(-50%,-50%)" }}
-        />
+    <div style={{
+      minHeight: "100vh",
+      backgroundColor: "#0e0b1f",
+      color: "#fff",
+      fontFamily: "'Sora', 'Segoe UI', sans-serif",
+      position: "relative",
+      overflow: "hidden",
+    }}>
+      {/* ambient glows */}
+      <div style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: 0 }}>
+        <div style={{
+          position: "absolute", top: "-15%", left: "-8%",
+          width: 500, height: 500, borderRadius: "50%",
+          background: "radial-gradient(circle, rgba(124,58,237,0.22) 0%, transparent 70%)",
+          filter: "blur(70px)",
+        }} />
+        <div style={{
+          position: "absolute", bottom: "5%", right: "-10%",
+          width: 420, height: 420, borderRadius: "50%",
+          background: "radial-gradient(circle, rgba(168,85,247,0.15) 0%, transparent 70%)",
+          filter: "blur(90px)",
+        }} />
       </div>
 
-      <div className="relative z-10">
-        {/* ── Back Button ── */}
-        <motion.div
-          variants={fadeIn("right", 0.1)}
-          initial="hidden"
-          animate="show"
-          className="container mx-auto px-6 pt-10"
+      <div style={{ position: "relative", zIndex: 1, maxWidth: 1080, margin: "0 auto", padding: "56px 32px 120px" }}>
+
+        {/* back */}
+        <motion.button
+          initial={{ opacity: 0, x: -12 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.45 }}
+          onClick={() => router.push("/work")}
+          style={{
+            display: "flex", alignItems: "center", gap: 6,
+            background: "none", border: "none",
+            color: "rgba(255,255,255,0.4)", fontSize: 13,
+            cursor: "pointer", marginBottom: 44, padding: 0,
+          }}
         >
-          <button
-            className="flex items-center gap-2 text-white/50 hover:text-purple-400 transition-all text-sm group"
-            onClick={() => window.history.back()}
-          >
-            <RxArrowTopRight className="rotate-180 group-hover:-translate-x-1 transition-transform" />
-            Back to Work
-          </button>
-        </motion.div>
+          <RxArrowTopRight style={{ transform: "rotate(180deg)" }} />
+          Back to Work
+        </motion.button>
 
-        {/* ── HERO ── */}
-        <motion.section
-          ref={heroRef}
-          style={{ y: heroY, opacity: heroOpacity }}
-          className="container mx-auto px-6 pt-16 pb-24"
-        >
-          {/* Tags */}
-          <motion.div variants={fadeIn("up", 0.2)} initial="hidden" animate="show" className="flex flex-wrap gap-3 mb-8">
-            {caseStudy.services.map((s, i) => (
-              <span
-                key={i}
-                className="px-4 py-1.5 rounded-full text-xs font-semibold tracking-widest uppercase"
-                style={{
-                  background: "rgba(124,58,237,0.15)",
-                  border: "1px solid rgba(124,58,237,0.4)",
-                  color: "#a78bfa",
-                }}
-              >
-                {s}
-              </span>
-            ))}
-          </motion.div>
+        {/* ── TITLE ── */}
+        <Reveal delay={0.05}>
+          <h1 style={{
+            fontSize: "clamp(1.9rem, 3.8vw, 2.9rem)",
+            fontWeight: 900,
+            margin: "0 0 36px",
+            letterSpacing: "-0.025em",
+            lineHeight: 1.1,
+          }}>
+            Case Study:{" "}
+            <span style={{
+              background: "linear-gradient(90deg,#a78bfa,#e879f9)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+            }}>
+              [Bags and Shoes ]
+            </span>
+          </h1>
+        </Reveal>
 
-          {/* Title */}
-          <motion.div variants={fadeIn("up", 0.3)} initial="hidden" animate="show">
-            <h1
-              className="font-black leading-none mb-6"
-              style={{ fontSize: "clamp(3rem, 8vw, 7rem)", letterSpacing: "-0.03em" }}
-            >
-              <span style={{ color: "#a78bfa" }}>Case Study:</span>
-              <br />
-              <span className="text-white">{caseStudy.title}</span>
-            </h1>
-          </motion.div>
+        {/* ── MAIN TWO-COLUMN: meta left / image right ── */}
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 1.35fr",
+          gap: 56,
+          alignItems: "start",
+          marginBottom: 72,
+        }}>
+          {/* LEFT */}
+          <div>
+            <Reveal delay={0.1}>
+              <div style={{ marginBottom: 20 }}>
+                <MetaRow label="Marketing  Objectives" value="ConversionCampaign" />
+                <MetaRow label="Industry" value="E-commerce" bold />
+              </div>
+            </Reveal>
 
-          <motion.p
-            variants={fadeIn("up", 0.4)}
-            initial="hidden"
-            animate="show"
-            className="text-lg text-white/60 max-w-2xl mb-12 leading-relaxed"
-          >
-            {caseStudy.subtitle}
-          </motion.p>
+            <Reveal delay={0.15}>
+              <div style={{ marginBottom: 20 }}>
+                <MetaRow label="Platform" value="Snapchat" bold />
+              </div>
+            </Reveal>
 
-          {/* Meta info bar */}
-          <motion.div
-            variants={fadeIn("up", 0.5)}
-            initial="hidden"
-            animate="show"
-            className="flex flex-wrap gap-x-10 gap-y-4 text-sm pb-12"
-            style={{ borderBottom: "1px solid rgba(255,255,255,0.08)" }}
-          >
+            <Reveal delay={0.2}>
+              <div style={{ marginBottom: 28 }}>
+                <MetaRow label="Country" value="Saudi Arabia" bold />
+              </div>
+            </Reveal>
+
+            {/* stats list */}
             {[
-              { label: "Marketing Objective", value: caseStudy.objective },
-              { label: "Industry", value: caseStudy.industry },
-              { label: "Platform", value: caseStudy.platform },
-              { label: "Country", value: caseStudy.country },
+              {
+                label: "Total Purchases",
+                node: <><Counter target={2437} /> Orders</>,
+              },
+              {
+                label: "CPP (Cost Per Purchase)",
+                node: <>12.6 $</>,
+              },
+              {
+                label: "Sales",
+                node: <>734,974 SAR</>,
+              },
+              {
+                label: "A.O.V",
+                node: <>300 SAR</>,
+              },
+              {
+                label: "ROAS",
+                node: <>6.36</>,
+                big: true,
+                accent: true,
+              },
+              {
+                label: "Total Spend",
+                node: <><Counter target={30782} prefix="$" /></>,
+                big: true,
+              },
             ].map((item, i) => (
-              <div key={i}>
-                <div className="text-white/40 text-xs uppercase tracking-widest mb-1">{item.label}</div>
-                <div className="text-white font-semibold">{item.value}</div>
-              </div>
+              <Reveal key={i} delay={0.22 + i * 0.07}>
+                <div style={{ marginBottom: 12, lineHeight: 1.5 }}>
+                  <span style={{ color: "rgba(255,255,255,0.5)", fontSize: 14 }}>
+                    {item.label}:{" "}
+                  </span>
+                  <span style={{
+                    fontSize: item.big ? 24 : 15,
+                    fontWeight: item.big ? 900 : 600,
+                    color: item.accent ? "#a78bfa" : "#fff",
+                    letterSpacing: item.big ? "-0.02em" : 0,
+                  }}>
+                    {item.node}
+                  </span>
+                </div>
+              </Reveal>
             ))}
-          </motion.div>
-        </motion.section>
-
-        {/* ── HERO VISUAL — Dashboard mockup ── */}
-        <Section className="container mx-auto px-6 mb-28">
-          <div
-            className="relative rounded-2xl overflow-hidden"
-            style={{
-              background: "rgba(255,255,255,0.03)",
-              border: "1px solid rgba(124,58,237,0.2)",
-              boxShadow: "0 0 80px rgba(124,58,237,0.1)",
-            }}
-          >
-            {/* Fake dashboard header */}
-            <div
-              className="px-6 py-4 flex items-center gap-3"
-              style={{ borderBottom: "1px solid rgba(255,255,255,0.05)", background: "rgba(0,0,0,0.3)" }}
-            >
-              <div className="w-3 h-3 rounded-full bg-red-500/60" />
-              <div className="w-3 h-3 rounded-full bg-yellow-500/60" />
-              <div className="w-3 h-3 rounded-full bg-green-500/60" />
-              <span className="ml-4 text-white/30 text-xs">Snapchat Ads Manager — Campaign Dashboard</span>
-            </div>
-
-            {/* Stat strip */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-px" style={{ background: "rgba(255,255,255,0.05)" }}>
-              {[
-                { label: "Amount Spent", value: "$30,782.45" },
-                { label: "Impressions", value: "3,903,822" },
-                { label: "Conversion Rate", value: "0.38" },
-                { label: "Purchases", value: "22,779" },
-              ].map((s, i) => (
-                <div key={i} className="px-6 py-5" style={{ background: "rgba(10,5,25,0.8)" }}>
-                  <div className="text-white/40 text-xs mb-1">{s.label}</div>
-                  <div className="text-white font-bold text-lg">{s.value}</div>
-                </div>
-              ))}
-            </div>
-
-            {/* Chart area */}
-            <div className="p-6" style={{ background: "rgba(5,2,15,0.9)", minHeight: "220px" }}>
-              <div className="flex items-center gap-6 mb-4">
-                <div className="flex items-center gap-2 text-xs text-white/50">
-                  <div className="w-8 h-0.5 bg-yellow-400" />
-                  Purchase ROAS (return on ad spend)
-                </div>
-                <div className="flex items-center gap-2 text-xs text-white/50">
-                  <div className="w-8 h-0.5 bg-green-400" />
-                  Paid Impressions
-                </div>
-              </div>
-
-              {/* SVG chart */}
-              <svg viewBox="0 0 900 160" className="w-full" preserveAspectRatio="none">
-                <defs>
-                  <linearGradient id="roasGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#facc15" stopOpacity="0.4" />
-                    <stop offset="100%" stopColor="#facc15" stopOpacity="0" />
-                  </linearGradient>
-                  <linearGradient id="impGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#4ade80" stopOpacity="0.3" />
-                    <stop offset="100%" stopColor="#4ade80" stopOpacity="0" />
-                  </linearGradient>
-                </defs>
-                {/* Impressions area */}
-                <path
-                  d="M0,120 C80,115 160,110 240,105 C320,100 380,108 440,95 C500,82 540,70 600,55 C660,40 720,30 780,20 C820,14 860,10 900,8 L900,160 L0,160 Z"
-                  fill="url(#impGrad)"
-                />
-                <path
-                  d="M0,120 C80,115 160,110 240,105 C320,100 380,108 440,95 C500,82 540,70 600,55 C660,40 720,30 780,20 C820,14 860,10 900,8"
-                  fill="none"
-                  stroke="#4ade80"
-                  strokeWidth="2"
-                  opacity="0.7"
-                />
-                {/* ROAS line */}
-                <path
-                  d="M0,140 C60,138 120,135 200,130 C280,125 320,120 380,118 C440,116 470,100 520,80 C570,60 620,40 680,25 C730,14 800,8 900,5"
-                  fill="none"
-                  stroke="#facc15"
-                  strokeWidth="2.5"
-                  opacity="0.9"
-                  strokeDasharray="2000"
-                  strokeDashoffset="2000"
-                  style={{ animation: "dash 2s ease forwards 0.5s" }}
-                />
-                <style>{`@keyframes dash { to { stroke-dashoffset: 0; } }`}</style>
-              </svg>
-            </div>
           </div>
-        </Section>
+
+          {/* RIGHT — screenshot */}
+          <Reveal delay={0.18} dir="left">
+            <motion.div
+              whileHover={{ scale: 1.015 }}
+              transition={{ duration: 0.3 }}
+              style={{
+                borderRadius: 14,
+                overflow: "hidden",
+                border: "1px solid rgba(167,139,250,0.22)",
+                boxShadow: "0 12px 60px rgba(124,58,237,0.2), 0 2px 12px rgba(0,0,0,0.4)",
+              }}
+            >
+              <img
+                src="/case.png"
+                alt="Snapchat Ads Manager Dashboard"
+                style={{ width: "100%", display: "block" }}
+              />
+            </motion.div>
+          </Reveal>
+        </div>
+
+        {/* ── DIVIDER ── */}
+        <div style={{ height: 1, background: "rgba(255,255,255,0.06)", marginBottom: 64 }} />
 
         {/* ── CHALLENGE ── */}
-        <Section className="container mx-auto px-6 mb-28">
-          <div className="grid md:grid-cols-2 gap-16 items-center">
-            <div>
-              <div className="text-xs text-purple-400 uppercase tracking-widest font-bold mb-4">01 — Challenge</div>
-              <h2 className="font-black text-4xl md:text-5xl mb-6" style={{ letterSpacing: "-0.02em" }}>
-                {caseStudy.challenge.title}
-              </h2>
-              <p className="text-white/60 leading-relaxed text-lg">{caseStudy.challenge.description}</p>
+        <section style={{ marginBottom: 72 }}>
+          <Reveal delay={0.05}>
+            <div style={{
+              display: "inline-block",
+              fontSize: 11, fontWeight: 700,
+              letterSpacing: "0.12em", textTransform: "uppercase",
+              color: "#a78bfa", marginBottom: 10,
+            }}>
+              01 — Challenge
             </div>
-            <div className="grid grid-cols-1 gap-4">
-              {caseStudy.challenge.metrics.map((m, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, x: 30 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.15, duration: 0.6 }}
-                  className="flex items-center justify-between px-7 py-5 rounded-xl"
-                  style={{
-                    background: "rgba(124,58,237,0.08)",
-                    border: "1px solid rgba(124,58,237,0.2)",
-                  }}
-                >
-                  <span className="text-white/60 text-sm">{m.label}</span>
-                  <span className="font-black text-2xl text-white">{m.value}</span>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </Section>
-
-        {/* ── SOLUTION ── */}
-        <Section className="container mx-auto px-6 mb-28">
-          <div className="text-xs text-purple-400 uppercase tracking-widest font-bold mb-4">02 — Strategy</div>
-          <h2 className="font-black text-4xl md:text-5xl mb-14" style={{ letterSpacing: "-0.02em" }}>
-            {caseStudy.solution.title}
-          </h2>
-          <div className="grid md:grid-cols-2 gap-6">
-            {caseStudy.solution.points.map((p, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.6 }}
-                whileHover={{ y: -4, transition: { duration: 0.2 } }}
-                className="group p-7 rounded-2xl cursor-default"
-                style={{
-                  background: "rgba(255,255,255,0.02)",
-                  border: "1px solid rgba(255,255,255,0.06)",
-                  transition: "border-color 0.3s",
-                }}
-                onMouseEnter={(e) => (e.currentTarget.style.borderColor = "rgba(124,58,237,0.5)")}
-                onMouseLeave={(e) => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.06)")}
-              >
-                <div className="flex items-start gap-5">
-                  <div
-                    className="w-10 h-10 rounded-full flex items-center justify-center font-black text-sm flex-shrink-0 group-hover:scale-110 transition-transform"
-                    style={{ background: "rgba(124,58,237,0.2)", color: "#a78bfa" }}
-                  >
-                    {String(i + 1).padStart(2, "0")}
+          </Reveal>
+          <Reveal delay={0.1}>
+            <SectionHeading>The Challenge</SectionHeading>
+          </Reveal>
+          <Reveal delay={0.15}>
+            <p style={{ color: "rgba(255,255,255,0.58)", lineHeight: 1.8, maxWidth: 680, marginBottom: 28, fontSize: 14.5 }}>
+              A fast-growing fashion brand selling bags and shoes in Saudi Arabia was struggling with high
+              cost-per-purchase and untapped Snapchat audience potential. Their campaigns lacked retargeting
+              depth, event tracking, and platform-native creatives — resulting in weak ROAS and unsustainable
+              acquisition costs.
+            </p>
+          </Reveal>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 14 }}>
+            {[
+              { label: "Starting ROAS", value: "1.8x" },
+              { label: "CPP Before", value: "$45" },
+              { label: "Conversion Rate", value: "1.2%" },
+            ].map((m, i) => (
+              <Reveal key={i} delay={0.1 + i * 0.08}>
+                <div style={{
+                  background: "rgba(167,139,250,0.07)",
+                  border: "1px solid rgba(167,139,250,0.14)",
+                  borderRadius: 10, padding: "18px 22px",
+                }}>
+                  <div style={{ color: "rgba(255,255,255,0.4)", fontSize: 11, marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.08em" }}>
+                    {m.label}
                   </div>
-                  <div>
-                    <h3 className="font-bold text-lg text-white mb-2">{p.title}</h3>
-                    <p className="text-white/55 leading-relaxed text-sm">{p.description}</p>
-                  </div>
+                  <div style={{ fontSize: 28, fontWeight: 900, color: "#fff" }}>{m.value}</div>
                 </div>
-              </motion.div>
+              </Reveal>
             ))}
           </div>
-        </Section>
+        </section>
+
+        {/* ── STRATEGY ── */}
+        <section style={{ marginBottom: 72 }}>
+          <Reveal delay={0.05}>
+            <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "#a78bfa", marginBottom: 10 }}>
+              02 — Strategy
+            </div>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <SectionHeading>Our Strategy</SectionHeading>
+          </Reveal>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+            {[
+              { n: "01", title: "Platform-Native Creative", desc: "Snapchat-first vertical UGC-style videos that felt organic — boosting thumb-stop rate by 3x." },
+              { n: "02", title: "Pixel & Event Architecture", desc: "Rebuilt Snap Pixel with server-side events for PURCHASE, ADD_CART, VIEW_CONTENT for smarter optimization." },
+              { n: "03", title: "Audience Segmentation", desc: "Layered lookalikes on high-intent retargeting pools segmented by recency and category." },
+              { n: "04", title: "Bid & Budget Optimization", desc: "Shifted to Target Cost bidding with aggressive scaling on winners — dropping CPP from $45 → $12.6." },
+            ].map((p, i) => (
+              <Reveal key={i} delay={0.1 + i * 0.07}>
+                <motion.div
+                  whileHover={{ y: -3 }}
+                  style={{
+                    background: "rgba(255,255,255,0.025)",
+                    border: "1px solid rgba(255,255,255,0.07)",
+                    borderRadius: 10, padding: "22px",
+                    cursor: "default",
+                    transition: "border-color 0.3s",
+                  }}
+                  onMouseEnter={e => e.currentTarget.style.borderColor = "rgba(167,139,250,0.4)"}
+                  onMouseLeave={e => e.currentTarget.style.borderColor = "rgba(255,255,255,0.07)"}
+                >
+                  <div style={{
+                    width: 30, height: 30, borderRadius: "50%",
+                    background: "rgba(167,139,250,0.14)", color: "#a78bfa",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    fontSize: 11, fontWeight: 700, marginBottom: 12,
+                  }}>
+                    {p.n}
+                  </div>
+                  <div style={{ fontWeight: 700, marginBottom: 8, fontSize: 14.5, color: "#fff" }}>{p.title}</div>
+                  <div style={{ color: "rgba(255,255,255,0.48)", fontSize: 13, lineHeight: 1.7 }}>{p.desc}</div>
+                </motion.div>
+              </Reveal>
+            ))}
+          </div>
+        </section>
 
         {/* ── RESULTS ── */}
-        <Section className="container mx-auto px-6 mb-28">
-          <div className="text-center mb-14">
-            <div className="text-xs text-purple-400 uppercase tracking-widest font-bold mb-4">03 — Results</div>
-            <h2 className="font-black text-4xl md:text-5xl" style={{ letterSpacing: "-0.02em" }}>
-              {caseStudy.results.title}
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {caseStudy.results.metrics.map((m, i) => (
+        <section style={{ marginBottom: 72 }}>
+          <Reveal delay={0.05}>
+            <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "#a78bfa", marginBottom: 10, textAlign: "center" }}>
+              03 — Results
+            </div>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <SectionHeading><span style={{ display: "block", textAlign: "center" }}>The Results</span></SectionHeading>
+          </Reveal>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 12 }}>
+            {[
+              { label: "ROAS", display: "6.36x", change: "+253%" },
+              { label: "Total Orders", target: 2437, suffix: "", change: "Purchases" },
+              { label: "Total Sales", display: "734,974 SAR", change: "Revenue" },
+              { label: "Total Spend", target: 30782, prefix: "$", change: "Ad Spend" },
+            ].map((m, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, scale: 0.85 }}
-                whileInView={{ opacity: 1, scale: 1 }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.12, duration: 0.5, type: "spring", stiffness: 120 }}
-                className="relative p-7 rounded-2xl text-center overflow-hidden"
+                transition={{ delay: i * 0.1, duration: 0.5 }}
                 style={{
-                  background: "linear-gradient(135deg, rgba(124,58,237,0.2) 0%, rgba(124,58,237,0.05) 100%)",
-                  border: "1px solid rgba(124,58,237,0.35)",
+                  background: "linear-gradient(135deg,rgba(124,58,237,0.18),rgba(124,58,237,0.04))",
+                  border: "1px solid rgba(124,58,237,0.28)",
+                  borderRadius: 12, padding: "22px 14px",
+                  textAlign: "center", position: "relative", overflow: "hidden",
                 }}
               >
-                {/* Glow dot */}
-                <div
-                  className="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-1 rounded-b-full"
-                  style={{ background: "linear-gradient(90deg, transparent, #7c3aed, transparent)" }}
-                />
-                <div
-                  className="font-black mb-1 text-transparent bg-clip-text"
-                  style={{
-                    fontSize: "clamp(1.8rem, 4vw, 2.6rem)",
-                    backgroundImage: "linear-gradient(135deg, #a78bfa, #e879f9)",
-                    letterSpacing: "-0.02em",
-                  }}
-                >
-                  {m.label === "ROAS" ? (
-                    <><Counter value="6.36" />x</>
-                  ) : m.label === "Total Orders" ? (
-                    <Counter value="2437" />
-                  ) : m.label === "Total Sales" ? (
-                    <>734,974 <span style={{ fontSize: "0.6em" }}>SAR</span></>
-                  ) : (
-                    <>$<Counter value="30782" /></>
-                  )}
+                <div style={{
+                  position: "absolute", top: 0, left: "50%", transform: "translateX(-50%)",
+                  width: 60, height: 2, borderRadius: "0 0 4px 4px",
+                  background: "linear-gradient(90deg,transparent,#7c3aed,transparent)",
+                }} />
+                <div style={{
+                  fontSize: "clamp(1.3rem,2vw,1.75rem)", fontWeight: 900,
+                  background: "linear-gradient(135deg,#a78bfa,#e879f9)",
+                  WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
+                  marginBottom: 6, letterSpacing: "-0.02em",
+                }}>
+                  {m.display ?? <Counter target={m.target} prefix={m.prefix ?? ""} suffix={m.suffix ?? ""} />}
                 </div>
-                <div className="text-white/70 text-sm font-medium mb-1">{m.label}</div>
-                <div className="text-green-400 text-xs font-semibold">{m.change}</div>
+                <div style={{ fontSize: 12, color: "rgba(255,255,255,0.55)", marginBottom: 4 }}>{m.label}</div>
+                <div style={{ fontSize: 11, color: "#4ade80", fontWeight: 600 }}>{m.change}</div>
               </motion.div>
             ))}
           </div>
-        </Section>
-
-        {/* ── KEY METRICS DETAIL ── */}
-        <Section className="container mx-auto px-6 mb-28">
-          <div
-            className="rounded-2xl p-8 md:p-12"
-            style={{
-              background: "rgba(255,255,255,0.02)",
-              border: "1px solid rgba(255,255,255,0.06)",
-            }}
-          >
-            <h3 className="font-black text-2xl mb-8 text-white/80">Campaign Breakdown</h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-              {[
-                { label: "Total Purchases", value: "2,437 Orders" },
-                { label: "CPP (Cost Per Purchase)", value: "12.6 $" },
-                { label: "Sales", value: "734,974 SAR" },
-                { label: "A.O.V", value: "300 SAR" },
-              ].map((item, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
-                >
-                  <div className="text-white/40 text-xs uppercase tracking-widest mb-2">{item.label}</div>
-                  <div className="text-white font-bold text-xl">{item.value}</div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </Section>
+        </section>
 
         {/* ── TESTIMONIAL ── */}
-        <Section className="container mx-auto px-6 mb-28">
-          <div
-            className="max-w-4xl mx-auto rounded-2xl p-10 md:p-16 text-center relative overflow-hidden"
-            style={{
-              background: "rgba(124,58,237,0.07)",
-              border: "1px solid rgba(124,58,237,0.2)",
-            }}
-          >
-            <div
-              className="absolute inset-0 opacity-5"
-              style={{
-                backgroundImage: "radial-gradient(circle at 50% 0%, #7c3aed 0%, transparent 60%)",
-              }}
-            />
-            <div
-              className="text-8xl font-black text-purple-500/20 leading-none mb-4 select-none"
-              style={{ fontFamily: "Georgia, serif" }}
-            >
-              "
-            </div>
-            <p className="text-xl md:text-2xl text-white/85 italic leading-relaxed mb-8 relative z-10">
-              {caseStudy.testimonial.text}
+        <Reveal delay={0.05}>
+          <div style={{
+            background: "rgba(167,139,250,0.06)",
+            border: "1px solid rgba(167,139,250,0.14)",
+            borderRadius: 16, padding: "44px 52px",
+            maxWidth: 740, margin: "0 auto 72px",
+          }}>
+            <div style={{ fontSize: 56, color: "rgba(167,139,250,0.2)", lineHeight: 1, marginBottom: 4, fontFamily: "Georgia,serif" }}>"</div>
+            <p style={{ fontSize: 17, fontStyle: "italic", color: "rgba(255,255,255,0.82)", lineHeight: 1.75, marginBottom: 22 }}>
+              The Snapchat results blew us away. We scaled from struggling campaigns to 6x ROAS — and we're still growing month over month.
             </p>
-            <div className="flex items-center justify-center gap-4 relative z-10">
-              <div
-                className="w-12 h-12 rounded-full flex items-center justify-center font-black text-sm"
-                style={{ background: "rgba(124,58,237,0.3)", color: "#a78bfa" }}
-              >
-                BM
-              </div>
-              <div className="text-left">
-                <div className="text-white font-semibold">{caseStudy.testimonial.author}</div>
-                <div className="text-white/50 text-sm">{caseStudy.testimonial.role}</div>
+            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+              <div style={{
+                width: 40, height: 40, borderRadius: "50%",
+                background: "rgba(167,139,250,0.18)", color: "#a78bfa",
+                display: "flex", alignItems: "center", justifyContent: "center",
+                fontSize: 11, fontWeight: 700,
+              }}>BM</div>
+              <div>
+                <div style={{ fontWeight: 600, fontSize: 13 }}>Brand Manager</div>
+                <div style={{ color: "rgba(255,255,255,0.4)", fontSize: 12 }}>Bags &amp; Shoes — Saudi Arabia</div>
               </div>
             </div>
           </div>
-        </Section>
+        </Reveal>
 
         {/* ── CTA ── */}
-        <Section className="container mx-auto px-6 pb-32 text-center">
-          <h3
-            className="font-black mb-4"
-            style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)", letterSpacing: "-0.03em" }}
-          >
-            Ready to achieve{" "}
-            <span
-              className="text-transparent bg-clip-text"
-              style={{ backgroundImage: "linear-gradient(135deg, #a78bfa, #e879f9)" }}
+        <Reveal>
+          <div style={{ textAlign: "center" }}>
+            <h3 style={{
+              fontSize: "clamp(1.4rem,2.8vw,2rem)",
+              fontWeight: 800, marginBottom: 24, letterSpacing: "-0.02em",
+            }}>
+              Ready to achieve similar results?
+            </h3>
+            <motion.button
+              whileHover={{ scale: 1.05, boxShadow: "0 0 40px rgba(124,58,237,0.55)" }}
+              whileTap={{ scale: 0.97 }}
+              style={{
+                display: "inline-flex", alignItems: "center", gap: 8,
+                background: "linear-gradient(135deg,#7c3aed,#a855f7)",
+                border: "none", borderRadius: 999,
+                padding: "13px 34px", color: "#fff",
+                fontSize: 14, fontWeight: 700, cursor: "pointer",
+                boxShadow: "0 0 24px rgba(124,58,237,0.35)",
+              }}
             >
-              similar results?
-            </span>
-          </h3>
-          <p className="text-white/50 mb-10 text-lg">Let's build your next growth story.</p>
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.97 }}
-            className="relative inline-flex items-center gap-3 px-10 py-4 rounded-full font-bold text-white overflow-hidden group"
-            style={{
-              background: "linear-gradient(135deg, #7c3aed, #a855f7)",
-              boxShadow: "0 0 40px rgba(124,58,237,0.4)",
-            }}
-          >
-            <span>Let's Talk</span>
-            <RxArrowTopRight className="text-lg group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-          </motion.button>
-        </Section>
+              Let's Talk
+              <RxArrowTopRight style={{ fontSize: 16 }} />
+            </motion.button>
+          </div>
+        </Reveal>
+
       </div>
     </div>
   );
-};
-
-export default CaseStudyPage;
+}
