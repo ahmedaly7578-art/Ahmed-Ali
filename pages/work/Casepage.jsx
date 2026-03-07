@@ -318,7 +318,7 @@ export default function CaseStudyPage() {
 
         /* mobile */
         @media (max-width: 720px) {
-          .cs-wrap { padding: 140px 18px 80px; }
+          .cs-wrap { padding: 140px 18px 160px; }
           .cs-back { margin-bottom: 22px; }
 
           /* stack: image first, meta second */
@@ -343,7 +343,7 @@ export default function CaseStudyPage() {
 
         /* small phone */
         @media (max-width: 420px) {
-          .cs-wrap { padding: 140px 14px 64px; }
+          .cs-wrap { padding: 140px 14px 160px; }
           .cs-metrics { grid-template-columns: 1fr; }
           .cs-mc-val { font-size: 22px; }
           .cs-stat-val--accent { font-size: 26px; }
