@@ -4,21 +4,17 @@ import { useRef, useEffect, useState } from "react";
 import { RxArrowTopRight } from "react-icons/rx";
 import { useRouter } from "next/router";
 
-/* ─────────────────────────────────────────────
-   Animated Counter
-───────────────────────────────────────────── */
+/* ── Animated Counter ── */
 const Counter = ({ target, prefix = "", suffix = "" }) => {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true });
   const [val, setVal] = useState(0);
-
   useEffect(() => {
     if (!inView) return;
     let raf;
     const start = performance.now();
-    const duration = 1800;
     const tick = (now) => {
-      const p = Math.min((now - start) / duration, 1);
+      const p = Math.min((now - start) / 1800, 1);
       const ease = 1 - Math.pow(1 - p, 3);
       setVal(Math.floor(ease * target));
       if (p < 1) raf = requestAnimationFrame(tick);
@@ -26,414 +22,390 @@ const Counter = ({ target, prefix = "", suffix = "" }) => {
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
   }, [inView, target]);
-
   return <span ref={ref}>{prefix}{val.toLocaleString()}{suffix}</span>;
 };
 
-/* ─────────────────────────────────────────────
-   Scroll Reveal
-───────────────────────────────────────────── */
+/* ── Scroll Reveal ── */
 const Reveal = ({ children, delay = 0, dir = "up" }) => {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-50px" });
+  const inView = useInView(ref, { once: true, margin: "-40px" });
   return (
     <motion.div
       ref={ref}
-      initial={{
-        opacity: 0,
-        y: dir === "up" ? 24 : 0,
-        x: dir === "left" ? 24 : dir === "right" ? -24 : 0,
-      }}
+      initial={{ opacity: 0, y: dir === "up" ? 22 : 0, x: dir === "left" ? 22 : dir === "right" ? -22 : 0 }}
       animate={inView ? { opacity: 1, y: 0, x: 0 } : {}}
-      transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.55, delay, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
     </motion.div>
   );
 };
 
-/* ─────────────────────────────────────────────
-   Shared styles
-───────────────────────────────────────────── */
-const S = {
-  // meta row: "Label: Value"
-  metaRow: {
-    display: "flex",
-    flexWrap: "wrap",
-    gap: "0 6px",
-    marginBottom: 10,
-    fontSize: 16,
-    lineHeight: 1.5,
-  },
-  metaLabel: { color: "rgba(255,255,255,0.5)", fontWeight: 400 },
-  metaValue: { color: "#fff", fontWeight: 700 },
-
-  // stat row (bigger values)
-  statRow: {
-    display: "flex",
-    flexWrap: "wrap",
-    gap: "0 6px",
-    marginBottom: 14,
-    fontSize: 16,
-    lineHeight: 1.5,
-    alignItems: "baseline",
-  },
-  statLabel: { color: "rgba(255,255,255,0.5)", fontWeight: 400 },
-  statValue: { color: "#fff", fontWeight: 800, fontSize: 18 },
-  statValueAccent: {
-    fontWeight: 900,
-    fontSize: 32,
-    letterSpacing: "-0.02em",
-    background: "linear-gradient(135deg,#a78bfa,#e879f9)",
-    WebkitBackgroundClip: "text",
-    WebkitTextFillColor: "transparent",
-  },
-  statValueBig: { color: "#fff", fontWeight: 900, fontSize: 26, letterSpacing: "-0.02em" },
-};
-
-/* ─────────────────────────────────────────────
-   Main Component
-───────────────────────────────────────────── */
 export default function CaseStudyPage() {
   const router = useRouter();
 
+  // back: use router.back() so it goes to previous page in history
+  const handleBack = () => {
+    if (window.history.length > 1) {
+      router.back();
+    } else {
+      router.push("/work");
+    }
+  };
+
   return (
     <>
-      {/* ── responsive styles injected ── */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800;900&display=swap');
 
-        .cs-page * { box-sizing: border-box; }
+        /* ── reset inside page ── */
+        .cs * { box-sizing: border-box; margin: 0; padding: 0; }
 
-        .cs-page {
+        /* ── page wrapper: NO overflow hidden — kills mobile scroll ── */
+        .cs {
+          width: 100%;
           min-height: 100vh;
           background-color: #0e0b1f;
           color: #fff;
           font-family: 'Sora', 'Segoe UI', sans-serif;
           position: relative;
-          overflow-x: hidden;
         }
 
-        /* glow orbs */
-        .cs-glow1 {
-          position: fixed; top: -12%; left: -6%;
-          width: 520px; height: 520px; border-radius: 50%;
-          background: radial-gradient(circle, rgba(124,58,237,0.22) 0%, transparent 70%);
-          filter: blur(72px); pointer-events: none; z-index: 0;
+        /* ── ambient glows (fixed, pointer-events none) ── */
+        .cs-g1, .cs-g2 {
+          position: fixed;
+          border-radius: 50%;
+          pointer-events: none;
+          z-index: 0;
         }
-        .cs-glow2 {
-          position: fixed; bottom: 5%; right: -8%;
-          width: 400px; height: 400px; border-radius: 50%;
-          background: radial-gradient(circle, rgba(168,85,247,0.14) 0%, transparent 70%);
-          filter: blur(88px); pointer-events: none; z-index: 0;
+        .cs-g1 {
+          top: -10%; left: -5%;
+          width: 500px; height: 500px;
+          background: radial-gradient(circle, rgba(124,58,237,0.2) 0%, transparent 70%);
+          filter: blur(70px);
+        }
+        .cs-g2 {
+          bottom: 5%; right: -8%;
+          width: 380px; height: 380px;
+          background: radial-gradient(circle, rgba(168,85,247,0.13) 0%, transparent 70%);
+          filter: blur(85px);
         }
 
-        .cs-inner {
-          position: relative; z-index: 1;
+        /* ── content wrapper ── */
+        .cs-wrap {
+          position: relative;
+          z-index: 1;
           max-width: 1100px;
           margin: 0 auto;
-          /* 100px top = typical navbar height (70-80px) + breathing room */
-          padding: 100px 40px 140px;
+          /* pt: pushes below navbar. navbar in this project is ~80px tall */
+          padding: 110px 40px 140px;
         }
 
-        /* back button */
+        /* ── back button ── */
         .cs-back {
-          display: inline-flex; align-items: center; gap: 6px;
-          background: none; border: none;
-          color: rgba(255,255,255,0.38);
-          font-size: 13px; cursor: pointer; padding: 0;
-          margin-bottom: 32px;
+          display: inline-flex;
+          align-items: center;
+          gap: 7px;
+          background: none;
+          border: none;
+          color: rgba(255,255,255,0.4);
+          font-size: 13px;
           font-family: 'Sora', sans-serif;
+          font-weight: 500;
+          cursor: pointer;
+          padding: 0;
+          margin-bottom: 36px;
           transition: color 0.2s;
+          text-decoration: none;
         }
         .cs-back:hover { color: #a78bfa; }
+        .cs-back svg { flex-shrink: 0; }
 
-        /* title */
+        /* ── page title ── */
         .cs-title {
-          font-size: clamp(1.9rem, 4.5vw, 3.4rem);
+          font-size: clamp(2rem, 4.5vw, 3.4rem);
           font-weight: 900;
           letter-spacing: -0.03em;
           line-height: 1.1;
-          margin: 0 0 48px;
+          margin-bottom: 48px;
+          color: #fff;
         }
-        .cs-title-accent {
-          background: linear-gradient(90deg,#a78bfa,#e879f9);
+        .cs-title span {
+          background: linear-gradient(90deg, #a78bfa, #e879f9);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
+          background-clip: text;
         }
 
-        /* two-col layout */
-        .cs-hero-grid {
+        /* ── hero two-column grid ── */
+        .cs-hero {
           display: grid;
-          grid-template-columns: 1fr 1.6fr;
-          gap: 64px;
+          grid-template-columns: 1fr 1.65fr;
+          gap: 60px;
           align-items: start;
           margin-bottom: 72px;
         }
 
-        /* screenshot */
-        .cs-screenshot {
-          border-radius: 12px;
+        /* ── meta rows ── */
+        .cs-meta { margin-bottom: 8px; font-size: 15.5px; line-height: 1.6; }
+        .cs-meta-lbl { color: rgba(255,255,255,0.48); font-weight: 400; }
+        .cs-meta-val { color: #fff; font-weight: 700; margin-left: 4px; }
+
+        .cs-gap { height: 14px; }
+
+        /* ── stat rows ── */
+        .cs-stat { display: flex; align-items: baseline; gap: 5px; margin-bottom: 13px; flex-wrap: wrap; }
+        .cs-stat-lbl { color: rgba(255,255,255,0.48); font-size: 15px; font-weight: 400; }
+        .cs-stat-val { color: #fff; font-size: 17px; font-weight: 800; }
+        .cs-stat-val--accent {
+          font-size: 33px;
+          font-weight: 900;
+          letter-spacing: -0.025em;
+          background: linear-gradient(135deg, #a78bfa, #e879f9);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+        .cs-stat-val--big { font-size: 27px; font-weight: 900; letter-spacing: -0.02em; color: #fff; }
+
+        /* ── screenshot ── */
+        .cs-img-wrap {
+          border-radius: 14px;
           overflow: hidden;
           border: 1px solid rgba(167,139,250,0.22);
-          box-shadow: 0 12px 56px rgba(124,58,237,0.2), 0 2px 10px rgba(0,0,0,0.5);
+          box-shadow: 0 14px 60px rgba(124,58,237,0.22), 0 2px 12px rgba(0,0,0,0.5);
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        .cs-screenshot img { width: 100%; display: block; }
-
-        /* divider */
-        .cs-divider {
-          height: 1px;
-          background: rgba(255,255,255,0.06);
-          margin: 0 0 60px;
+        .cs-img-wrap:hover {
+          transform: scale(1.012);
+          box-shadow: 0 20px 80px rgba(124,58,237,0.32), 0 2px 12px rgba(0,0,0,0.5);
         }
+        .cs-img-wrap img { width: 100%; display: block; }
 
-        /* tag */
+        /* ── divider ── */
+        .cs-divider { height: 1px; background: rgba(255,255,255,0.06); margin-bottom: 64px; }
+
+        /* ── section tag + heading ── */
         .cs-tag {
           display: inline-block;
           font-size: 10px; font-weight: 700;
-          letter-spacing: 0.12em; text-transform: uppercase;
+          letter-spacing: 0.13em; text-transform: uppercase;
           color: #a78bfa; margin-bottom: 10px;
         }
-
-        /* section heading */
         .cs-sh {
-          font-size: clamp(1.3rem, 2.5vw, 2.1rem);
+          font-size: clamp(1.3rem, 2.4vw, 2rem);
           font-weight: 800;
-          letter-spacing: -0.02em;
-          margin: 0 0 20px;
+          letter-spacing: -0.025em;
           color: #fff;
+          margin-bottom: 20px;
         }
 
-        /* challenge metrics */
+        /* ── challenge metric cards ── */
         .cs-metrics {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
           gap: 14px;
+          margin-top: 28px;
           margin-bottom: 64px;
         }
-        .cs-metric-card {
+        .cs-mc {
           background: rgba(167,139,250,0.07);
           border: 1px solid rgba(167,139,250,0.14);
           border-radius: 10px;
           padding: 18px 20px;
         }
-        .cs-metric-label {
-          color: rgba(255,255,255,0.4);
-          font-size: 11px; text-transform: uppercase;
-          letter-spacing: 0.08em; margin-bottom: 6px;
-        }
-        .cs-metric-val {
-          font-size: 28px; font-weight: 900; color: #fff;
-        }
+        .cs-mc-lbl { color: rgba(255,255,255,0.4); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 7px; }
+        .cs-mc-val { font-size: 28px; font-weight: 900; color: #fff; }
 
-        /* strategy grid */
-        .cs-strategy-grid {
+        /* ── strategy grid ── */
+        .cs-strategy {
           display: grid;
           grid-template-columns: 1fr 1fr;
           gap: 14px;
           margin-bottom: 64px;
         }
-        .cs-strategy-card {
+        .cs-sc {
           background: rgba(255,255,255,0.025);
           border: 1px solid rgba(255,255,255,0.07);
           border-radius: 10px;
           padding: 22px;
-          transition: border-color 0.3s, transform 0.2s;
+          transition: border-color 0.25s, transform 0.2s;
           cursor: default;
         }
-        .cs-strategy-card:hover {
-          border-color: rgba(167,139,250,0.4);
-          transform: translateY(-3px);
-        }
-        .cs-strategy-num {
+        .cs-sc:hover { border-color: rgba(167,139,250,0.4); transform: translateY(-3px); }
+        .cs-sc-num {
           width: 30px; height: 30px; border-radius: 50%;
           background: rgba(167,139,250,0.14); color: #a78bfa;
           display: flex; align-items: center; justify-content: center;
           font-size: 11px; font-weight: 700; margin-bottom: 12px;
         }
-        .cs-strategy-title { font-weight: 700; font-size: 14px; color: #fff; margin-bottom: 8px; }
-        .cs-strategy-desc { color: rgba(255,255,255,0.48); font-size: 13px; line-height: 1.7; }
+        .cs-sc-title { font-weight: 700; font-size: 14.5px; color: #fff; margin-bottom: 8px; }
+        .cs-sc-desc { color: rgba(255,255,255,0.48); font-size: 13px; line-height: 1.7; }
 
-        /* results grid */
-        .cs-results-grid {
+        /* ── results grid ── */
+        .cs-results {
           display: grid;
-          grid-template-columns: repeat(4,1fr);
-          gap: 12px;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 13px;
           margin-bottom: 64px;
         }
-        .cs-result-card {
-          background: linear-gradient(135deg,rgba(124,58,237,0.18),rgba(124,58,237,0.04));
+        .cs-rc {
+          background: linear-gradient(135deg, rgba(124,58,237,0.18), rgba(124,58,237,0.04));
           border: 1px solid rgba(124,58,237,0.28);
-          border-radius: 12px; padding: 22px 12px;
-          text-align: center; position: relative; overflow: hidden;
+          border-radius: 12px;
+          padding: 22px 12px;
+          text-align: center;
+          position: relative;
+          overflow: hidden;
         }
-        .cs-result-topline {
+        .cs-rc-line {
           position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-          width: 56px; height: 2px; border-radius: 0 0 4px 4px;
-          background: linear-gradient(90deg,transparent,#7c3aed,transparent);
+          width: 52px; height: 2px; border-radius: 0 0 4px 4px;
+          background: linear-gradient(90deg, transparent, #7c3aed, transparent);
         }
-        .cs-result-val {
-          font-size: clamp(1.2rem,2vw,1.7rem); font-weight: 900;
-          background: linear-gradient(135deg,#a78bfa,#e879f9);
+        .cs-rc-val {
+          font-size: clamp(1.2rem, 2vw, 1.75rem); font-weight: 900;
+          background: linear-gradient(135deg, #a78bfa, #e879f9);
           -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+          background-clip: text;
           margin-bottom: 6px; letter-spacing: -0.02em;
         }
-        .cs-result-label { font-size: 12px; color: rgba(255,255,255,0.55); margin-bottom: 4px; }
-        .cs-result-change { font-size: 11px; color: #4ade80; font-weight: 600; }
+        .cs-rc-lbl { font-size: 12px; color: rgba(255,255,255,0.55); margin-bottom: 4px; }
+        .cs-rc-change { font-size: 11px; color: #4ade80; font-weight: 600; }
 
-        /* testimonial */
-        .cs-testimonial {
+        /* ── testimonial ── */
+        .cs-testi {
           background: rgba(167,139,250,0.06);
           border: 1px solid rgba(167,139,250,0.14);
-          border-radius: 16px; padding: 44px 52px;
-          max-width: 720px; margin: 0 auto 64px;
+          border-radius: 16px;
+          padding: 44px 52px;
+          max-width: 720px;
+          margin: 0 auto 64px;
         }
-        .cs-quote-mark { font-size: 56px; color: rgba(167,139,250,0.2); line-height: 1; font-family: Georgia,serif; margin-bottom: 4px; }
-        .cs-quote-text { font-size: 17px; font-style: italic; color: rgba(255,255,255,0.82); line-height: 1.75; margin-bottom: 22px; }
-        .cs-quote-author { display: flex; align-items: center; gap: 12px; }
-        .cs-avatar {
-          width: 40px; height: 40px; border-radius: 50%;
-          background: rgba(167,139,250,0.18); color: #a78bfa;
-          display: flex; align-items: center; justify-content: center;
-          font-size: 11px; font-weight: 700; flex-shrink: 0;
-        }
-        .cs-author-name { font-weight: 600; font-size: 13px; }
+        .cs-quote { font-size: 54px; color: rgba(167,139,250,0.2); line-height: 1; font-family: Georgia, serif; margin-bottom: 6px; }
+        .cs-testi-text { font-size: 17px; font-style: italic; color: rgba(255,255,255,0.82); line-height: 1.75; margin-bottom: 22px; }
+        .cs-testi-author { display: flex; align-items: center; gap: 13px; }
+        .cs-avatar { width: 40px; height: 40px; border-radius: 50%; background: rgba(167,139,250,0.18); color: #a78bfa; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; }
+        .cs-author-name { font-weight: 600; font-size: 13px; color: #fff; }
         .cs-author-role { color: rgba(255,255,255,0.4); font-size: 12px; }
 
-        /* cta */
-        .cs-cta-btn {
+        /* ── CTA button ── */
+        .cs-cta { text-align: center; }
+        .cs-cta-h { font-size: clamp(1.3rem, 2.6vw, 1.9rem); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 24px; color: #fff; }
+        .cs-btn {
           display: inline-flex; align-items: center; gap: 8px;
-          background: linear-gradient(135deg,#7c3aed,#a855f7);
+          background: linear-gradient(135deg, #7c3aed, #a855f7);
           border: none; border-radius: 999px;
           padding: 13px 34px; color: #fff;
           font-size: 14px; font-weight: 700;
-          cursor: pointer; font-family: 'Sora', sans-serif;
+          font-family: 'Sora', sans-serif;
+          cursor: pointer;
           box-shadow: 0 0 24px rgba(124,58,237,0.35);
-          transition: box-shadow 0.3s, transform 0.2s;
+          transition: box-shadow 0.25s, transform 0.2s;
         }
-        .cs-cta-btn:hover {
-          box-shadow: 0 0 44px rgba(124,58,237,0.55);
-          transform: scale(1.04);
-        }
+        .cs-btn:hover { box-shadow: 0 0 44px rgba(124,58,237,0.55); transform: scale(1.04); }
 
-        /* ── RESPONSIVE ── */
+        /* ════════════════════════════════
+           RESPONSIVE
+        ════════════════════════════════ */
 
         /* tablet */
-        @media (max-width: 900px) {
-          .cs-inner { padding: 90px 28px 100px; }
-          .cs-hero-grid { grid-template-columns: 1fr 1.3fr; gap: 36px; }
+        @media (max-width: 960px) {
+          .cs-wrap { padding: 96px 28px 100px; }
+          .cs-hero { grid-template-columns: 1fr 1.3fr; gap: 36px; }
         }
 
         /* mobile */
-        @media (max-width: 768px) {
-          /* Key fix: push content below navbar (navbar ~72px) + extra breathing room */
-          .cs-inner { padding: 88px 20px 80px; }
-          .cs-back { margin-bottom: 20px; }
-          .cs-title { margin-bottom: 28px; font-size: clamp(1.6rem, 7vw, 2.2rem); }
+        @media (max-width: 720px) {
+          /* push below navbar properly */
+          .cs-wrap { padding: 90px 18px 80px; }
+          .cs-back { margin-bottom: 22px; }
 
-          /* stack vertically: screenshot first, meta below */
-          .cs-hero-grid {
+          /* stack: image first, meta second */
+          .cs-hero {
             grid-template-columns: 1fr;
-            gap: 24px;
+            gap: 22px;
             margin-bottom: 48px;
           }
           .cs-hero-left { order: 2; }
           .cs-hero-right { order: 1; }
 
-          .cs-metrics { grid-template-columns: 1fr 1fr; gap: 10px; }
-          .cs-strategy-grid { grid-template-columns: 1fr; gap: 10px; }
-          .cs-results-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
-          .cs-testimonial { padding: 26px 22px; margin-bottom: 48px; }
-          .cs-quote-text { font-size: 15px; }
-          .cs-sh { font-size: 1.35rem; }
-          .cs-divider { margin: 0 0 40px; }
+          .cs-title { font-size: clamp(1.65rem, 7vw, 2.2rem); margin-bottom: 32px; }
+          .cs-metrics { grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 48px; }
+          .cs-strategy { grid-template-columns: 1fr; gap: 10px; margin-bottom: 48px; }
+          .cs-results { grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 48px; }
+          .cs-testi { padding: 26px 20px; }
+          .cs-testi-text { font-size: 15px; }
+          .cs-divider { margin-bottom: 44px; }
+          .cs-g1 { width: 280px; height: 280px; }
+          .cs-g2 { width: 220px; height: 220px; }
         }
 
-        @media (max-width: 480px) {
-          .cs-inner { padding: 84px 16px 72px; }
+        /* small phone */
+        @media (max-width: 420px) {
+          .cs-wrap { padding: 84px 14px 64px; }
           .cs-metrics { grid-template-columns: 1fr; }
-          .cs-results-grid { grid-template-columns: 1fr 1fr; }
-          .cs-metric-val { font-size: 22px; }
+          .cs-mc-val { font-size: 22px; }
+          .cs-stat-val--accent { font-size: 26px; }
+          .cs-stat-val--big { font-size: 22px; }
         }
       `}</style>
 
-      <div className="cs-page">
-        <div className="cs-glow1" />
-        <div className="cs-glow2" />
+      <div className="cs">
+        <div className="cs-g1" />
+        <div className="cs-g2" />
 
-        <div className="cs-inner">
+        <div className="cs-wrap">
 
-          {/* ── back button — sits below navbar naturally ── */}
-          <button className="cs-back" onClick={() => router.push("/work")}>
-            <RxArrowTopRight style={{ transform: "rotate(180deg)" }} />
-            Back to Work
-          </button>
+          {/* ── back button ── */}
+          <Reveal delay={0}>
+            <button className="cs-back" onClick={handleBack}>
+              <RxArrowTopRight style={{ transform: "rotate(180deg)", fontSize: 15 }} />
+              Back to Work
+            </button>
+          </Reveal>
 
-          {/* ── TITLE ── */}
-          <Reveal delay={0.05}>
+          {/* ── title ── */}
+          <Reveal delay={0.06}>
             <h1 className="cs-title">
-              Case Study:{" "}
-              <span className="cs-title-accent">[Bags and Shoes ]</span>
+              Case Study: <span>[Bags and Shoes ]</span>
             </h1>
           </Reveal>
 
-          {/* ── HERO GRID: meta left / screenshot right ── */}
-          <div className="cs-hero-grid">
+          {/* ── hero grid ── */}
+          <div className="cs-hero">
 
             {/* LEFT — meta + stats */}
             <div className="cs-hero-left">
               <Reveal delay={0.1}>
-                <div style={S.metaRow}>
-                  <span style={S.metaLabel}>Marketing Objectives:</span>
-                  <span style={S.metaValue}>ConversionCampaign</span>
-                </div>
-                <div style={S.metaRow}>
-                  <span style={S.metaLabel}>Industry:</span>
-                  <span style={S.metaValue}>E-commerce</span>
-                </div>
+                <p className="cs-meta"><span className="cs-meta-lbl">Marketing Objectives:</span><span className="cs-meta-val">ConversionCampaign</span></p>
+                <p className="cs-meta"><span className="cs-meta-lbl">Industry:</span><span className="cs-meta-val">E-commerce</span></p>
               </Reveal>
 
-              <Reveal delay={0.15}>
-                <div style={{ height: 10 }} />
-                <div style={S.metaRow}>
-                  <span style={S.metaLabel}>Platform:</span>
-                  <span style={S.metaValue}>Snapchat</span>
-                </div>
+              <Reveal delay={0.14}>
+                <div className="cs-gap" />
+                <p className="cs-meta"><span className="cs-meta-lbl">Platform:</span><span className="cs-meta-val">Snapchat</span></p>
               </Reveal>
 
-              <Reveal delay={0.2}>
-                <div style={{ height: 10 }} />
-                <div style={S.metaRow}>
-                  <span style={S.metaLabel}>Country:</span>
-                  <span style={S.metaValue}>Saudi Arabia</span>
-                </div>
+              <Reveal delay={0.18}>
+                <div className="cs-gap" />
+                <p className="cs-meta"><span className="cs-meta-lbl">Country:</span><span className="cs-meta-val">Saudi Arabia</span></p>
               </Reveal>
 
-              <div style={{ height: 20 }} />
+              <div style={{ height: 22 }} />
 
-              {/* stats */}
               {[
-                { label: "Total Purchases:", node: <Counter target={2437} />, suffix: " Orders", size: "normal" },
-                { label: "CPP (Cost Per Purchase):", node: "12.6 $", size: "normal" },
-                { label: "Sales:", node: "734,974 SAR", size: "normal" },
-                { label: "A.O.V:", node: "300 SAR", size: "normal" },
-                { label: "ROAS:", node: "6.36", size: "accent" },
-                { label: "Total Spend:", node: <Counter target={30782} prefix="$" />, size: "big" },
+                { lbl: "Total Purchases:", val: <><Counter target={2437} /> Orders</>, cls: "" },
+                { lbl: "CPP (Cost Per Purchase):", val: "12.6 $", cls: "" },
+                { lbl: "Sales:", val: "734,974 SAR", cls: "" },
+                { lbl: "A.O.V:", val: "300 SAR", cls: "" },
+                { lbl: "ROAS:", val: "6.36", cls: "--accent" },
+                { lbl: "Total Spend:", val: <Counter target={30782} prefix="$" />, cls: "--big" },
               ].map((item, i) => (
-                <Reveal key={i} delay={0.22 + i * 0.07}>
-                  <div style={{
-                    ...S.statRow,
-                    marginBottom: item.size === "accent" || item.size === "big" ? 18 : 12,
-                  }}>
-                    <span style={S.statLabel}>{item.label}</span>
-                    <span style={
-                      item.size === "accent" ? S.statValueAccent :
-                      item.size === "big" ? S.statValueBig :
-                      S.statValue
-                    }>
-                      {item.node}
-                      {item.suffix && <span style={{ fontSize: 15, fontWeight: 700, color: "#fff" }}>{item.suffix}</span>}
-                    </span>
+                <Reveal key={i} delay={0.22 + i * 0.06}>
+                  <div className="cs-stat" style={{ marginBottom: item.cls ? 18 : 12 }}>
+                    <span className="cs-stat-lbl">{item.lbl}</span>
+                    <span className={`cs-stat-val${item.cls}`}>{item.val}</span>
                   </div>
                 </Reveal>
               ))}
@@ -441,28 +413,26 @@ export default function CaseStudyPage() {
 
             {/* RIGHT — screenshot */}
             <div className="cs-hero-right">
-              <Reveal delay={0.2} dir="left">
-                <motion.div
-                  className="cs-screenshot"
-                  whileHover={{ scale: 1.015, transition: { duration: 0.3 } }}
-                >
+              <Reveal delay={0.18} dir="left">
+                <div className="cs-img-wrap">
                   <img src="/case.png" alt="Snapchat Ads Manager Dashboard" />
-                </motion.div>
+                </div>
               </Reveal>
             </div>
-          </div>
 
-          {/* ── DIVIDER ── */}
+          </div>{/* end hero grid */}
+
+          {/* ── divider ── */}
           <div className="cs-divider" />
 
-          {/* ── CHALLENGE ── */}
+          {/* ── challenge ── */}
           <section style={{ marginBottom: 64 }}>
             <Reveal delay={0.05}>
               <div className="cs-tag">01 — Challenge</div>
               <h2 className="cs-sh">The Challenge</h2>
             </Reveal>
             <Reveal delay={0.1}>
-              <p style={{ color: "rgba(255,255,255,0.58)", lineHeight: 1.8, maxWidth: 680, marginBottom: 28, fontSize: 14.5 }}>
+              <p style={{ color: "rgba(255,255,255,0.58)", lineHeight: 1.8, maxWidth: 680, fontSize: 15, marginBottom: 0 }}>
                 A fast-growing fashion brand selling bags and shoes in Saudi Arabia was struggling with high
                 cost-per-purchase and an untapped Snapchat audience. Their campaigns lacked retargeting depth,
                 server-side event tracking, and platform-native creatives — resulting in weak ROAS and
@@ -471,85 +441,85 @@ export default function CaseStudyPage() {
             </Reveal>
             <div className="cs-metrics">
               {[
-                { label: "Starting ROAS", value: "1.8x" },
-                { label: "CPP Before", value: "$45" },
-                { label: "Conv. Rate", value: "1.2%" },
+                { lbl: "Starting ROAS", val: "1.8x" },
+                { lbl: "CPP Before", val: "$45" },
+                { lbl: "Conv. Rate", val: "1.2%" },
               ].map((m, i) => (
                 <Reveal key={i} delay={0.1 + i * 0.08}>
-                  <div className="cs-metric-card">
-                    <div className="cs-metric-label">{m.label}</div>
-                    <div className="cs-metric-val">{m.value}</div>
+                  <div className="cs-mc">
+                    <div className="cs-mc-lbl">{m.lbl}</div>
+                    <div className="cs-mc-val">{m.val}</div>
                   </div>
                 </Reveal>
               ))}
             </div>
           </section>
 
-          {/* ── STRATEGY ── */}
+          {/* ── strategy ── */}
           <section style={{ marginBottom: 64 }}>
-            <Reveal delay={0.05}>
+            <Reveal>
               <div className="cs-tag">02 — Strategy</div>
               <h2 className="cs-sh">Our Strategy</h2>
             </Reveal>
-            <div className="cs-strategy-grid">
+            <div className="cs-strategy">
               {[
-                { n: "01", title: "Platform-Native Creative", desc: "Snapchat-first vertical UGC-style videos that felt organic in the feed — boosting thumb-stop rate by 3x." },
-                { n: "02", title: "Pixel & Event Architecture", desc: "Rebuilt Snap Pixel with server-side events for PURCHASE, ADD_CART, VIEW_CONTENT for smarter optimization." },
-                { n: "03", title: "Audience Segmentation", desc: "Layered lookalikes on high-intent retargeting pools segmented by recency and product category." },
-                { n: "04", title: "Bid & Budget Optimization", desc: "Shifted to Target Cost bidding with aggressive scaling on winning ad sets — dropping CPP from $45 → $12.6." },
+                { n: "01", t: "Platform-Native Creative", d: "Snapchat-first vertical UGC-style videos that felt organic in the feed — boosting thumb-stop rate by 3x." },
+                { n: "02", t: "Pixel & Event Architecture", d: "Rebuilt Snap Pixel with server-side events for PURCHASE, ADD_CART, VIEW_CONTENT for smarter optimization." },
+                { n: "03", t: "Audience Segmentation", d: "Layered lookalikes on high-intent retargeting pools segmented by recency and product category." },
+                { n: "04", t: "Bid & Budget Optimization", d: "Shifted to Target Cost bidding with aggressive scaling on winning ad sets — dropping CPP from $45 → $12.6." },
               ].map((p, i) => (
-                <Reveal key={i} delay={0.1 + i * 0.07}>
-                  <div className="cs-strategy-card">
-                    <div className="cs-strategy-num">{p.n}</div>
-                    <div className="cs-strategy-title">{p.title}</div>
-                    <div className="cs-strategy-desc">{p.desc}</div>
+                <Reveal key={i} delay={0.08 + i * 0.07}>
+                  <div className="cs-sc">
+                    <div className="cs-sc-num">{p.n}</div>
+                    <div className="cs-sc-title">{p.t}</div>
+                    <div className="cs-sc-desc">{p.d}</div>
                   </div>
                 </Reveal>
               ))}
             </div>
           </section>
 
-          {/* ── RESULTS ── */}
+          {/* ── results ── */}
           <section style={{ marginBottom: 64 }}>
-            <Reveal delay={0.05}>
+            <Reveal>
               <div className="cs-tag" style={{ display: "block", textAlign: "center" }}>03 — Results</div>
               <h2 className="cs-sh" style={{ textAlign: "center" }}>The Results</h2>
             </Reveal>
-            <div className="cs-results-grid">
+            <div className="cs-results">
               {[
-                { label: "ROAS", display: "6.36x", change: "+253%" },
-                { label: "Total Orders", target: 2437, change: "Purchases" },
-                { label: "Total Sales", display: "734,974 SAR", change: "Revenue" },
-                { label: "Total Spend", target: 30782, prefix: "$", change: "Ad Spend" },
+                { lbl: "ROAS",        display: "6.36x",        change: "+253%" },
+                { lbl: "Total Orders",target: 2437,            change: "Purchases" },
+                { lbl: "Total Sales", display: "734,974 SAR",  change: "Revenue" },
+                { lbl: "Total Spend", target: 30782, pfx: "$", change: "Ad Spend" },
               ].map((m, i) => (
                 <motion.div
                   key={i}
-                  className="cs-result-card"
-                  initial={{ opacity: 0, y: 18 }}
+                  className="cs-rc"
+                  initial={{ opacity: 0, y: 16 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: i * 0.1, duration: 0.5 }}
+                  transition={{ delay: i * 0.09, duration: 0.5 }}
                 >
-                  <div className="cs-result-topline" />
-                  <div className="cs-result-val">
-                    {m.display ?? <Counter target={m.target} prefix={m.prefix ?? ""} />}
+                  <div className="cs-rc-line" />
+                  <div className="cs-rc-val">
+                    {m.display ?? <Counter target={m.target} prefix={m.pfx ?? ""} />}
                   </div>
-                  <div className="cs-result-label">{m.label}</div>
-                  <div className="cs-result-change">{m.change}</div>
+                  <div className="cs-rc-lbl">{m.lbl}</div>
+                  <div className="cs-rc-change">{m.change}</div>
                 </motion.div>
               ))}
             </div>
           </section>
 
-          {/* ── TESTIMONIAL ── */}
+          {/* ── testimonial ── */}
           <Reveal delay={0.05}>
-            <div className="cs-testimonial">
-              <div className="cs-quote-mark">"</div>
-              <p className="cs-quote-text">
+            <div className="cs-testi">
+              <div className="cs-quote">"</div>
+              <p className="cs-testi-text">
                 The Snapchat results blew us away. We scaled from struggling campaigns to 6x ROAS —
                 and we're still growing month over month.
               </p>
-              <div className="cs-quote-author">
+              <div className="cs-testi-author">
                 <div className="cs-avatar">BM</div>
                 <div>
                   <div className="cs-author-name">Brand Manager</div>
@@ -561,22 +531,17 @@ export default function CaseStudyPage() {
 
           {/* ── CTA ── */}
           <Reveal>
-            <div style={{ textAlign: "center" }}>
-              <h3 style={{
-                fontSize: "clamp(1.3rem,2.8vw,2rem)",
-                fontWeight: 800, marginBottom: 24, letterSpacing: "-0.02em",
-              }}>
-                Ready to achieve similar results?
-              </h3>
-              <button className="cs-cta-btn" onClick={() => router.push("/contact")}>
+            <div className="cs-cta">
+              <h3 className="cs-cta-h">Ready to achieve similar results?</h3>
+              <button className="cs-btn" onClick={() => router.push("/contact")}>
                 Let's Talk
                 <RxArrowTopRight style={{ fontSize: 16 }} />
               </button>
             </div>
           </Reveal>
 
-        </div>
-      </div>
+        </div>{/* end cs-wrap */}
+      </div>{/* end cs */}
     </>
   );
 }
