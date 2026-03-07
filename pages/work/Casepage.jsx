@@ -62,7 +62,7 @@ const S = {
     flexWrap: "wrap",
     gap: "0 6px",
     marginBottom: 10,
-    fontSize: 15,
+    fontSize: 16,
     lineHeight: 1.5,
   },
   metaLabel: { color: "rgba(255,255,255,0.5)", fontWeight: 400 },
@@ -74,12 +74,12 @@ const S = {
     flexWrap: "wrap",
     gap: "0 6px",
     marginBottom: 14,
-    fontSize: 15,
+    fontSize: 16,
     lineHeight: 1.5,
     alignItems: "baseline",
   },
   statLabel: { color: "rgba(255,255,255,0.5)", fontWeight: 400 },
-  statValue: { color: "#fff", fontWeight: 800, fontSize: 17 },
+  statValue: { color: "#fff", fontWeight: 800, fontSize: 18 },
   statValueAccent: {
     fontWeight: 900,
     fontSize: 32,
@@ -130,9 +130,10 @@ export default function CaseStudyPage() {
 
         .cs-inner {
           position: relative; z-index: 1;
-          max-width: 1080px;
+          max-width: 1100px;
           margin: 0 auto;
-          padding: 36px 32px 120px;   /* top: 36px gives room below the navbar */
+          /* 100px top = typical navbar height (70-80px) + breathing room */
+          padding: 100px 40px 140px;
         }
 
         /* back button */
@@ -149,11 +150,11 @@ export default function CaseStudyPage() {
 
         /* title */
         .cs-title {
-          font-size: clamp(1.8rem, 4vw, 2.8rem);
+          font-size: clamp(1.9rem, 4.5vw, 3.4rem);
           font-weight: 900;
-          letter-spacing: -0.025em;
+          letter-spacing: -0.03em;
           line-height: 1.1;
-          margin: 0 0 40px;
+          margin: 0 0 48px;
         }
         .cs-title-accent {
           background: linear-gradient(90deg,#a78bfa,#e879f9);
@@ -164,10 +165,10 @@ export default function CaseStudyPage() {
         /* two-col layout */
         .cs-hero-grid {
           display: grid;
-          grid-template-columns: 1fr 1.4fr;
-          gap: 52px;
+          grid-template-columns: 1fr 1.6fr;
+          gap: 64px;
           align-items: start;
-          margin-bottom: 64px;
+          margin-bottom: 72px;
         }
 
         /* screenshot */
@@ -196,7 +197,7 @@ export default function CaseStudyPage() {
 
         /* section heading */
         .cs-sh {
-          font-size: clamp(1.2rem, 2.2vw, 1.7rem);
+          font-size: clamp(1.3rem, 2.5vw, 2.1rem);
           font-weight: 800;
           letter-spacing: -0.02em;
           margin: 0 0 20px;
@@ -316,28 +317,43 @@ export default function CaseStudyPage() {
         }
 
         /* ── RESPONSIVE ── */
-        @media (max-width: 768px) {
-          .cs-inner { padding: 24px 20px 80px; }
-          .cs-back { margin-bottom: 24px; }
-          .cs-title { margin-bottom: 28px; }
 
+        /* tablet */
+        @media (max-width: 900px) {
+          .cs-inner { padding: 90px 28px 100px; }
+          .cs-hero-grid { grid-template-columns: 1fr 1.3fr; gap: 36px; }
+        }
+
+        /* mobile */
+        @media (max-width: 768px) {
+          /* Key fix: push content below navbar (navbar ~72px) + extra breathing room */
+          .cs-inner { padding: 88px 20px 80px; }
+          .cs-back { margin-bottom: 20px; }
+          .cs-title { margin-bottom: 28px; font-size: clamp(1.6rem, 7vw, 2.2rem); }
+
+          /* stack vertically: screenshot first, meta below */
           .cs-hero-grid {
             grid-template-columns: 1fr;
-            gap: 28px;
+            gap: 24px;
+            margin-bottom: 48px;
           }
-          /* on mobile: image comes first, then meta */
           .cs-hero-left { order: 2; }
           .cs-hero-right { order: 1; }
 
-          .cs-metrics { grid-template-columns: 1fr 1fr; }
-          .cs-strategy-grid { grid-template-columns: 1fr; }
-          .cs-results-grid { grid-template-columns: 1fr 1fr; }
-          .cs-testimonial { padding: 28px 24px; }
+          .cs-metrics { grid-template-columns: 1fr 1fr; gap: 10px; }
+          .cs-strategy-grid { grid-template-columns: 1fr; gap: 10px; }
+          .cs-results-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+          .cs-testimonial { padding: 26px 22px; margin-bottom: 48px; }
+          .cs-quote-text { font-size: 15px; }
+          .cs-sh { font-size: 1.35rem; }
+          .cs-divider { margin: 0 0 40px; }
         }
 
         @media (max-width: 480px) {
+          .cs-inner { padding: 84px 16px 72px; }
           .cs-metrics { grid-template-columns: 1fr; }
           .cs-results-grid { grid-template-columns: 1fr 1fr; }
+          .cs-metric-val { font-size: 22px; }
         }
       `}</style>
 
