@@ -114,10 +114,12 @@ export default function CaseStudyPage() {
           font-family: 'Sora', sans-serif;
           font-weight: 500;
           cursor: pointer;
-          padding: 0;
+          padding: 8px 0;
           margin-bottom: 36px;
           transition: color 0.2s;
           text-decoration: none;
+          position: relative;
+          z-index: 50;
         }
         .cs-back:hover { color: #a78bfa; }
         .cs-back svg { flex-shrink: 0; }
