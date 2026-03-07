@@ -64,6 +64,7 @@ export default function CaseStudyPage() {
         .cs {
           width: 100%;
           min-height: 100vh;
+          max-height: 100vh;
           background-color: #0e0b1f;
           color: #fff;
           font-family: 'Sora', 'Segoe UI', sans-serif;
@@ -311,13 +312,13 @@ export default function CaseStudyPage() {
 
         /* tablet */
         @media (max-width: 960px) {
-          .cs-wrap { padding: 110px 28px 100px; }
+          .cs-wrap { padding: 130px 28px 100px; }
           .cs-hero { grid-template-columns: 1fr 1.3fr; gap: 36px; }
         }
 
         /* mobile */
         @media (max-width: 720px) {
-          .cs-wrap { padding: 110px 18px 80px; }
+          .cs-wrap { padding: 140px 18px 80px; }
           .cs-back { margin-bottom: 22px; }
 
           /* stack: image first, meta second */
@@ -342,7 +343,7 @@ export default function CaseStudyPage() {
 
         /* small phone */
         @media (max-width: 420px) {
-          .cs-wrap { padding: 110px 14px 64px; }
+          .cs-wrap { padding: 140px 14px 64px; }
           .cs-metrics { grid-template-columns: 1fr; }
           .cs-mc-val { font-size: 22px; }
           .cs-stat-val--accent { font-size: 26px; }
