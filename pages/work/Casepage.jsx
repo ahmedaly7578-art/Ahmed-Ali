@@ -43,7 +43,6 @@ const Reveal = ({ children, delay = 0, dir = "up" }) => {
 
 export default function CaseStudyPage() {
   const router = useRouter();
-
   // back: use router.back() so it goes to previous page in history
   const handleBack = () => {
     if (window.history.length > 1) {
@@ -61,7 +60,7 @@ export default function CaseStudyPage() {
         /* ── reset inside page ── */
         .cs * { box-sizing: border-box; margin: 0; padding: 0; }
 
-        /* ── page wrapper: NO overflow hidden — kills mobile scroll ── */
+        /* ── page wrapper ── */
         .cs {
           width: 100%;
           min-height: 100vh;
@@ -69,6 +68,8 @@ export default function CaseStudyPage() {
           color: #fff;
           font-family: 'Sora', 'Segoe UI', sans-serif;
           position: relative;
+          overflow-y: auto;
+          overflow-x: hidden;
         }
 
         /* ── ambient glows (fixed, pointer-events none) ── */
@@ -97,8 +98,7 @@ export default function CaseStudyPage() {
           z-index: 1;
           max-width: 1100px;
           margin: 0 auto;
-          /* pt: pushes below navbar. navbar in this project is ~80px tall */
-          padding: 110px 40px 140px;
+          padding: 120px 40px 140px;
         }
 
         /* ── back button ── */
@@ -311,14 +311,13 @@ export default function CaseStudyPage() {
 
         /* tablet */
         @media (max-width: 960px) {
-          .cs-wrap { padding: 96px 28px 100px; }
+          .cs-wrap { padding: 110px 28px 100px; }
           .cs-hero { grid-template-columns: 1fr 1.3fr; gap: 36px; }
         }
 
         /* mobile */
         @media (max-width: 720px) {
-          /* push below navbar properly */
-          .cs-wrap { padding: 90px 18px 80px; }
+          .cs-wrap { padding: 110px 18px 80px; }
           .cs-back { margin-bottom: 22px; }
 
           /* stack: image first, meta second */
@@ -343,7 +342,7 @@ export default function CaseStudyPage() {
 
         /* small phone */
         @media (max-width: 420px) {
-          .cs-wrap { padding: 84px 14px 64px; }
+          .cs-wrap { padding: 110px 14px 64px; }
           .cs-metrics { grid-template-columns: 1fr; }
           .cs-mc-val { font-size: 22px; }
           .cs-stat-val--accent { font-size: 26px; }
