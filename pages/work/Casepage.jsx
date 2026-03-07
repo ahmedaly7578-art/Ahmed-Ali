@@ -511,23 +511,7 @@ export default function CaseStudyPage() {
             </div>
           </section>
 
-          {/* ── testimonial ── */}
-          <Reveal delay={0.05}>
-            <div className="cs-testi">
-              <div className="cs-quote">"</div>
-              <p className="cs-testi-text">
-                The Snapchat results blew us away. We scaled from struggling campaigns to 6x ROAS —
-                and we're still growing month over month.
-              </p>
-              <div className="cs-testi-author">
-                <div className="cs-avatar">BM</div>
-                <div>
-                  <div className="cs-author-name">Brand Manager</div>
-                  <div className="cs-author-role">Bags &amp; Shoes — Saudi Arabia</div>
-                </div>
-              </div>
-            </div>
-          </Reveal>
+
 
           {/* ── CTA ── */}
           <Reveal>
