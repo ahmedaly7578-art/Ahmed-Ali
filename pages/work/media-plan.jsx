@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { RxArrowTopRight } from "react-icons/rx";
 
 /* ── YOUR OPENAI API KEY ── */
-const OPENAI_API_KEY = "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"; // ← حط الـ Key الجديدة هنا
+const OPENAI_API_KEY = "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"; // ← حط الـ Key الجديدة هنا
 
 /* ── constants ── */
 const PLATFORM_META = {
