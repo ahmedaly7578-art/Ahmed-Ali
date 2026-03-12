@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { RxArrowTopRight } from "react-icons/rx";
 
@@ -6,11 +6,12 @@ import { RxArrowTopRight } from "react-icons/rx";
    Benchmark data per platform (realistic)
 ───────────────────────────────────────────*/
 const BENCHMARKS = {
-  Snapchat: { ctr: 0.008, cpc: 0.25, cr: 0.012, cpm: 2.0,  color: "#FFFC00", icon: "👻" },
-  TikTok:   { ctr: 0.010, cpc: 0.30, cr: 0.010, cpm: 3.0,  color: "#69C9D0", icon: "🎵" },
-  Google:   { ctr: 0.040, cpc: 0.80, cr: 0.025, cpm: 32.0, color: "#4285F4", icon: "🔍" },
-  Meta:     { ctr: 0.012, cpc: 0.60, cr: 0.015, cpm: 7.2,  color: "#1877F2", icon: "📘" },
-  Pinterest:{ ctr: 0.005, cpc: 0.50, cr: 0.008, cpm: 2.5,  color: "#E60023", icon: "📌" },
+  // Realistic MENA/Saudi Arabia benchmarks based on real campaign data
+  Snapchat: { ctr: 0.0080, cpc: 0.18, cr: 0.0035, cpm: 1.44, color: "#FFFC00", icon: "👻" },
+  TikTok:   { ctr: 0.0100, cpc: 0.22, cr: 0.0030, cpm: 2.20, color: "#69C9D0", icon: "🎵" },
+  Google:   { ctr: 0.0350, cpc: 0.55, cr: 0.0200, cpm: 19.25,color: "#4285F4", icon: "🔍" },
+  Meta:     { ctr: 0.0120, cpc: 0.40, cr: 0.0120, cpm: 4.80, color: "#1877F2", icon: "📘" },
+  Pinterest:{ ctr: 0.0050, cpc: 0.35, cr: 0.0060, cpm: 1.75, color: "#E60023", icon: "📌" },
 };
 
 function calcPlatform(platform, investment, aov) {
@@ -40,6 +41,81 @@ function calcPlatform(platform, investment, aov) {
 }
 
 const fmt = (n) => Number(n).toLocaleString();
+
+/* ── Donut Chart (pure SVG, no library needed) ── */
+const DonutChart = ({ data }) => {
+  const size = 220;
+  const cx = size / 2, cy = size / 2;
+  const r = 80, inner = 50;
+  const total = data.reduce((s, d) => s + d.value, 0);
+  if (total === 0) return null;
+
+  let angle = -90; // start from top
+  const slices = data.map(d => {
+    const pct   = d.value / total;
+    const sweep = pct * 360;
+    const start = angle;
+    angle += sweep;
+    return { ...d, pct, sweep, start };
+  });
+
+  const polar = (deg, radius) => {
+    const rad = (deg * Math.PI) / 180;
+    return [cx + radius * Math.cos(rad), cy + radius * Math.sin(rad)];
+  };
+
+  const arc = (s) => {
+    const [x1, y1] = polar(s.start, r);
+    const [x2, y2] = polar(s.start + s.sweep, r);
+    const [ix1, iy1] = polar(s.start, inner);
+    const [ix2, iy2] = polar(s.start + s.sweep, inner);
+    const large = s.sweep > 180 ? 1 : 0;
+    return `M ${x1} ${y1} A ${r} ${r} 0 ${large} 1 ${x2} ${y2} L ${ix2} ${iy2} A ${inner} ${inner} 0 ${large} 0 ${ix1} ${iy1} Z`;
+  };
+
+  const [hovered, setHovered] = React.useState(null);
+
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: 28, flexWrap: "wrap" }}>
+      <svg width={size} height={size} style={{ flexShrink: 0 }}>
+        {slices.map((s, i) => (
+          <path
+            key={i}
+            d={arc(s)}
+            fill={s.color}
+            opacity={hovered === null || hovered === i ? 1 : 0.4}
+            style={{ cursor: "pointer", transition: "opacity 0.2s" }}
+            onMouseEnter={() => setHovered(i)}
+            onMouseLeave={() => setHovered(null)}
+          />
+        ))}
+        {/* center label */}
+        <text x={cx} y={cy - 8} textAnchor="middle" fill="#fff" fontSize="13" fontWeight="700" fontFamily="Sora, sans-serif">
+          {hovered !== null ? slices[hovered].label : "Revenue"}
+        </text>
+        <text x={cx} y={cy + 12} textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="11" fontFamily="Sora, sans-serif">
+          {hovered !== null ? `${(slices[hovered].pct * 100).toFixed(1)}%` : "Split"}
+        </text>
+      </svg>
+
+      {/* legend */}
+      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+        {slices.map((s, i) => (
+          <div
+            key={i}
+            style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer", opacity: hovered === null || hovered === i ? 1 : 0.4, transition: "opacity 0.2s" }}
+            onMouseEnter={() => setHovered(i)}
+            onMouseLeave={() => setHovered(null)}
+          >
+            <div style={{ width: 10, height: 10, borderRadius: "50%", background: s.color, flexShrink: 0 }} />
+            <span style={{ fontSize: 13, color: "rgba(255,255,255,0.7)", fontWeight: 600 }}>{s.label}</span>
+            <span style={{ fontSize: 12, color: "rgba(255,255,255,0.4)", marginLeft: 4 }}>{(s.pct * 100).toFixed(1)}%</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
 
 /* ─────────────────────────────────────────
    Main Component
@@ -353,7 +429,7 @@ export default function MediaPlanGenerator() {
             <motion.div key="form" initial={{ opacity:0, y:20 }} animate={{ opacity:1, y:0 }} exit={{ opacity:0, y:-20 }} transition={{ duration:0.4 }}>
 
               <h1 className="mp-title">Media Plan <span>Generator</span></h1>
-              <p className="mp-sub">Fill the client details to automatically generate a full media plan.</p>
+              <p className="mp-sub">أدخل بيانات الـ client وأنا هولد الـ media plan كاملة</p>
 
               {/* basic info */}
               <div className="mp-form-grid">
@@ -528,6 +604,23 @@ export default function MediaPlanGenerator() {
                     </tr>
                   </tbody>
                 </table>
+              </div>
+
+              {/* ── Revenue Chart ── */}
+              <p className="mp-section-title" style={{ marginBottom: 20 }}>Expected Revenue per Platform</p>
+              <div style={{
+                background: "rgba(255,255,255,0.025)",
+                border: "1px solid rgba(255,255,255,0.07)",
+                borderRadius: 14, padding: "28px 32px",
+                marginBottom: 48,
+              }}>
+                <DonutChart
+                  data={plan.rows.map(r => ({
+                    label: r.platform,
+                    value: parseFloat(r.sales),
+                    color: BENCHMARKS[r.platform].color,
+                  }))}
+                />
               </div>
 
               {/* platform breakdown cards */}
