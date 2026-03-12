@@ -124,13 +124,15 @@ export default function MediaPlanGenerator() {
     .mp * { box-sizing: border-box; margin: 0; padding: 0; }
 
     .mp {
+      width: 100%;
       min-height: 100vh;
+      max-height: 100vh;
       background-color: #0e0b1f;
       color: #fff;
       font-family: 'Sora', 'Segoe UI', sans-serif;
+      position: relative;
       overflow-y: auto;
       overflow-x: hidden;
-      position: relative;
     }
 
     .mp-glow1 {
@@ -351,7 +353,7 @@ export default function MediaPlanGenerator() {
             <motion.div key="form" initial={{ opacity:0, y:20 }} animate={{ opacity:1, y:0 }} exit={{ opacity:0, y:-20 }} transition={{ duration:0.4 }}>
 
               <h1 className="mp-title">Media Plan <span>Generator</span></h1>
-              <p className="mp-sub">أدخل بيانات الـ client وأنا هولد الـ media plan كاملة</p>
+              <p className="mp-sub">Fill the client details to automatically generate a full media plan.</p>
 
               {/* basic info */}
               <div className="mp-form-grid">
