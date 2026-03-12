@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { RxArrowTopRight } from "react-icons/rx";
 
+/* ── YOUR OPENAI API KEY ── */
+const OPENAI_API_KEY = "sk-proj-YOUR_KEY_HERE"; // ← حط الـ Key الجديدة هنا
+
 /* ── constants ── */
 const PLATFORM_META = {
   Snapchat: { color: "#FFFC00", icon: "👻", bg: "rgba(255,252,0,0.08)" },
@@ -118,7 +121,7 @@ export default function MediaPlanGenerator() {
     });
   };
 
-  /* ── GENERATE with Claude AI ── */
+  /* ── GENERATE with OpenAI ── */
   const handleGenerate = async () => {
     if (!clientName||!budget||!aov||!platforms.length||totalSplit!==100) return;
     setLoading(true);
@@ -199,18 +202,22 @@ Rules:
 - Fashion/Beauty = higher CR, lower AOV
 - All numbers must be mathematically consistent (sales = orders * AOV, ROAS = sales/investment)`;
 
-      const res = await fetch("https://api.anthropic.com/v1/messages", {
+      /* ══ OpenAI API Call ══ */
+      const res = await fetch("https://api.openai.com/v1/chat/completions", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${OPENAI_API_KEY}`,
+        },
         body: JSON.stringify({
-          model: "claude-sonnet-4-20250514",
+          model: "gpt-4o-mini",
           max_tokens: 1000,
-          messages: [{ role:"user", content: prompt }],
+          messages: [{ role: "user", content: prompt }],
         }),
       });
 
       const data   = await res.json();
-      const raw    = data.content?.find(b=>b.type==="text")?.text || "";
+      const raw    = data.choices?.[0]?.message?.content || "";
       const clean  = raw.replace(/```json|```/g,"").trim();
       const parsed = JSON.parse(clean);
 
@@ -380,7 +387,7 @@ Rules:
                 initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}}>
                 <div className="mp-spinner"/>
                 <p style={{fontSize:15,fontWeight:600,color:"rgba(255,255,255,0.8)"}}>{loadMsg}</p>
-                <p style={{fontSize:12,color:"rgba(255,255,255,0.25)"}}>Claude AI is analyzing your campaign...</p>
+                <p style={{fontSize:12,color:"rgba(255,255,255,0.25)"}}>AI is analyzing your campaign...</p>
               </motion.div>
             )}
 
