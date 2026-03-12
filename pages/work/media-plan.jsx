@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { RxArrowTopRight } from "react-icons/rx";
 
 /* ── YOUR OPENAI API KEY ── */
-const OPENAI_API_KEY = "sk-proj-YOUR_KEY_HERE"; // ← حط الـ Key الجديدة هنا
+const OPENAI_API_KEY = "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"; // ← حط الـ Key الجديدة هنا
 
 /* ── constants ── */
 const PLATFORM_META = {
@@ -397,7 +397,7 @@ Rules:
 
                 <div className="mp-badge">✦ AI-Powered</div>
                 <h1 className="mp-title">Media Plan <span>Generator</span></h1>
-                <p className="mp-sub">أدخل بيانات الـ client والـ AI هيولد media plan دقيقة بناءً على السوق والمنصات المختارة</p>
+                <p className="mp-sub">Fill the client details to automatically generate a full media plan.</p>
 
                 <div className="mp-form-grid">
                   <div className="mp-field">
