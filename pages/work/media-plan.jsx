@@ -259,7 +259,7 @@ Rules: sales=orders*AOV, ROAS=sales/investment. All numbers must be mathematical
   const S = `
     @import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800;900&display=swap');
     .mp *{box-sizing:border-box;}
-    .mp{width:100%;min-height:100vh;background:#0a0815;color:#fff;font-family:'Sora','Segoe UI',sans-serif;position:relative;overflow-x:hidden;}
+    .mp{width:100%;min-height:100vh;background:#0a0815;color:#fff;font-family:'Sora','Segoe UI',sans-serif;position:relative;}
     .mp-glow1{position:fixed;top:-8%;left:-4%;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(124,58,237,0.16) 0%,transparent 70%);filter:blur(80px);pointer-events:none;z-index:0;}
     .mp-glow2{position:fixed;bottom:0;right:-6%;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(232,121,249,0.10) 0%,transparent 70%);filter:blur(90px);pointer-events:none;z-index:0;}
     .mp-wrap{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:120px 40px 160px;}
