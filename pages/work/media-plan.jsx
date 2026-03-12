@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { RxArrowTopRight } from "react-icons/rx";
 
-/* ── YOUR OPENAI API KEY ── */
-const OPENAI_API_KEY = "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"; // ← حط الـ Key الجديدة هنا
+/* ── GROQ API KEY ── */
+const GROQ_API_KEY = "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";
 
 /* ── constants ── */
 const PLATFORM_META = {
@@ -202,15 +202,15 @@ Rules:
 - Fashion/Beauty = higher CR, lower AOV
 - All numbers must be mathematically consistent (sales = orders * AOV, ROAS = sales/investment)`;
 
-      /* ══ OpenAI API Call ══ */
-      const res = await fetch("https://api.openai.com/v1/chat/completions", {
+      /* ══ Groq API Call ══ */
+      const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${OPENAI_API_KEY}`,
+          "Authorization": `Bearer ${GROQ_API_KEY}`,
         },
         body: JSON.stringify({
-          model: "gpt-4o-mini",
+          model: "llama-3.3-70b-versatile",
           max_tokens: 1000,
           messages: [{ role: "user", content: prompt }],
         }),
@@ -397,7 +397,7 @@ Rules:
 
                 <div className="mp-badge">✦ AI-Powered</div>
                 <h1 className="mp-title">Media Plan <span>Generator</span></h1>
-                <p className="mp-sub">Fill the client details to automatically generate a full media plan.</p>
+                <p className="mp-sub">أدخل بيانات الـ client والـ AI هيولد media plan دقيقة بناءً على السوق والمنصات المختارة</p>
 
                 <div className="mp-form-grid">
                   <div className="mp-field">
