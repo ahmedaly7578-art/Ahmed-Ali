@@ -28,7 +28,7 @@ const workSlides = {
         },
         {
           title: "title",
-          path: "/thumb4.jpg",
+          path: "/thumb40.png",
           link: "/work/Case3",
         },
       ],
