@@ -23,7 +23,7 @@ const workSlides = {
         },
         {
           title: "title",
-          path: "/thumb3.jpg",
+          path: "/Mediaplan1.png",
           link: "/work/media-plan",
         },
         {
