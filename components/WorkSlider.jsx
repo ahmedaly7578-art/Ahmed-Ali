@@ -20,7 +20,7 @@ const workSlides = {
     {
       images: [
         { title: "Medical Fashion", path: "/thumb44.png", link: "/work/Casepage4" },
-        { title: "title",           path: "/thumb1.jpg",  link: "/work/Casepage5"               },
+        { title: "title",           path: "/thumb10.png",  link: "/work/Casepage5"               },
         { title: "title",           path: "/thumb2.jpg",  link: "/"               },
         { title: "title",           path: "/thumb3.jpg",  link: "/"               },
       ],
