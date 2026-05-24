@@ -228,22 +228,36 @@ export default function CaseStudyPage3() {
           user-select: none;
           cursor: grab;
           touch-action: pan-y;
+          height: 340px;
+          background: rgba(14,11,31,0.6);
         }
         .cs-slider:active { cursor: grabbing; }
 
         .cs-slider-track {
           display: flex;
           width: 100%;
+          height: 100%;
         }
         .cs-slide {
           min-width: 100%;
           flex-shrink: 0;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          overflow: hidden;
         }
         .cs-slide img {
           width: 100%;
+          height: 100%;
           display: block;
           pointer-events: none;
           object-fit: cover;
+          object-position: top;
+        }
+
+        @media (max-width: 720px) {
+          .cs-slider { height: 220px; }
         }
 
         /* arrows */
@@ -438,7 +452,7 @@ export default function CaseStudyPage3() {
 
               <Reveal delay={0.14}>
                 <div className="cs-gap" />
-                <p className="cs-meta"><span className="cs-meta-lbl">Platform:</span><span className="cs-meta-val">Google Ads & Meta</span></p>
+                <p className="cs-meta"><span className="cs-meta-lbl">Platform:</span><span className="cs-meta-val">Snapchat & Google Ads</span></p>
               </Reveal>
 
               <Reveal delay={0.18}>
@@ -449,12 +463,12 @@ export default function CaseStudyPage3() {
               <div style={{ height: 22 }} />
 
               {[
-                { lbl: "Total Purchases:", val: <><Counter target={93} /> Orders (Meta) + <Counter target={30} /> Orders (Google)</>, cls: "" },
-                { lbl: "CPP (Meta):", val: "$20.91", cls: "" },
-                { lbl: "Total Sales (Meta):", val: "$48,158", cls: "" },
-                { lbl: "Total Revenue (Google):", val: "SAR 510K", cls: "" },
+                { lbl: "Total Purchases (Snapchat):", val: <><Counter target={93} /> Orders</>, cls: "" },
+                { lbl: "CPP (Snapchat):", val: "$20.91", cls: "" },
+                { lbl: "Total Revenue (Snapchat):", val: "$48,158", cls: "" },
+                { lbl: "Total Sales (Google):", val: "SAR 510K", cls: "" },
                 { lbl: "ROAS (Google):", val: "98.2x", cls: "--accent" },
-                { lbl: "Total Spend (Meta):", val: <><Counter target={48158} prefix="$" suffix=" Revenue" /></>, cls: "--big" },
+                { lbl: "Total Clicks (Google):", val: "20.8K Clicks", cls: "--big" },
               ].map((item, i) => (
                 <Reveal key={i} delay={0.22 + i * 0.06}>
                   <div className="cs-stat" style={{ marginBottom: item.cls ? 18 : 12 }}>
@@ -485,10 +499,10 @@ export default function CaseStudyPage3() {
             </Reveal>
             <Reveal delay={0.1}>
               <p style={{ color: "rgba(255,255,255,0.58)", lineHeight: 1.8, maxWidth: 680, fontSize: 15, marginBottom: 0 }}>
-                A Saudi home furniture brand — selling beds, sofas, and home decor — was running Google and Meta campaigns
-                with no structured approach. Budgets were scattered, audiences were broad, and there was zero cross-platform
-                synergy. ROAS was low, CPP was bleeding, and the brand was leaving massive revenue on the table
-                despite strong organic demand in the Saudi market.
+                A Saudi home furniture brand — selling beds, sofas, and home decor — was running Snapchat and Google campaigns
+                with no clear structure or optimization. Budgets were scattered, audiences were broad, and there was zero
+                cross-platform synergy. ROAS was low, CPP was way above target, and the brand was leaving massive
+                revenue on the table despite strong organic demand in the Saudi market.
               </p>
             </Reveal>
             <div className="cs-metrics">
@@ -539,10 +553,10 @@ export default function CaseStudyPage3() {
             </Reveal>
             <div className="cs-results">
               {[
-                { lbl: "ROAS (Google)",    display: "98.2x",       change: "Actual ROAS" },
-                { lbl: "Total Sales",      display: "SAR 510K",    change: "Google Revenue" },
-                { lbl: "Meta Revenue",     display: "$48,158",     change: "Total Value" },
-                { lbl: "Total Orders",     target: 123,            change: "Across Platforms" },
+                { lbl: "ROAS (Google)",      display: "98.2x",     change: "Actual ROAS" },
+                { lbl: "Sales (Google)",     display: "SAR 510K",  change: "Total Revenue" },
+                { lbl: "Revenue (Snapchat)", display: "$48,158",   change: "Total Value" },
+                { lbl: "Purchases (Snap)",   display: "93 Orders", change: "Conversions" },
               ].map((m, i) => (
                 <motion.div
                   key={i}
