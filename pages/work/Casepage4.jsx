@@ -40,8 +40,70 @@ const Reveal = ({ children, delay = 0, dir = "up" }) => {
   );
 };
 
+
+/* ── Image Slider ── */
+const ImageSlider = ({ images }) => {
+  const [current, setCurrent] = useState(0);
+  const [dragging, setDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [dragDelta, setDragDelta] = useState(0);
+  const total = images.length;
+
+  const prev = () => setCurrent((c) => (c - 1 + total) % total);
+  const next = () => setCurrent((c) => (c + 1) % total);
+
+  const onDragStart = (clientX) => { setDragging(true); setStartX(clientX); setDragDelta(0); };
+  const onDragMove = (clientX) => { if (!dragging) return; setDragDelta(clientX - startX); };
+  const onDragEnd = () => {
+    if (dragDelta < -50) next();
+    else if (dragDelta > 50) prev();
+    setDragging(false); setDragDelta(0);
+  };
+
+  return (
+    <div
+      className="cs4-slider"
+      onMouseDown={(e) => onDragStart(e.clientX)}
+      onMouseMove={(e) => onDragMove(e.clientX)}
+      onMouseUp={onDragEnd}
+      onMouseLeave={() => { if (dragging) onDragEnd(); }}
+      onTouchStart={(e) => onDragStart(e.touches[0].clientX)}
+      onTouchMove={(e) => onDragMove(e.touches[0].clientX)}
+      onTouchEnd={onDragEnd}
+    >
+      <div
+        className="cs4-slider-track"
+        style={{
+          transform: `translateX(calc(-${current * 100}% + ${dragging ? dragDelta : 0}px))`,
+          transition: dragging ? "none" : "transform 0.48s cubic-bezier(0.22,1,0.36,1)",
+        }}
+      >
+        {images.map((src, i) => (
+          <div className="cs4-slide" key={i}>
+            <img src={src} alt={`Screenshot ${i + 1}`} draggable={false} />
+          </div>
+        ))}
+      </div>
+      <button className="cs4-arrow cs4-arrow--left" onClick={prev}>
+        <RxArrowTopRight style={{ transform: "rotate(225deg)", fontSize: 18 }} />
+      </button>
+      <button className="cs4-arrow cs4-arrow--right" onClick={next}>
+        <RxArrowTopRight style={{ fontSize: 18 }} />
+      </button>
+      <div className="cs4-dots">
+        {images.map((_, i) => (
+          <button key={i} className={`cs4-dot${i === current ? " cs4-dot--active" : ""}`} onClick={() => setCurrent(i)} />
+        ))}
+      </div>
+      <div className="cs4-slide-counter">{current + 1} / {total}</div>
+    </div>
+  );
+};
+
 export default function CaseStudyPage4() {
   const router = useRouter();
+  const sliderImages = ["/case4-1.png"];
+
   const handleBack = () => {
     if (window.history.length > 1) router.back();
     else router.push("/work");
@@ -273,6 +335,35 @@ export default function CaseStudyPage4() {
         }
         .cs4-btn:hover { box-shadow: 0 0 44px rgba(124,58,237,0.55); transform: scale(1.04); }
 
+
+        /* ── slider ── */
+        .cs4-slider {
+          position: relative; border-radius: 14px; overflow: hidden;
+          border: 1px solid rgba(167,139,250,0.22);
+          box-shadow: 0 14px 60px rgba(124,58,237,0.22), 0 2px 12px rgba(0,0,0,0.5);
+          user-select: none; cursor: grab; touch-action: pan-y;
+          height: 360px; background: rgba(14,11,31,0.6);
+          margin-bottom: 64px;
+        }
+        .cs4-slider:active { cursor: grabbing; }
+        .cs4-slider-track { display: flex; width: 100%; height: 100%; }
+        .cs4-slide { min-width: 100%; flex-shrink: 0; height: 100%; overflow: hidden; }
+        .cs4-slide img { width: 100%; height: 100%; display: block; pointer-events: none; object-fit: cover; object-position: top; }
+        .cs4-arrow {
+          position: absolute; top: 50%; transform: translateY(-50%);
+          width: 36px; height: 36px; border-radius: 50%;
+          background: rgba(14,11,31,0.72); border: 1px solid rgba(167,139,250,0.28);
+          color: #a78bfa; display: flex; align-items: center; justify-content: center;
+          cursor: pointer; transition: background 0.2s; z-index: 10;
+        }
+        .cs4-arrow:hover { background: rgba(124,58,237,0.4); }
+        .cs4-arrow--left { left: 12px; }
+        .cs4-arrow--right { right: 12px; }
+        .cs4-dots { position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; z-index: 10; }
+        .cs4-dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,0.25); border: none; cursor: pointer; transition: background 0.2s, transform 0.2s; padding: 0; }
+        .cs4-dot--active { background: #a78bfa; transform: scale(1.3); }
+        .cs4-slide-counter { position: absolute; top: 12px; right: 12px; background: rgba(14,11,31,0.7); border: 1px solid rgba(167,139,250,0.22); border-radius: 999px; padding: 3px 10px; font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.6); z-index: 10; font-family: 'Sora', sans-serif; }
+
         /* ════ RESPONSIVE ════ */
         @media (max-width: 960px) {
           .cs4-wrap { padding: 130px 28px 100px; }
@@ -288,6 +379,7 @@ export default function CaseStudyPage4() {
           .cs4-strategy { grid-template-columns: 1fr; gap: 10px; margin-bottom: 48px; }
           .cs4-results { grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 48px; }
           .cs4-stats-grid { grid-template-columns: 1fr 1fr; }
+          .cs4-slider { height: 220px; }
           .cs4-g1 { width: 280px; height: 280px; }
           .cs4-g2 { width: 220px; height: 220px; }
         }
@@ -344,6 +436,11 @@ export default function CaseStudyPage4() {
                 </div>
               </div>
             </div>
+          </Reveal>
+
+          {/* ── dashboard screenshot ── */}
+          <Reveal delay={0.15} dir="up">
+            <ImageSlider images={sliderImages} />
           </Reveal>
 
           {/* ── meta + stat cards ── */}
