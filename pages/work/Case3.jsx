@@ -436,7 +436,7 @@ export default function CaseStudyPage3() {
           {/* ── title ── */}
           <Reveal delay={0.06}>
             <h1 className="cs-title">
-              Case Study: <span>[Home Furniture]</span>
+              Case Study: <span>[Home & Living]</span>
             </h1>
           </Reveal>
 
@@ -446,7 +446,7 @@ export default function CaseStudyPage3() {
             {/* LEFT — meta + stats */}
             <div className="cs-hero-left">
               <Reveal delay={0.1}>
-                <p className="cs-meta"><span className="cs-meta-lbl">Marketing Objectives:</span><span className="cs-meta-val">Conversion Campaign</span></p>
+                <p className="cs-meta"><span className="cs-meta-lbl">Marketing Objectives:</span><span className="cs-meta-val">Full-Funnel Growth</span></p>
                 <p className="cs-meta"><span className="cs-meta-lbl">Industry:</span><span className="cs-meta-val">E-commerce</span></p>
               </Reveal>
 
@@ -463,12 +463,12 @@ export default function CaseStudyPage3() {
               <div style={{ height: 22 }} />
 
               {[
-                { lbl: "Total Purchases (Snapchat):", val: <><Counter target={93} /> Orders</>, cls: "" },
-                { lbl: "CPP (Snapchat):", val: "$20.91", cls: "" },
-                { lbl: "Total Revenue (Snapchat):", val: "$48,158", cls: "" },
-                { lbl: "Total Sales (Google):", val: "SAR 510K", cls: "" },
-                { lbl: "ROAS (Google):", val: "98.2x", cls: "--accent" },
-                { lbl: "Total Clicks (Google):", val: "20.8K Clicks", cls: "--big" },
+                { lbl: "Total Revenue (Aug–Oct):", val: "SAR 2.9M", cls: "--accent" },
+                { lbl: "ROAS (Google):", val: "98.2x", cls: "" },
+                { lbl: "Google Sales:", val: "SAR 510K", cls: "" },
+                { lbl: "Snapchat Revenue:", val: "$48,158", cls: "" },
+                { lbl: "Snapchat CPP:", val: "$20.91", cls: "" },
+                { lbl: "Snapchat Purchases:", val: <><Counter target={93} /> Orders</>, cls: "--big" },
               ].map((item, i) => (
                 <Reveal key={i} delay={0.22 + i * 0.06}>
                   <div className="cs-stat" style={{ marginBottom: item.cls ? 18 : 12 }}>
@@ -499,17 +499,19 @@ export default function CaseStudyPage3() {
             </Reveal>
             <Reveal delay={0.1}>
               <p style={{ color: "rgba(255,255,255,0.58)", lineHeight: 1.8, maxWidth: 680, fontSize: 15, marginBottom: 0 }}>
-                A Saudi home furniture brand — selling beds, sofas, and home decor — was running Snapchat and Google campaigns
-                with no clear structure or optimization. Budgets were scattered, audiences were broad, and there was zero
-                cross-platform synergy. ROAS was low, CPP was way above target, and the brand was leaving massive
-                revenue on the table despite strong organic demand in the Saudi market.
+                A Saudi home furniture brand had real demand — but their ad accounts told a different story.
+                Campaigns were running with no structure, no cross-platform strategy, and no optimization framework.
+                Budget was being burned on broad audiences with zero intent signals, CPP was bleeding above $46,
+                and ROAS was stuck well below 5x. The product was strong. The execution wasn't.
+                We came in, rebuilt everything from scratch, and scaled to SAR 2.9M in total revenue
+                across 77 days.
               </p>
             </Reveal>
             <div className="cs-metrics">
               {[
-                { lbl: "Starting ROAS", val: "~3x" },
+                { lbl: "Starting ROAS", val: "<5x" },
                 { lbl: "CPP Before", val: "$46+" },
-                { lbl: "Total Orders", val: "123+" },
+                { lbl: "Revenue Before", val: "Fragmented" },
               ].map((m, i) => (
                 <Reveal key={i} delay={0.1 + i * 0.08}>
                   <div className="cs-mc">
@@ -529,10 +531,10 @@ export default function CaseStudyPage3() {
             </Reveal>
             <div className="cs-strategy">
               {[
-                { n: "01", t: "Google Shopping & Search Structure", d: "Rebuilt the campaign architecture with product-level bidding, separating brand vs. non-brand terms and optimizing Smart Shopping feeds for Saudi inventory." },
-                { n: "02", t: "Meta Conversion Funnel", d: "Built a full-funnel Meta setup: awareness through broad creatives → retargeting warm audiences → conversion-optimized ad sets for high-AOV furniture items." },
+                { n: "01", t: "Full Account Rebuild", d: "Scrapped the existing structure entirely. Rebuilt Google Shopping with product-level bidding and separated brand vs. non-brand — immediately improving Quality Scores and cutting wasted spend." },
+                { n: "02", t: "Snapchat Conversion Funnel", d: "Built a full-funnel Snapchat setup: broad awareness creatives at the top → retargeting warm audiences → purchase-optimized ad sets targeting high-AOV furniture buyers in Saudi Arabia." },
                 { n: "03", t: "Audience Layering & Lookalikes", d: "Built high-intent lookalikes from past purchasers segmented by product category (beds, sofas, decor), then layered them over interest-based audiences for precise targeting." },
-                { n: "04", t: "Creative & Offer Optimization", d: "Developed product-focused creatives highlighting key purchase triggers — installment options, fast delivery, and quality — which drove CTR up and CPP down from $46 → $19.88." },
+                { n: "04", t: "Creative & Offer Optimization", d: "Built product-focused creatives around the real purchase triggers in the Saudi market: installment plans, fast delivery, and build quality. CPP dropped from $46 → $20.91 within weeks." },
               ].map((p, i) => (
                 <Reveal key={i} delay={0.08 + i * 0.07}>
                   <div className="cs-sc">
@@ -553,10 +555,10 @@ export default function CaseStudyPage3() {
             </Reveal>
             <div className="cs-results">
               {[
-                { lbl: "ROAS (Google)",      display: "98.2x",     change: "Actual ROAS" },
-                { lbl: "Sales (Google)",     display: "SAR 510K",  change: "Total Revenue" },
-                { lbl: "Revenue (Snapchat)", display: "$48,158",   change: "Total Value" },
-                { lbl: "Purchases (Snap)",   display: "93 Orders", change: "Conversions" },
+                { lbl: "Total Revenue",      display: "SAR 2.9M",  change: "Aug 15 – Oct 30" },
+                { lbl: "ROAS (Google)",      display: "98.2x",     change: "↑ from <5x" },
+                { lbl: "Google Sales",       display: "SAR 510K",  change: "Sept alone" },
+                { lbl: "Snapchat CPP",       display: "$20.91",    change: "↓ from $46+" },
               ].map((m, i) => (
                 <motion.div
                   key={i}
@@ -580,7 +582,7 @@ export default function CaseStudyPage3() {
           {/* ── CTA ── */}
           <Reveal>
             <div className="cs-cta">
-              <h3 className="cs-cta-h">Ready to achieve similar results?</h3>
+              <h3 className="cs-cta-h">SAR 2.9M in 77 days. Your brand next?</h3>
               <button className="cs-btn" onClick={() => router.push("/contact")}>
                 Let's Talk
                 <RxArrowTopRight style={{ fontSize: 16 }} />
