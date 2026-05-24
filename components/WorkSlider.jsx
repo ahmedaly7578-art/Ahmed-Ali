@@ -13,7 +13,7 @@ const workSlides = {
       images: [
         {
           title: "title",
-          path: "/thumb1.jpg",
+          path: "/thumb12.png",
           link: "/work/Casepage",
         },
         {
