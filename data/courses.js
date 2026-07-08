@@ -31,7 +31,7 @@ export const courses = [
       {
         id: "lesson-1",
         title: "مقدمة عن Meta Ads Manager",
-        videoUrl: "", // هتضيف لينك الفيديو هنا بعدين
+        videoUrl: "https://www.youtube.com/watch?v=p2suBUZkUZI&list=RDtSzBqXgKfss&index", // هتضيف لينك الفيديو هنا بعدين
         pptUrl: "", // هتضيف لينك البوربوينت هنا بعدين
         code: "",
       },
