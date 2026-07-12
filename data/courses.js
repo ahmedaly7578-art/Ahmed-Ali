@@ -30,17 +30,5 @@ export const courses = [
     ],
   },
 
-  // عايز تضيف كورس تاني؟ انسخ الأوبجكت دا كله وحطه هنا وعدّل بياناته
-  // {
-  //   id: "google-ads-basics",
-  //   title: "أساسيات Google Ads",
-  //   description: "...",
-  //   thumbnail: "/case2.png",
-  //   lessons: [
-  //     { id: "lesson-1", title: "...", videoUrl: "", pptUrl: "", code: "" },
-  //   ],
-  // },
-];
-
 // دالة مساعدة بترجع كورس معين حسب الـ id بتاعه
 export const getCourseById = (id) => courses.find((course) => course.id === id);
