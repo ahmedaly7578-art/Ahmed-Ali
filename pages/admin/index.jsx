@@ -5,7 +5,7 @@ const field = "w-full rounded-lg bg-white/5 border border-white/10 px-3 py-2 tex
 const btn = "px-4 py-2 rounded-lg text-sm bg-accent text-white disabled:opacity-50";
 const btn2 = "px-4 py-2 rounded-lg text-sm border border-white/20 hover:border-accent";
 
-const blank = (courseId) => ({ courseId, id: "", title: "", videoUrl: "", pptUrl: "", homework: "", position: 0, published: false, isNew: true });
+const blank = (courseId) => ({ courseId, id: "", title: "", videoUrl: "", pptUrl: "", homework: "", section: "", position: 0, published: false, isNew: true });
 
 const Admin = () => {
   const [pw, setPw] = useState("");
@@ -14,6 +14,7 @@ const Admin = () => {
   const [msg, setMsg] = useState("");
   const [edit, setEdit] = useState(null);
   const [fb, setFb] = useState({});
+  const [qr, setQr] = useState({});
 
   const call = async (body, password = pw) => {
     const r = await fetch("/api/admin", { method: "POST", headers: { "Content-Type": "application/json", "x-admin-password": password }, body: JSON.stringify(body) });
@@ -49,6 +50,21 @@ const Admin = () => {
     } catch (err) { setMsg(err.message); }
   };
 
+  const replyQ = async (q, hidden) => {
+    setMsg("");
+    try {
+      const reply = qr[q.id] !== undefined ? qr[q.id] : q.reply || "";
+      await call({ action: "replyQuestion", id: q.id, reply, hidden });
+      setMsg(reply.trim() ? (hidden ? "Reply saved (hidden from students)." : "Reply saved. Students can now see this question and answer.") : "Reply cleared. The question is hidden from students.");
+      await reload();
+    } catch (err) { setMsg(err.message); }
+  };
+
+  const delQ = async (q) => {
+    if (!window.confirm("Delete this question?")) return;
+    try { await call({ action: "deleteQuestion", id: q.id }); await reload(); } catch (err) { setMsg(err.message); }
+  };
+
   const del = async (s) => {
     if (!window.confirm("Delete this submission?")) return;
     try { await call({ action: "deleteSubmission", id: s.id }); await reload(); } catch (err) { setMsg(err.message); }
@@ -81,6 +97,9 @@ const Admin = () => {
               <button onClick={() => setTab("homework")} className={tab === "homework" ? btn : btn2}>
                 Homework ({data.submissions.filter((s) => !s.reviewed).length} new)
               </button>
+              <button onClick={() => setTab("questions")} className={tab === "questions" ? btn : btn2}>
+                Questions ({(data.questions || []).filter((q) => !q.reply).length} new)
+              </button>
             </div>
 
             {tab === "lessons" && !edit && Object.entries(data.lessons).map(([courseId, lessons]) => (
@@ -93,7 +112,7 @@ const Admin = () => {
                   {lessons.map((l) => (
                     <div key={l.id} className="border border-white/10 rounded-xl bg-white/5 p-4 text-sm flex items-center justify-between gap-x-3">
                       <div>
-                        <div>{l.title}</div>
+                        <div>{l.title}{l.section ? <span className="text-white/40"> · {l.section}</span> : null}</div>
                         <div className={l.approved ? "text-green-400" : "text-white/40"}>{l.approved ? "Published" : "Not published"}{l.videoUrl ? " · has video" : " · no video"}</div>
                       </div>
                       <div className="flex gap-x-2">
@@ -113,6 +132,10 @@ const Admin = () => {
                 <input className={field} placeholder="Title" value={edit.title} onChange={(e) => setEdit({ ...edit, title: e.target.value })} />
                 <input className={field} placeholder="Video link (YouTube link or .mp4 link)" value={edit.videoUrl} onChange={(e) => setEdit({ ...edit, videoUrl: e.target.value })} />
                 <input className={field} placeholder="Slides link (optional)" value={edit.pptUrl} onChange={(e) => setEdit({ ...edit, pptUrl: e.target.value })} />
+                <input className={field} list="section-names" placeholder="Section title (optional), e.g. Part 1: Fundamentals" value={edit.section || ""} onChange={(e) => setEdit({ ...edit, section: e.target.value })} />
+                <datalist id="section-names">
+                  {[...new Set(Object.values(data.lessons).flat().map((l) => l.section).filter(Boolean))].map((s) => <option key={s} value={s} />)}
+                </datalist>
                 <textarea className={field} rows={4} placeholder="Homework text" value={edit.homework} onChange={(e) => setEdit({ ...edit, homework: e.target.value })} />
                 <input className={field} type="number" placeholder="Order (smaller first)" value={edit.position} onChange={(e) => setEdit({ ...edit, position: e.target.value })} />
                 <div className="flex gap-x-3">
@@ -121,6 +144,28 @@ const Admin = () => {
                   <button className={btn2} onClick={() => setEdit(null)}>Cancel</button>
                 </div>
                 <p className="text-xs text-white/50">A lesson is visible to students only after you press "Save and publish".</p>
+              </div>
+            )}
+
+            {tab === "questions" && (
+              <div className="mt-6 flex flex-col gap-y-3">
+                {(data.questions || []).length === 0 && <p className="text-white/60">No questions yet.</p>}
+                {(data.questions || []).map((q) => (
+                  <div key={q.id} className="border border-white/10 rounded-xl bg-white/5 p-4 text-sm">
+                    <div className="text-accent">
+                      {q.student_name} <span className="text-white/40">· {q.course_id} / {q.lesson_id} · {new Date(q.created_at).toLocaleString()}</span>
+                      <span className={`ml-2 ${q.reply && !q.hidden ? "text-green-400" : "text-yellow-300"}`}>{q.reply ? (q.hidden ? "Hidden" : "Answered, visible") : "New, not visible"}</span>
+                    </div>
+                    <p className="mt-2 whitespace-pre-wrap">{q.question}</p>
+                    <textarea className={`${field} mt-3`} rows={3} placeholder="Your answer (students see it under the lesson after you save)"
+                      value={qr[q.id] !== undefined ? qr[q.id] : q.reply || ""} onChange={(e) => setQr({ ...qr, [q.id]: e.target.value })} />
+                    <div className="flex gap-x-2 mt-2 flex-wrap gap-y-2">
+                      <button className={btn} onClick={() => replyQ(q, false)}>Save answer and show</button>
+                      {q.reply && <button className={btn2} onClick={() => replyQ(q, true)}>Save and hide</button>}
+                      <button className={btn2} onClick={() => delQ(q)}>Delete</button>
+                    </div>
+                  </div>
+                ))}
               </div>
             )}
 
