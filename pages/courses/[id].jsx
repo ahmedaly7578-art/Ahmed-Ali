@@ -3,11 +3,11 @@ import { useRouter } from "next/router";
 import { HiChevronRight } from "react-icons/hi2";
 
 import Circles from "../../components/Circles";
-import { getCourseById } from "../../data/courses";
+import { useCourse } from "../../lib/useCourse";
 
 const CoursePage = () => {
   const { query } = useRouter();
-  const course = getCourseById(query.id);
+  const course = useCourse(query.id);
 
   return (
     <div className="h-screen overflow-y-auto overflow-x-hidden bg-primary/30 py-36">
