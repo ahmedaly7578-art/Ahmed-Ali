@@ -1,6 +1,6 @@
 import crypto from "crypto";
 
-import { getCourseById } from "../../data/courses";
+import { getLessons } from "../../lib/lessonsStore";
 import { clientHash, countRecent } from "../../lib/guard";
 import { sb, sbConfigured } from "../../lib/supabase";
 
@@ -40,8 +40,8 @@ export default async function handler(req, res) {
 
   const { courseId, lessonId, name, answer, link, website } = req.body || {};
   if (website) return res.status(200).json({ ok: true }); // honeypot: bots fill this
-  const course = getCourseById(courseId);
-  const lesson = course && course.lessons.find((l) => l.id === lessonId);
+  const lessons = (await getLessons(String(courseId || ""))) || [];
+  const lesson = lessons.find((l) => l.id === lessonId);
   if (!lesson || !lesson.approved) return res.status(400).json({ error: "This lesson is not open for submissions." });
 
   const n = String(name || "").trim();
