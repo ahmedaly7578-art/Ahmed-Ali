@@ -8,7 +8,9 @@ import { fadeIn } from "../../variants";
 
 const Courses = () => {
   return (
-    <div className="h-screen overflow-y-auto overflow-x-hidden bg-primary/30 py-36">
+    <div className="h-screen flex flex-col bg-primary/30">
+      <div className="shrink-0 h-[190px] lg:h-[110px]" />
+      <div className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden pb-28 relative">
       <Circles />
       <div className="container mx-auto">
         <div className="text-center flex flex-col mb-12">
@@ -46,6 +48,7 @@ const Courses = () => {
       </div>
       <Bulb />
     </div>
+      </div>
   );
 };
 

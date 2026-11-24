@@ -10,7 +10,9 @@ const CoursePage = () => {
   const course = useCourse(query.id);
 
   return (
-    <div className="h-screen overflow-y-auto overflow-x-hidden bg-primary/30 py-36">
+    <div className="h-screen flex flex-col bg-primary/30">
+      <div className="shrink-0 h-[190px] lg:h-[110px]" />
+      <div className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden pb-28 relative">
       <Circles />
       <div className="container mx-auto max-w-[800px] relative z-10">
         {course ? (
@@ -40,6 +42,7 @@ const CoursePage = () => {
         )}
       </div>
     </div>
+      </div>
   );
 };
 
