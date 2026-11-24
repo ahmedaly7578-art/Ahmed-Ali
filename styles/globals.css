@@ -49,3 +49,13 @@
     @apply w-full h-[180px] p-6 rounded-lg resize-none;
   }
 }
+
+/* Course pages: size the shell to the *visible* mobile viewport (dvh),
+   so the URL bar does not push the scroll area's bottom off screen. */
+.course-shell {
+  height: 100vh;
+  height: 100dvh;
+}
+.course-scroll {
+  padding-bottom: calc(7rem + env(safe-area-inset-bottom, 0px));
+}
