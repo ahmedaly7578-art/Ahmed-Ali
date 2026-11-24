@@ -7,8 +7,8 @@ export default async function handler(req, res) {
   // Unapproved lessons expose only their title; the video, slides and homework are hidden until published.
   const safe = lessons.map((l) =>
     l.approved
-      ? { id: l.id, title: l.title, approved: true, videoUrl: l.videoUrl, pptUrl: l.pptUrl, homework: l.homework }
-      : { id: l.id, title: l.title, approved: false, videoUrl: "", pptUrl: "", homework: "" }
+      ? { id: l.id, title: l.title, approved: true, videoUrl: l.videoUrl, pptUrl: l.pptUrl, homework: l.homework, section: l.section || "" }
+      : { id: l.id, title: l.title, section: l.section || "", approved: false, videoUrl: "", pptUrl: "", homework: "" }
   );
   res.setHeader("Cache-Control", "no-store");
   return res.status(200).json({ lessons: safe });
