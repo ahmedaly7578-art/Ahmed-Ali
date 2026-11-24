@@ -1,7 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
 
-const CourseCard = ({ course }) => {
+import { useCourse } from "../lib/useCourse";
+
+const CourseCard = ({ course: base }) => {
+  const live = useCourse(base.id);
+  const course = base;
+  const loaded = live && live.loaded;
+  const count = loaded ? live.lessons.filter((l) => l.approved).length : null;
   return (
     <Link
       href={`/courses/${course.id}`}
@@ -21,7 +27,7 @@ const CourseCard = ({ course }) => {
         </h3>
         <p className="text-sm text-white/60 line-clamp-2">{course.description}</p>
         <span className="text-xs text-accent mt-2">
-          {course.lessons.length} lessons
+          {count === null ? "\u00a0" : `${count} ${count === 1 ? "lesson" : "lessons"}`}
         </span>
       </div>
     </Link>
