@@ -4,6 +4,7 @@ import { HiDocumentText, HiPencilSquare, HiPlayCircle } from "react-icons/hi2";
 
 import Circles from "../../../components/Circles";
 import HomeworkForm from "../../../components/HomeworkForm";
+import QuestionsSection from "../../../components/QuestionsSection";
 import { useCourse } from "../../../lib/useCourse";
 
 const isMp4 = (url) => /\.mp4($|\?)/i.test(url);
@@ -78,6 +79,8 @@ const LessonPage = () => {
                   <HomeworkForm courseId={course.id} lessonId={lesson.id} />
                 </div>
               )}
+
+              {live && <QuestionsSection courseId={course.id} lessonId={lesson.id} />}
 
               <div className="flex justify-between gap-x-4 text-sm pb-8">
                 {prev ? <Link href={`/courses/${course.id}/${prev.id}`} className="px-4 py-3 rounded-lg bg-accent/10 text-accent hover:bg-accent hover:text-white transition-all duration-300">&larr; Previous lesson</Link> : <span />}
