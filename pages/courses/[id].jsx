@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Fragment } from "react";
 import { useRouter } from "next/router";
 import { HiChevronRight } from "react-icons/hi2";
 
@@ -22,8 +23,11 @@ const CoursePage = () => {
             <p className="mb-8 text-white/70">{course.description}</p>
             <div className="flex flex-col gap-y-3">
               {course.lessons.map((lesson, i) => (
+                <Fragment key={lesson.id}>
+                {lesson.section && lesson.section !== (i > 0 ? course.lessons[i - 1].section : undefined) && (
+                  <h3 className={`text-lg text-accent ${i > 0 ? "mt-6" : ""}`}>{lesson.section}</h3>
+                )}
                 <Link
-                  key={lesson.id}
                   href={`/courses/${course.id}/${lesson.id}`}
                   className="w-full flex items-center justify-between px-5 py-4 border border-white/10 rounded-xl bg-white/5 hover:border-accent transition-all duration-300"
                 >
@@ -34,6 +38,7 @@ const CoursePage = () => {
                   </span>
                   <HiChevronRight />
                 </Link>
+                </Fragment>
               ))}
             </div>
           </>
