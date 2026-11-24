@@ -18,9 +18,9 @@ const LessonPage = () => {
   const next = lesson && index < course.lessons.length - 1 ? course.lessons[index + 1] : null;
 
   return (
-    <div className="h-screen flex flex-col bg-primary/30">
+    <div className="course-shell flex flex-col bg-primary/30">
       <div className="shrink-0 h-[190px] lg:h-[110px]" />
-      <div className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden pb-28 relative">
+      <div className="flex-1 min-h-0 course-scroll overflow-y-auto overflow-x-hidden relative">
       <Circles />
       <div className="container mx-auto max-w-[800px] relative z-10">
         {lesson ? (
@@ -79,9 +79,9 @@ const LessonPage = () => {
                 </div>
               )}
 
-              <div className="flex justify-between text-sm pb-8">
-                {prev ? <Link href={`/courses/${course.id}/${prev.id}`} className="text-accent">&larr; Previous lesson</Link> : <span />}
-                {next ? <Link href={`/courses/${course.id}/${next.id}`} className="text-accent">Next lesson &rarr;</Link> : <span />}
+              <div className="flex justify-between gap-x-4 text-sm pb-8">
+                {prev ? <Link href={`/courses/${course.id}/${prev.id}`} className="px-4 py-3 rounded-lg bg-accent/10 text-accent hover:bg-accent hover:text-white transition-all duration-300">&larr; Previous lesson</Link> : <span />}
+                {next ? <Link href={`/courses/${course.id}/${next.id}`} className="px-4 py-3 rounded-lg bg-accent text-white hover:bg-accent/80 transition-all duration-300">Next lesson &rarr;</Link> : <span />}
               </div>
             </div>
           </>
