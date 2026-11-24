@@ -21,7 +21,7 @@ const CourseCard = ({ course }) => {
         </h3>
         <p className="text-sm text-white/60 line-clamp-2">{course.description}</p>
         <span className="text-xs text-accent mt-2">
-          {course.lessons.length} ليسون
+          {course.lessons.length} lessons
         </span>
       </div>
     </Link>
