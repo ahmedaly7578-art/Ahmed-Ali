@@ -60,7 +60,9 @@ const Admin = () => {
   };
 
   return (
-    <div className="h-screen overflow-y-auto overflow-x-hidden bg-primary/30 py-28">
+    <div className="h-screen flex flex-col bg-primary/30">
+      <div className="shrink-0 h-[190px] lg:h-[110px]" />
+      <div className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden pb-28 relative">
       <Head><title>Admin</title><meta name="robots" content="noindex,nofollow" /></Head>
       <div className="container mx-auto max-w-[900px] relative z-10 pb-16">
         <h2 className="h2">Course admin<span className="text-accent">.</span></h2>
@@ -148,6 +150,7 @@ const Admin = () => {
         )}
       </div>
     </div>
+      </div>
   );
 };
 
