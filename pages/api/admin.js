@@ -29,7 +29,9 @@ export default async function handler(req, res) {
       for (const id of courseIds()) out[id] = await getLessons(id, true);
       const r = await sb("homework_submissions?select=id,created_at,course_id,lesson_id,student_name,answer,link,reviewed,feedback,reviewed_at&order=created_at.desc&limit=500");
       if (!r.ok) return res.status(502).json({ error: "Storage error" });
-      return res.status(200).json({ lessons: out, submissions: await r.json() });
+      const qr = await sb("lesson_questions?select=id,created_at,course_id,lesson_id,student_name,question,reply,replied_at,hidden&order=created_at.desc&limit=500");
+      const questions = qr.ok ? await qr.json() : [];
+      return res.status(200).json({ lessons: out, submissions: await r.json(), questions });
     }
 
     if (b.action === "saveLesson") {
@@ -43,7 +45,7 @@ export default async function handler(req, res) {
       if (ppt && !httpUrl(ppt)) return res.status(400).json({ error: "Slides link must start with http:// or https://" });
       const row = {
         course_id: b.courseId, id, title, video_url: video || null, ppt_url: ppt || null,
-        homework: clean(b.homework, 3000) || null, position: Number.isFinite(+b.position) ? Math.trunc(+b.position) : 0,
+        section: clean(b.section, 100) || null, homework: clean(b.homework, 3000) || null, position: Number.isFinite(+b.position) ? Math.trunc(+b.position) : 0,
         published: b.published === true, updated_at: new Date().toISOString(),
       };
       const r = await sb("lessons?on_conflict=course_id,id", {
@@ -67,6 +69,24 @@ export default async function handler(req, res) {
         body: JSON.stringify({ feedback: clean(b.feedback, 5000) || null, reviewed, reviewed_at: reviewed ? new Date().toISOString() : null }),
       });
       return r.ok ? res.status(200).json({ ok: true }) : res.status(502).json({ error: "Could not save the review." });
+    }
+
+    if (b.action === "replyQuestion") {
+      const qid = parseInt(b.id, 10);
+      if (!qid) return res.status(400).json({ error: "Bad question id." });
+      const reply = clean(b.reply, 5000);
+      const r = await sb(`lesson_questions?id=eq.${qid}`, {
+        method: "PATCH", headers: { Prefer: "return=minimal" },
+        body: JSON.stringify({ reply: reply || null, replied_at: reply ? new Date().toISOString() : null, hidden: b.hidden === true }),
+      });
+      return r.ok ? res.status(200).json({ ok: true }) : res.status(502).json({ error: "Could not save the reply." });
+    }
+
+    if (b.action === "deleteQuestion") {
+      const qid = parseInt(b.id, 10);
+      if (!qid) return res.status(400).json({ error: "Bad question id." });
+      const r = await sb(`lesson_questions?id=eq.${qid}`, { method: "DELETE" });
+      return r.ok ? res.status(200).json({ ok: true }) : res.status(502).json({ error: "Could not delete." });
     }
 
     if (b.action === "deleteSubmission") {
