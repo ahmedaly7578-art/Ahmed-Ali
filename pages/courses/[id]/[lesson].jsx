@@ -4,13 +4,13 @@ import { HiDocumentText, HiPencilSquare, HiPlayCircle } from "react-icons/hi2";
 
 import Circles from "../../../components/Circles";
 import HomeworkForm from "../../../components/HomeworkForm";
-import { getCourseById } from "../../../data/courses";
+import { useCourse } from "../../../lib/useCourse";
 
 const isMp4 = (url) => /\.mp4($|\?)/i.test(url);
 
 const LessonPage = () => {
   const { query } = useRouter();
-  const course = getCourseById(query.id);
+  const course = useCourse(query.id);
   const index = course ? course.lessons.findIndex((l) => l.id === query.lesson) : -1;
   const lesson = index >= 0 ? course.lessons[index] : null;
   const live = lesson && lesson.approved;
