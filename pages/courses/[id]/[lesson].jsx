@@ -64,7 +64,7 @@ const LessonPage = () => {
                     <HiDocumentText className="text-accent" /> Slides
                   </div>
                   <a href={lesson.pptUrl} target="_blank" rel="noreferrer"
-                    className="inline-block px-4 py-2 rounded-lg bg-accent/10 text-accent hover:bg-accent hover:text-onaccent transition-all duration-300 text-sm">
+                    className="inline-block px-4 py-2 rounded-lg bg-accent/10 text-accent hover:bg-accent hover:text-white transition-all duration-300 text-sm">
                     Open slides
                   </a>
                 </div>
@@ -83,8 +83,8 @@ const LessonPage = () => {
               {live && <QuestionsSection courseId={course.id} lessonId={lesson.id} />}
 
               <div className="flex justify-between gap-x-4 text-sm pb-8">
-                {prev ? <Link href={`/courses/${course.id}/${prev.id}`} className="px-4 py-3 rounded-lg bg-accent/10 text-accent hover:bg-accent hover:text-onaccent transition-all duration-300">&larr; Previous lesson</Link> : <span />}
-                {next ? <Link href={`/courses/${course.id}/${next.id}`} className="px-4 py-3 rounded-lg bg-accent text-onaccent hover:bg-accent/80 transition-all duration-300">Next lesson &rarr;</Link> : <span />}
+                {prev ? <Link href={`/courses/${course.id}/${prev.id}`} className="px-4 py-3 rounded-lg bg-accent/10 text-accent hover:bg-accent hover:text-white transition-all duration-300">&larr; Previous lesson</Link> : <span />}
+                {next ? <Link href={`/courses/${course.id}/${next.id}`} className="px-4 py-3 rounded-lg bg-accent text-white hover:bg-accent/80 transition-all duration-300">Next lesson &rarr;</Link> : <span />}
               </div>
             </div>
           </>
