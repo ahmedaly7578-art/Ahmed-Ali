@@ -2,6 +2,49 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Theme colors as RGB channels so Tailwind opacity classes keep working. */
+:root {
+  --c-white: 255 255 255;
+  --c-primary: 19 20 36;
+  --c-secondary: 57 58 71;
+  --c-accent: 241 48 36;
+  color-scheme: dark;
+}
+html[data-theme="light"]:not([data-force-dark]) {
+  --c-white: 24 26 44;
+  --c-primary: 255 255 255;
+  --c-secondary: 236 239 247;
+  --c-accent: 205 30 22;
+  color-scheme: light;
+}
+html[data-theme="light"]:not([data-force-dark]) .bg-site {
+  background-image: linear-gradient(135deg, #f8f9fd 0%, #e8ecf7 55%, #f6eeee 100%);
+}
+/* Glow and blend decorations only work on dark backgrounds. */
+html[data-theme="light"]:not([data-force-dark]) .deco {
+  display: none;
+}
+html[data-theme="light"]:not([data-force-dark]) .round-btn {
+  filter: invert(1);
+}
+html[data-theme="light"]:not([data-force-dark]) .round-btn svg {
+  filter: invert(1);
+}
+html[data-theme="light"]:not([data-force-dark]) .site-logo {
+  filter: invert(1) hue-rotate(180deg);
+}
+html[data-theme="light"]:not([data-force-dark]) .swiper-pagination-bullet {
+  background: rgb(24 26 44 / 0.35);
+}
+html[data-theme="light"]:not([data-force-dark]) .card-surface {
+  box-shadow: 0 1px 2px rgb(24 26 44 / 0.06), 0 8px 24px rgb(24 26 44 / 0.06);
+}
+html[data-theme="light"]:not([data-force-dark]) .nav-glass {
+  background: rgb(255 255 255 / 0.7);
+  box-shadow: 0 4px 20px rgb(24 26 44 / 0.12);
+}
+body, .page, .nav-glass, .card-surface { transition: background-color .25s ease, color .25s ease; }
+
 .translate-z-0 {
   transform: translateZ(0px);
 }
@@ -32,7 +75,7 @@
     @apply text-[35px] leading-tight md:text-[54px] md:leading-[1.3] mb-4 font-semibold;
   }
   p {
-    @apply leading-[1.8] text-white/60 font-light;
+    @apply leading-[1.8] text-white/70 font-light;
   }
   .btn,
   .input {
@@ -58,4 +101,22 @@
 }
 .course-scroll {
   padding-bottom: calc(7rem + env(safe-area-inset-bottom, 0px));
+}
+
+/* Case study pages and the media plan tool ship their own dark design.
+   In light mode the page is color-inverted, and images are inverted back
+   so screenshots and charts keep their original colors. */
+html[data-theme="light"] :is(.cs, .cs4, .cs5, .mp) {
+  filter: invert(1) hue-rotate(180deg);
+}
+html[data-theme="light"] :is(.cs, .cs4, .cs5, .mp) :is(img, video, canvas, iframe) {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+/* Keep small secondary text readable in both themes. */
+html[data-theme] .text-white\/40 {
+  color: rgb(var(--c-white) / 0.68);
+}
+html[data-theme="light"]:not([data-force-dark]) .text-white\/60 {
+  color: rgb(var(--c-white) / 0.72);
 }
