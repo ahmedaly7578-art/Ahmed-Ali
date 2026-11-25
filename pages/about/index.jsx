@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
-import CountUp from "react-countup";
 import {
   SiGoogleanalytics,
   SiMixpanel,
@@ -36,29 +35,26 @@ export const aboutData = [
     
     FaChartLine,],
       },
-    ],
-  },
-  {
-    title: "Achievements",
-    info: [
-      { title: "Webby Awards - Honoree", stage: "2011 - 2012" },
-      { title: "Adobe Design Achievement Awards - Finalist", stage: "2009 - 2010" },
+      { title: "GA4, GTM, Pixel, Firebase, Hotjar" },
+      { title: "CRO, A/B testing and app event tracking" },
     ],
   },
   {
     title: "experience",
     info: [
-      { title: "UX/UI Designer - XYZ Company", stage: "2012 - 2023" },
-      { title: "Web Developer - ABC Agency", stage: "2010 - 2012" },
-      { title: "Intern - DEF Corporation", stage: "2008 - 2010" },
+      { title: "Wameed: Head of Media Buying", stage: "Jun 2026 - Present" },
+      { title: "TAG Creative Hub: Senior Media Buyer", stage: "Mar 2025 - Feb 2026" },
+      { title: "Darb: Performance Marketing Team Leader", stage: "Aug 2024 - Feb 2025" },
+      { title: "Azzrk: Performance Marketing Team Leader", stage: "Jun 2024 - Feb 2025" },
+      { title: "Azzrk: Media Buyer", stage: "Sep 2023 - Apr 2024" },
+      { title: "Freelance: Social Media Marketing Specialist", stage: "Jul 2016 - Sep 2023" },
+      { title: "Freelance: Mobile App Developer", stage: "Sep 2022 - Jul 2023" },
     ],
   },
   {
-    title: "credentials",
+    title: "education",
     info: [
-      { title: "Web Development - ABC University, LA, CA", stage: "2011" },
-      { title: "Computer Science Diploma - AV Technical Institute", stage: "2009" },
-      { title: "Certified Graphic Designer - ABC Institute, Los Angeles, CA", stage: "2006" },
+      { title: "Civil Engineering - Misr University for Science and Technology" },
     ],
   },
 ];
@@ -116,8 +112,7 @@ const About = () => {
             animate="show"
             className="xl:hidden text-sm leading-relaxed text-white/70 mb-10 px-2"
           >
-            I help brands turn ad spend into real, scalable profit through smart,
-            data-driven strategies focused on performance and sustainable growth.
+            I&apos;m Ahmed Ali, Head of Media Buying at Wameed. I help brands grow through paid media strategy, campaign optimization and reliable tracking. My work covers Meta, Google, Snapchat and TikTok, with a focus on full-funnel campaigns, creative testing and improving conversion rates. With a background in civil engineering and mobile app development, I bring a technical approach to understanding user journeys and measuring performance.
           </motion.p>
 
           {/* ===== DESKTOP TEXT (UNCHANGED) ===== */}
@@ -127,40 +122,8 @@ const About = () => {
             animate="show"
             className="hidden xl:block max-w-[500px] mb-10 xl:mb-12 px-2 xl:px-0"
           >
-            I help brands turn data into direction, and ad spend into meaningful growth.
-            With a blend of strategic insight, careful optimization, and performance-focused
-            execution, I build campaigns that scale, connect with the right audience,
-            and deliver results that actually matter.
+            I&apos;m Ahmed Ali, Head of Media Buying at Wameed. I help brands grow through paid media strategy, campaign optimization and reliable tracking. My work covers Meta, Google, Snapchat and TikTok, with a focus on full-funnel campaigns, creative testing and improving conversion rates. With a background in civil engineering and mobile app development, I bring a technical approach to understanding user journeys and measuring performance.
           </motion.p>
-
-          {/* ===== COUNTERS (DESKTOP ONLY – UNCHANGED) ===== */}
-          <motion.div
-            variants={fadeIn("right", 0.6)}
-            initial="hidden"
-            animate="show"
-            className="hidden md:flex md:max-w-xl xl:max-w-none mx-auto xl:mx-0 mb-8"
-          >
-            <div className="flex flex-1 xl:gap-x-6">
-              {[
-                { end: 10, label: "Years of experience." },
-                { end: 250, label: "Satisfied clients." },
-                { end: 650, label: "Finished projects." },
-                { end: 8, label: "Winning awards." },
-              ].map((item, i) => (
-                <div
-                  key={i}
-                  className={`relative flex-1 ${i !== 3 && "after:w-[1px] after:h-full after:bg-white/10 after:absolute after:top-0 after:right-0"}`}
-                >
-                  <div className="text-2xl xl:text-4xl font-extrabold text-accent mb-2">
-                    <CountUp start={0} end={item.end} duration={5} />
-                  </div>
-                  <div className="text-xs uppercase tracking-[1px] leading-[1.4] max-w-[100px]">
-                    {item.label}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </motion.div>
         </div>
 
         {/* ================= INFO ================= */}
@@ -211,4 +174,3 @@ const About = () => {
 };
 
 export default About;
-
