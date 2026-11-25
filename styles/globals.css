@@ -103,14 +103,19 @@ body, .page, .nav-glass, .card-surface { transition: background-color .25s ease,
   padding-bottom: calc(7rem + env(safe-area-inset-bottom, 0px));
 }
 
-/* Case study pages stay dark, so the theme toggle is hidden there. */
-html[data-force-dark] .theme-toggle {
-  display: none;
+/* Case study pages and the media plan tool ship their own dark design.
+   In light mode the page is color-inverted, and images are inverted back
+   so screenshots and charts keep their original colors. */
+html[data-theme="light"] :is(.cs, .cs4, .cs5, .mp) {
+  filter: invert(1) hue-rotate(180deg);
+}
+html[data-theme="light"] :is(.cs, .cs4, .cs5, .mp) :is(img, video, canvas, iframe) {
+  filter: invert(1) hue-rotate(180deg);
 }
 
 /* Keep small secondary text readable in both themes. */
 html[data-theme] .text-white\/40 {
-  color: rgb(var(--c-white) / 0.58);
+  color: rgb(var(--c-white) / 0.68);
 }
 html[data-theme="light"]:not([data-force-dark]) .text-white\/60 {
   color: rgb(var(--c-white) / 0.72);
