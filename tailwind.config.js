@@ -26,7 +26,7 @@ module.exports = {
         secondary: "rgb(var(--c-secondary) / <alpha-value>)",
         accent: "rgb(var(--c-accent) / <alpha-value>)",
         white: "rgb(var(--c-white) / <alpha-value>)",
-        onaccent: "#ffffff",
+        onaccent: "rgb(var(--c-onaccent) / <alpha-value>)",
       },
       backgroundImage: {
         explosion: 'url("/bg-explosion.png")',
