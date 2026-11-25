@@ -143,7 +143,7 @@ const About = () => {
                   key={i}
                   className={`relative flex-1 ${i !== 2 && "after:w-[1px] after:h-full after:bg-white/10 after:absolute after:top-0 after:right-0"}`}
                 >
-                  <div className="text-2xl xl:text-4xl font-extrabold text-accent mb-2">
+                  <div className={`font-extrabold text-accent mb-2 ${item.text ? "text-lg xl:text-2xl whitespace-nowrap xl:leading-[2.25rem]" : "text-2xl xl:text-4xl"}`}>
                     {item.text ? item.text : item.end === null ? "\u00a0" : <CountUp start={0} end={item.end} duration={2} />}
                   </div>
                   <div className="text-xs uppercase tracking-[1px] leading-[1.4] max-w-[120px]">
