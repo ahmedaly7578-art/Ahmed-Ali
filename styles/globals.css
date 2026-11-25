@@ -4,45 +4,51 @@
 
 /* Theme colors as RGB channels so Tailwind opacity classes keep working. */
 :root {
-  --c-white: 255 255 255;
-  --c-primary: 19 20 36;
-  --c-secondary: 57 58 71;
-  --c-accent: 241 48 36;
+  --c-white: 238 243 239;
+  --c-primary: 10 13 12;
+  --c-secondary: 12 16 14;
+  --c-accent: 200 242 60;
+  --c-onaccent: 10 13 12;
+  --c-line: 35 45 41;
   color-scheme: dark;
 }
 html[data-theme="light"]:not([data-force-dark]) {
-  --c-white: 24 26 44;
+  --c-white: 14 20 17;
   --c-primary: 255 255 255;
-  --c-secondary: 236 239 247;
-  --c-accent: 205 30 22;
+  --c-secondary: 243 245 239;
+  --c-accent: 63 105 0;
+  --c-onaccent: 255 255 255;
+  --c-line: 214 221 208;
   color-scheme: light;
 }
-html[data-theme="light"]:not([data-force-dark]) .bg-site {
-  background-image: linear-gradient(135deg, #f8f9fd 0%, #e8ecf7 55%, #f6eeee 100%);
+/* Page background: soft grid. */
+.bg-site {
+  background-color: rgb(var(--c-secondary));
+  background-image:
+    linear-gradient(rgb(var(--c-line) / 0.55) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(var(--c-line) / 0.55) 1px, transparent 1px);
+  background-size: 64px 64px;
+  background-position: -1px -1px;
 }
-/* Glow and blend decorations only work on dark backgrounds. */
-html[data-theme="light"]:not([data-force-dark]) .deco {
-  display: none;
-}
-html[data-theme="light"]:not([data-force-dark]) .round-btn {
-  filter: invert(1);
-}
-html[data-theme="light"]:not([data-force-dark]) .round-btn svg {
-  filter: invert(1);
-}
-html[data-theme="light"]:not([data-force-dark]) .site-logo {
-  filter: invert(1) hue-rotate(180deg);
-}
-html[data-theme="light"]:not([data-force-dark]) .swiper-pagination-bullet {
-  background: rgb(24 26 44 / 0.35);
-}
+/* Old glow and blend decorations are retired in the new look. */
+.deco { display: none !important; }
+.round-btn { display: none; }
+.swiper-pagination-bullet { background: rgb(var(--c-white) / 0.35) !important; }
+.swiper-pagination-bullet-active { background: rgb(var(--c-accent)) !important; }
+.card-surface { box-shadow: none; }
 html[data-theme="light"]:not([data-force-dark]) .card-surface {
-  box-shadow: 0 1px 2px rgb(24 26 44 / 0.06), 0 8px 24px rgb(24 26 44 / 0.06);
+  box-shadow: 0 1px 2px rgb(14 20 17 / 0.05), 0 8px 24px rgb(14 20 17 / 0.05);
 }
-html[data-theme="light"]:not([data-force-dark]) .nav-glass {
-  background: rgb(255 255 255 / 0.7);
-  box-shadow: 0 4px 20px rgb(24 26 44 / 0.12);
+.nav-glass {
+  background: rgb(var(--c-primary) / 0.85) !important;
+  border: 1px solid rgb(var(--c-line));
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
 }
+.mono { font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; letter-spacing: .06em; text-transform: uppercase; }
+.chip { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 12px; border: 1px solid rgb(var(--c-line)); background: rgb(var(--c-primary) / 0.7); padding: 7px 12px; border-radius: 999px; display: inline-flex; align-items: center; gap: 7px; }
+.chip i { width: 6px; height: 6px; background: rgb(var(--c-accent)); border-radius: 50%; display: block; }
+.panel { background: rgb(var(--c-primary) / 0.75); border: 1px solid rgb(var(--c-line)); border-radius: 20px; }
 body, .page, .nav-glass, .card-surface { transition: background-color .25s ease, color .25s ease; }
 
 .translate-z-0 {
@@ -51,14 +57,14 @@ body, .page, .nav-glass, .card-surface { transition: background-color .25s ease,
 .swiper-horizontal > .swiper-pagination-bullets .swiper-pagination-bullet,
 .swiper-pagination-horizontal.swiper-pagination-bullets
   .swiper-pagination-bullet {
-  background-color: #f13024;
+  background-color: rgb(var(--c-accent));
 }
 
 .swiper-button-next:after,
 .swiper-button-prev:after,
 .swiper-button-next:after,
 .swiper-rtl .swiper-button-prev:after {
-  color: #f13024;
+  color: rgb(var(--c-accent));
 }
 
 @layer base {
@@ -103,15 +109,14 @@ body, .page, .nav-glass, .card-surface { transition: background-color .25s ease,
   padding-bottom: calc(7rem + env(safe-area-inset-bottom, 0px));
 }
 
-/* Case study pages and the media plan tool ship their own dark design.
-   In light mode the page is color-inverted, and images are inverted back
-   so screenshots and charts keep their original colors. */
-html[data-theme="light"] :is(.cs, .cs4, .cs5, .mp) {
-  filter: invert(1) hue-rotate(180deg);
-}
-html[data-theme="light"] :is(.cs, .cs4, .cs5, .mp) :is(img, video, canvas, iframe) {
-  filter: invert(1) hue-rotate(180deg);
-}
+/* Case study pages and the media plan tool ship their own purple design.
+   Rotate the hue to match the site accent; images are counter-rotated so
+   screenshots and charts keep their original colors. In light mode the page
+   is also inverted, and images are inverted back. */
+:is(.cs, .cs4, .cs5, .mp) { filter: hue-rotate(-188deg); }
+:is(.cs, .cs4, .cs5, .mp) :is(img, video, canvas, iframe) { filter: hue-rotate(188deg); }
+html[data-theme="light"] :is(.cs, .cs4, .cs5, .mp) { filter: invert(1) hue-rotate(-8deg); }
+html[data-theme="light"] :is(.cs, .cs4, .cs5, .mp) :is(img, video, canvas, iframe) { filter: hue-rotate(8deg) invert(1); }
 
 /* Keep small secondary text readable in both themes. */
 html[data-theme] .text-white\/40 {
