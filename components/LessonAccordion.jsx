@@ -54,7 +54,7 @@ const LessonAccordion = ({ lesson, index, courseId }) => {
                 <HiDocumentText className="text-accent" /> Slides
               </div>
               <a href={lesson.pptUrl} target="_blank" rel="noreferrer"
-                className="inline-block px-4 py-2 rounded-lg bg-accent/10 text-accent hover:bg-accent hover:text-white transition-all duration-300 text-sm">
+                className="inline-block px-4 py-2 rounded-lg bg-accent/10 text-accent hover:bg-accent hover:text-onaccent transition-all duration-300 text-sm">
                 Open slides
               </a>
             </div>
@@ -70,7 +70,7 @@ const LessonAccordion = ({ lesson, index, courseId }) => {
                 <HomeworkForm courseId={courseId} lessonId={lesson.id} />
               ) : lesson.homeworkUrl ? (
                 <a href={lesson.homeworkUrl} target="_blank" rel="noreferrer"
-                  className="inline-block px-4 py-2 rounded-lg bg-accent text-white text-sm">
+                  className="inline-block px-4 py-2 rounded-lg bg-accent text-onaccent text-sm">
                   Submit homework
                 </a>
               ) : null}

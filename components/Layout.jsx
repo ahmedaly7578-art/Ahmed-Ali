@@ -19,10 +19,10 @@ const Layout = ({ children }) => {
     >
       {/* metadata */}
       <Head>
-        <title>Ahmed Ali | Portfolio</title>
+        <title>Ahmed Ali | Head Media Buyer</title>
         <meta
           name="description"
-          content="Ahmed Ali is a digital marketing specialist with strong experience in the e-commerce field."
+          content="Ahmed Ali is a head media buyer. Paid campaigns on Meta, Google, Snapchat and TikTok, tracking with GTM and GA4, and the Tracking From Zero course."
         />
         <meta
   name="keywords"
@@ -30,7 +30,11 @@ const Layout = ({ children }) => {
 />
 <meta name="author" content="Ahmed Ali" />
 
-        <meta name="theme-color" content="#f13024" />
+        <meta name="theme-color" content="#131424" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta property="og:title" content="Ahmed Ali | Head Media Buyer" />
+        <meta property="og:description" content="Paid campaigns, tracking and training. Tracking From Zero, a course for media buyers." />
+        <meta property="og:type" content="website" />
       </Head>
 
       <TopLeftImg />

@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import Socials from "../components/Socials";
+import ThemeToggle from "../components/ThemeToggle";
 
 const Header = () => {
   return (
@@ -12,7 +13,8 @@ const Header = () => {
           <Link href="/">
             <Image
               src="/logo.png"
-              alt="logo"
+              alt="Ahmed Ali"
+              className="site-logo"
               width={220}
               height={48}
               priority
@@ -20,7 +22,10 @@ const Header = () => {
           </Link>
 
           {/* socials */}
-          <Socials />
+          <div className="flex items-center gap-x-5">
+            <Socials />
+            <ThemeToggle />
+          </div>
         </div>
       </div>
     </header>
