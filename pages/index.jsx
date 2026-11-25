@@ -8,7 +8,7 @@ const Home = () => {
   return (
     <div className="bg-primary/60 min-h-screen">
       {/* Mobile Layout */}
-      <div className="xl:hidden w-full min-h-screen max-h-screen overflow-y-auto overflow-x-hidden bg-gradient-to-b from-primary/10 via-black/30 to-black/10">
+      <div className="xl:hidden w-full min-h-screen max-h-screen overflow-y-auto overflow-x-hidden bg-gradient-to-b from-primary/10 via-primary/20 to-primary/10">
         {/* Container with scroll */}
         <div className="flex flex-col items-center px-4 pt-8 pb-28">
           {/* Logo */}
@@ -62,7 +62,7 @@ const Home = () => {
             initial="hidden"
             animate="show"
             exit="hidden"
-            className="text-sm text-center mb-8 text-gray-300 leading-relaxed"
+            className="text-sm text-center mb-8 text-white/70 leading-relaxed"
           >
              Smart, data-driven campaigns built to deliver real, scalable growth.
 
@@ -81,7 +81,7 @@ const Home = () => {
       </div>
 
       {/* Desktop Layout */}
-      <div className="hidden xl:block w-full h-full bg-gradient-to-r from-primary/10 via-black/30 to-black/10">
+      <div className="hidden xl:block w-full h-full bg-gradient-to-r from-primary/10 via-primary/20 to-primary/10">
         <div className="text-center flex flex-col justify-center xl:pt-40 xl:text-left h-full container mx-auto">
           {/* title */}
           <motion.h1
@@ -130,12 +130,12 @@ const Home = () => {
         {/* bg img */}
         <div
           role="img"
-          className="bg-none xl:bg-explosion xl:bg-cover xl:bg-right xl:bg-no-repeat w-full h-full absolute mix-blend-color-dodge translate-z-0"
+          className="deco bg-none xl:bg-explosion xl:bg-cover xl:bg-right xl:bg-no-repeat w-full h-full absolute mix-blend-color-dodge translate-z-0"
           aria-hidden
         />
 
         {/* particles */}
-        <ParticlesContainer />
+        <div className="deco"><ParticlesContainer /></div>
 
         {/* avatar */}
         <motion.div
