@@ -29,7 +29,7 @@ const Work = () => {
               exit="hidden"
               className="mb-4 max-w-[400px] mx-auto lg:mx-0"
             >
-              Case studies from e-commerce campaigns I have run, and an AI media plan tool. Open any card to see the details.
+              Example case studies that show how I analyse and present campaign results, plus an AI media plan tool. Open any card to see the details.
             </motion.p>
           </div>
 
