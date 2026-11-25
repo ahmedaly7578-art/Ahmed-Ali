@@ -99,3 +99,8 @@ body, .page, .nav-glass, .card-surface { transition: background-color .25s ease,
 .course-scroll {
   padding-bottom: calc(7rem + env(safe-area-inset-bottom, 0px));
 }
+
+/* Case study pages stay dark, so the theme toggle is hidden there. */
+html[data-force-dark] .theme-toggle {
+  display: none;
+}
