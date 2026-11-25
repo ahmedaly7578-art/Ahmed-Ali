@@ -64,8 +64,8 @@ const Home = () => {
             exit="hidden"
             className="text-sm text-center mb-8 text-gray-300 leading-relaxed"
           >
-            Head media buyer. I run paid campaigns on Meta, Google, Snapchat
-            and TikTok, and build the tracking that shows what is working.
+            Head media buyer. I run paid campaigns on Meta, Google and
+            Snapchat, and build the tracking that shows what is working.
 
           </motion.p>
 
@@ -104,8 +104,8 @@ const Home = () => {
             exit="hidden"
             className="max-w-sm xl:max-w-xl mx-auto xl:mx-0 mb-10 xl:mb-16"
           >
-            I am a head media buyer. I run paid campaigns on Meta, Google,
-            Snapchat and TikTok, and I set up the tracking behind them, so every
+            I am a head media buyer. I run paid campaigns on Meta, Google
+            and Snapchat, and I set up the tracking behind them, so every
             dollar of spend can be traced to a result. I also train media buying
             teams, and teach tracking in my course, Tracking From Zero.
 
