@@ -62,7 +62,7 @@ const Home = () => {
             initial="hidden"
             animate="show"
             exit="hidden"
-            className="text-sm text-center mb-8 text-gray-300 leading-relaxed"
+            className="text-sm text-center mb-8 text-white/70 leading-relaxed"
           >
             Head media buyer. I run paid campaigns on Meta, Google and
             Snapchat, and build the tracking that shows what is working.
