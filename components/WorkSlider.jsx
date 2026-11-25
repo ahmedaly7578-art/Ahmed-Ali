@@ -11,15 +11,15 @@ const workSlides = {
   slides: [
     {
       images: [
-        { title: "Example: Bags & Shoes", path: "/thumb12.png", link: "/work/Casepage" },
-        { title: "Example: Fashion", path: "/thumb22.png", link: "/work/Case2" },
-        { title: "Example: Home & Living", path: "/thumb40.png", link: "/work/Case3" },
-        { title: "Example: Medical Fashion", path: "/thumb44.png", link: "/work/Casepage4" },
+        { title: "Bags & Shoes", path: "/thumb12.png", link: "/work/Casepage" },
+        { title: "Fashion", path: "/thumb22.png", link: "/work/Case2" },
+        { title: "Home & Living", path: "/thumb40.png", link: "/work/Case3" },
+        { title: "Medical Fashion", path: "/thumb44.png", link: "/work/Casepage4" },
       ],
     },
     {
       images: [
-        { title: "Example: Coffee & Gourmet", path: "/thumb10.png", link: "/work/Casepage5" },
+        { title: "Coffee & Gourmet", path: "/thumb10.png", link: "/work/Casepage5" },
         { title: "AI Media Plan Generator", path: "/Mediaplan1.png", link: "/work/media-plan" },
       ],
     },
