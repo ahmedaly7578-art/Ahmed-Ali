@@ -120,3 +120,18 @@ html[data-theme] .text-white\/40 {
 html[data-theme="light"]:not([data-force-dark]) .text-white\/60 {
   color: rgb(var(--c-white) / 0.72);
 }
+
+/* About: on phones size the scroller to the visible viewport (dvh) and
+   leave room under the fixed bottom nav so the last line can be reached. */
+.about-shell {
+  height: 100vh;
+  height: 100dvh;
+  padding-bottom: calc(8rem + env(safe-area-inset-bottom, 0px));
+  -webkit-overflow-scrolling: touch;
+}
+@media (min-width: 1200px) {
+  .about-shell {
+    height: 100%;
+    padding-bottom: 8rem;
+  }
+}
