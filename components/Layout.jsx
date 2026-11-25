@@ -1,5 +1,6 @@
 import { Sora } from "next/font/google";
 import Head from "next/head";
+import { useRouter } from "next/router";
 
 import Header from "../components/Header";
 import Nav from "../components/Nav";
@@ -13,6 +14,9 @@ const sora = Sora({
 });
 
 const Layout = ({ children }) => {
+  const { pathname } = useRouter();
+  // About renders its own header inside its scroller on phones so it scrolls with the content.
+  const aboutOwnsHeader = pathname === "/about";
   return (
     <main
       className={`page bg-site text-white bg-cover bg-no-repeat ${sora.variable} font-sora relative`}
@@ -35,7 +39,9 @@ const Layout = ({ children }) => {
 
       <TopLeftImg />
       <Nav />
-      <Header />
+      <div className={aboutOwnsHeader ? "max-xl:hidden" : "contents"}>
+        <Header />
+      </div>
 
       {/* main content */}
       {children}
