@@ -11,8 +11,7 @@ import { FaChartLine } from "react-icons/fa";
 import {
   SiGoogleads,
   SiMeta,
-  SiTiktok,
-  SiSnapchat,
+    SiSnapchat,
 } from "react-icons/si";
 
 import Avatar from "../../components/Avatar";
@@ -26,8 +25,8 @@ export const aboutData = [
     title: "skills",
     info: [
       {
-        title: "Paid media: Meta, Google, Snapchat, TikTok",
-        icons: [SiGoogleads, SiMeta, SiSnapchat, SiTiktok],
+        title: "Paid media: Meta, Google, Snapchat",
+        icons: [SiGoogleads, SiMeta, SiSnapchat],
       },
       {
         title: "Tracking: GTM, GA4, Looker Studio",
@@ -51,7 +50,6 @@ export const aboutData = [
     info: [
       { title: "Head media buyer, leading the media buying team" },
       { title: "Teaching tracking in Tracking From Zero, a course for media buyers" },
-      { title: "Works in Arabic and English" },
     ],
   },
 ];
@@ -122,7 +120,7 @@ const About = () => {
             className="hidden xl:block max-w-[500px] mb-10 xl:mb-12 px-2 xl:px-0"
           >
             I am Ahmed Ali, a head media buyer. I run paid campaigns on Meta,
-            Google, Snapchat and TikTok, and I set up the tracking behind them so
+            Google and Snapchat, and I set up the tracking behind them so
             every result can be traced back to its source. I lead a team of media
             buyers, and I teach what I know in Tracking From Zero, a practical
             course built for them.
@@ -137,9 +135,9 @@ const About = () => {
           >
             <div className="flex flex-1 xl:gap-x-6">
               {[
-                { end: 4, label: "Ad platforms I run." },
+                { text: "GTM \u00b7 GA4", label: "Tracking setup." },
                 { end: liveLessons, label: "Course lessons live." },
-                { text: "AR / EN", label: "Languages I work in." },
+                { text: "Arabic", label: "Tracking lessons." },
               ].map((item, i) => (
                 <div
                   key={i}
