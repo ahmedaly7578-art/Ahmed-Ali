@@ -45,7 +45,7 @@ const Socials = () => {
           rel="noreferrer noopener"
           className={`${
             social.name === "Github"
-              ? "bg-accent rounded-full p-[5px] hover:text-white"
+              ? "bg-accent text-onaccent rounded-full p-[5px]"
               : "hover:text-accent"
           } transition-all duration-300`}
         >
