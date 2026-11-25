@@ -17,7 +17,7 @@ const serviceData = [
   {
     Icon: RxRocket,
     title: "Performance Advertising",
-    description: "Paid campaigns on Meta, Google, Snapchat and TikTok, planned around your sales goals.",
+    description: "Paid campaigns on Meta, Google and Snapchat, planned around your sales goals.",
   },
   {
     Icon: RxTarget,

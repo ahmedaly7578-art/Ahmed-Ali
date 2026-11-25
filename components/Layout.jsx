@@ -22,7 +22,7 @@ const Layout = ({ children }) => {
         <title>Ahmed Ali | Head Media Buyer</title>
         <meta
           name="description"
-          content="Ahmed Ali is a head media buyer. Paid campaigns on Meta, Google, Snapchat and TikTok, tracking with GTM and GA4, and the Tracking From Zero course."
+          content="Ahmed Ali is a head media buyer. Paid campaigns on Meta, Google and Snapchat, tracking with GTM and GA4, and the Tracking From Zero course."
         />
         <meta
   name="keywords"
