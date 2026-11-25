@@ -30,7 +30,7 @@ const Courses = () => {
             exit="hidden"
             className="mb-4 max-w-[500px] mx-auto"
           >
-            Practical lessons for media buyers. Watch the video, do the homework, ask your question.
+            All courses and lessons live here.
           </motion.p>
         </div>
 
