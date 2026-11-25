@@ -14,6 +14,7 @@ import {
   SiSnapchat,
 } from "react-icons/si";
 
+import Header from "../../components/Header";
 import Avatar from "../../components/Avatar";
 import Circles from "../../components/Circles";
 import { fadeIn } from "../../variants";
@@ -63,8 +64,13 @@ const About = () => {
   const [index, setIndex] = useState(0);
 
   return (
-    <div className="about-shell bg-primary/30 pt-32 text-center xl:text-left overflow-y-auto overscroll-contain xl:overflow-visible">
+    <div className="about-shell max-xl:relative bg-primary/30 pt-40 xl:pt-32 text-center xl:text-left overflow-y-auto overscroll-contain xl:overflow-visible">
       <Circles />
+
+      {/* phone header: scrolls with the content instead of floating over it */}
+      <div className="absolute top-0 left-0 w-full xl:hidden">
+        <Header />
+      </div>
 
       {/* ===== AVATAR (DESKTOP ONLY – UNCHANGED) ===== */}
       <motion.div
