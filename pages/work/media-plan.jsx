@@ -372,7 +372,7 @@ Rules: sales=orders*AOV, ROAS=sales/investment. All numbers must be mathematical
       @page{margin:1.5cm;}
     }
     @media(max-width:768px){
-      .mp-wrap{padding:100px 18px 140px;}
+      .mp-wrap{padding:160px 18px 140px;}
       .mp-form-grid{grid-template-columns:1fr;}
       .mp-summary{grid-template-columns:1fr 1fr;}
       .mp-breakdown{grid-template-columns:1fr;}
