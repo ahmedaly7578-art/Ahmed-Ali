@@ -63,7 +63,7 @@ const WorkSlider = () => {
 
                   {/* label */}
                   <div className="absolute bottom-0 left-0 right-0 flex justify-center translate-y-full group-hover:-translate-y-10 group-hover:xl:-translate-y-20 transition-all duration-300 pointer-events-none">
-                    <div className="flex items-center gap-x-2 text-[13px] tracking-[0.2em] text-white">
+                    <div className="flex items-center gap-x-2 text-[13px] tracking-[0.2em] text-onaccent">
                       <div className="delay-100">LIVE</div>
                       <div className="translate-y-[500%] group-hover:translate-y-0 transition-all duration-300 delay-150">
                         PROJECT
