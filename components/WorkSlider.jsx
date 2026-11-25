@@ -11,16 +11,18 @@ const workSlides = {
   slides: [
     {
       images: [
-        { title: "Bags & Shoes", path: "/thumb12.png", link: "/work/Casepage" },
-        { title: "Fashion", path: "/thumb22.png", link: "/work/Case2" },
-        { title: "Home & Living", path: "/thumb40.png", link: "/work/Case3" },
-        { title: "Medical Fashion", path: "/thumb44.png", link: "/work/Casepage4" },
+        { title: "Fashion ROAS 6.36",       path: "/thumb12.png",    link: "/work/Casepage"   },
+        { title: "Case Study Fashion",       path: "/thumb22.png",    link: "/work/Case2"      },
+        { title: "AI Media Plan",            path: "/Mediaplan1.png", link: "/work/media-plan" },
+        { title: "Multi-Platform Case Study",path: "/thumb40.png",    link: "/work/Case3"      },
       ],
     },
     {
       images: [
-        { title: "Coffee & Gourmet", path: "/thumb10.png", link: "/work/Casepage5" },
-        { title: "AI Media Plan Generator", path: "/Mediaplan1.png", link: "/work/media-plan" },
+        { title: "Medical Fashion", path: "/thumb44.png", link: "/work/Casepage4" },
+        { title: "title",           path: "/thumb10.png",  link: "/work/Casepage5"               },
+        { title: "title",           path: "/thumb2.jpg",  link: "/"               },
+        { title: "title",           path: "/thumb3.jpg",  link: "/"               },
       ],
     },
   ],
@@ -55,18 +57,13 @@ const WorkSlider = () => {
 
                   {/* overlay — pointer-events-none علشان ميبلكش الكليك */}
                   <div
-                    className="absolute inset-0 bg-gradient-to-l from-transparent via-[#c8f23c] to-[#1a2a05] opacity-0 group-hover:opacity-80 transition-all duration-700 pointer-events-none"
+                    className="absolute inset-0 bg-gradient-to-l from-transparent via-[#e838cc] to-[#4a22bd] opacity-0 group-hover:opacity-80 transition-all duration-700 pointer-events-none"
                     aria-hidden
                   />
 
-                  {/* title */}
-                  <div className="absolute inset-x-0 bottom-0 px-3 py-2 bg-gradient-to-t from-black/80 to-transparent text-[13px] sm:text-sm text-[#ffffff] pointer-events-none">
-                    {image.title}
-                  </div>
-
                   {/* label */}
                   <div className="absolute bottom-0 left-0 right-0 flex justify-center translate-y-full group-hover:-translate-y-10 group-hover:xl:-translate-y-20 transition-all duration-300 pointer-events-none">
-                    <div className="flex items-center gap-x-2 text-[13px] tracking-[0.2em] text-[#ffffff]">
+                    <div className="flex items-center gap-x-2 text-[13px] tracking-[0.2em] text-white">
                       <div className="delay-100">LIVE</div>
                       <div className="translate-y-[500%] group-hover:translate-y-0 transition-all duration-300 delay-150">
                         PROJECT
