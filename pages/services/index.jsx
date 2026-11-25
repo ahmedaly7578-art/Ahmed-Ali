@@ -31,7 +31,7 @@ const Services = () => {
               exit="hidden"
               className="mb-4 max-w-[400px] mx-auto lg:mx-0"
             >
-              What I can do for your business: paid media, tracking, reporting and team training, all built around results you can measure.
+              Performance-focused advertising strategies designed to turn traffic into consistent sales.
             </motion.p>
           </div>
 
