@@ -6,17 +6,17 @@ import {
   SiMixpanel,
   SiGoogledatastudio,
 } from "react-icons/si";
-import { FaChartLine } from "react-icons/fa";
+import { FaFlask, FaChartLine } from "react-icons/fa";
 
 import {
   SiGoogleads,
   SiMeta,
-    SiSnapchat,
+  SiTiktok,
+  SiSnapchat,
 } from "react-icons/si";
 
 import Avatar from "../../components/Avatar";
 import Circles from "../../components/Circles";
-import { useCourse } from "../../lib/useCourse";
 import { fadeIn } from "../../variants";
 
 // data
@@ -25,38 +25,46 @@ export const aboutData = [
     title: "skills",
     info: [
       {
-        title: "Paid media: Meta, Google, Snapchat",
-        icons: [SiGoogleads, SiMeta, SiSnapchat],
+        title: "Performance Media Buying",
+        icons: [SiGoogleads, SiMeta, SiTiktok, SiSnapchat],
       },
       {
-        title: "Tracking: Google Tag Manager and GA4",
-        icons: [SiGoogleanalytics],
+        title: "Tracking & CRO",
+        icons: [SiGoogleanalytics,
+    SiMixpanel,
+    SiGoogledatastudio,
+    
+    FaChartLine,],
       },
-      { title: "Attribution across platforms, and app tracking with AppsFlyer" },
     ],
   },
   {
-    title: "what I do",
+    title: "Achievements",
     info: [
-      { title: "Plan, launch and scale paid campaigns" },
-      { title: "Set up tracking so results can be trusted" },
-      { title: "Lead and train a team of media buyers" },
-      { title: "Build practical learning material for the team" },
+      { title: "Webby Awards - Honoree", stage: "2011 - 2012" },
+      { title: "Adobe Design Achievement Awards - Finalist", stage: "2009 - 2010" },
     ],
   },
   {
-    title: "now",
+    title: "experience",
     info: [
-      { title: "Head media buyer, leading the media buying team" },
-      { title: "Teaching tracking in Tracking From Zero, a course for media buyers" },
+      { title: "UX/UI Designer - XYZ Company", stage: "2012 - 2023" },
+      { title: "Web Developer - ABC Agency", stage: "2010 - 2012" },
+      { title: "Intern - DEF Corporation", stage: "2008 - 2010" },
+    ],
+  },
+  {
+    title: "credentials",
+    info: [
+      { title: "Web Development - ABC University, LA, CA", stage: "2011" },
+      { title: "Computer Science Diploma - AV Technical Institute", stage: "2009" },
+      { title: "Certified Graphic Designer - ABC Institute, Los Angeles, CA", stage: "2006" },
     ],
   },
 ];
 
 const About = () => {
   const [index, setIndex] = useState(0);
-  const course = useCourse("tracking-from-zero");
-  const liveLessons = course && course.loaded ? course.lessons.filter((l) => l.approved).length : null;
 
   return (
     <div className="h-full bg-primary/30 py-32 text-center xl:text-left overflow-y-auto xl:overflow-visible">
@@ -86,7 +94,8 @@ const About = () => {
             exit="hidden"
             className="h2 mt-12 mb-4 xl:hidden"
           >
-            Media buying you can <span className="text-accent">measure</span>.
+            Strategic <span className="text-accent">Insights</span><br />
+            Drive Scalable Growth.
           </motion.h2>
 
           {/* ===== DESKTOP TITLE (UNCHANGED) ===== */}
@@ -97,7 +106,7 @@ const About = () => {
             exit="hidden"
             className="h2 hidden xl:block"
           >
-            Media buying you can <span className="text-accent">measure</span>.
+            Strategic <span className="text-accent">Insights</span> create scalable growth.
           </motion.h2>
 
           {/* ===== MOBILE TEXT ===== */}
@@ -107,8 +116,8 @@ const About = () => {
             animate="show"
             className="xl:hidden text-sm leading-relaxed text-white/70 mb-10 px-2"
           >
-            I am Ahmed Ali, a head media buyer. I run paid campaigns, set up the
-            tracking behind them, and train my team to do the same.
+            I help brands turn ad spend into real, scalable profit through smart,
+            data-driven strategies focused on performance and sustainable growth.
           </motion.p>
 
           {/* ===== DESKTOP TEXT (UNCHANGED) ===== */}
@@ -118,11 +127,10 @@ const About = () => {
             animate="show"
             className="hidden xl:block max-w-[500px] mb-10 xl:mb-12 px-2 xl:px-0"
           >
-            I am Ahmed Ali, a head media buyer. I run paid campaigns on Meta,
-            Google and Snapchat, and I set up the tracking behind them so
-            every result can be traced back to its source. I lead a team of media
-            buyers, and I teach what I know in Tracking From Zero, a practical
-            course built for them.
+            I help brands turn data into direction, and ad spend into meaningful growth.
+            With a blend of strategic insight, careful optimization, and performance-focused
+            execution, I build campaigns that scale, connect with the right audience,
+            and deliver results that actually matter.
           </motion.p>
 
           {/* ===== COUNTERS (DESKTOP ONLY – UNCHANGED) ===== */}
@@ -130,22 +138,23 @@ const About = () => {
             variants={fadeIn("right", 0.6)}
             initial="hidden"
             animate="show"
-            className="flex md:max-w-xl xl:max-w-none mx-auto xl:mx-0 mb-8"
+            className="hidden md:flex md:max-w-xl xl:max-w-none mx-auto xl:mx-0 mb-8"
           >
             <div className="flex flex-1 xl:gap-x-6">
               {[
-                { text: "GTM \u00b7 GA4", label: "Tracking setup." },
-                { end: liveLessons, label: "Course lessons live." },
-                { text: "Arabic", label: "Tracking lessons." },
+                { end: 10, label: "Years of experience." },
+                { end: 250, label: "Satisfied clients." },
+                { end: 650, label: "Finished projects." },
+                { end: 8, label: "Winning awards." },
               ].map((item, i) => (
                 <div
                   key={i}
-                  className={`relative flex-1 ${i !== 2 && "after:w-[1px] after:h-full after:bg-white/10 after:absolute after:top-0 after:right-0"}`}
+                  className={`relative flex-1 ${i !== 3 && "after:w-[1px] after:h-full after:bg-white/10 after:absolute after:top-0 after:right-0"}`}
                 >
-                  <div className={`font-extrabold text-accent mb-2 ${item.text ? "text-lg xl:text-2xl whitespace-nowrap xl:leading-[2.25rem]" : "text-2xl xl:text-4xl"}`}>
-                    {item.text ? item.text : item.end === null ? "\u00a0" : <CountUp start={0} end={item.end} duration={2} />}
+                  <div className="text-2xl xl:text-4xl font-extrabold text-accent mb-2">
+                    <CountUp start={0} end={item.end} duration={5} />
                   </div>
-                  <div className="text-xs uppercase tracking-[1px] leading-[1.4] max-w-[120px]">
+                  <div className="text-xs uppercase tracking-[1px] leading-[1.4] max-w-[100px]">
                     {item.label}
                   </div>
                 </div>
@@ -183,13 +192,13 @@ const About = () => {
                 key={itemI}
                 className="flex flex-col md:flex-row gap-x-2 items-center text-center text-white/60"
               >
-                <div className="font-light xl:text-left">{item.title}</div>
+                <div className="font-light">{item.title}</div>
                 {item.stage && <div className="hidden md:flex">-</div>}
                 <div>{item.stage}</div>
 
                 <div className="flex gap-x-4">
                   {item.icons?.map((Icon, iconI) => (
-                    <Icon key={iconI} className="text-2xl text-white" aria-hidden />
+                    <Icon key={iconI} className="text-2xl text-white" />
                   ))}
                 </div>
               </div>
