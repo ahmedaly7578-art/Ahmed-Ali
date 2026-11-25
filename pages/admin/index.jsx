@@ -2,7 +2,7 @@ import Head from "next/head";
 import { useState } from "react";
 
 const field = "w-full rounded-lg bg-white/5 border border-white/10 px-3 py-2 text-sm outline-none focus:border-accent";
-const btn = "px-4 py-2 rounded-lg text-sm bg-accent text-white disabled:opacity-50";
+const btn = "px-4 py-2 rounded-lg text-sm bg-accent text-onaccent disabled:opacity-50";
 const btn2 = "px-4 py-2 rounded-lg text-sm border border-white/20 hover:border-accent";
 
 const blank = (courseId) => ({ courseId, id: "", title: "", videoUrl: "", pptUrl: "", homework: "", section: "", position: 0, published: false, isNew: true });
