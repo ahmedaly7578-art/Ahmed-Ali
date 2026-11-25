@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 import Script from "next/script";
 
 import Layout from "../components/Layout";
@@ -9,6 +10,14 @@ import "../styles/globals.css";
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
+
+  // Case study pages ship their own dark design, so they stay dark in both themes.
+  useEffect(() => {
+    const forceDark = /^\/work\/./.test(router.asPath);
+    const el = document.documentElement;
+    if (forceDark) el.setAttribute("data-force-dark", "");
+    else el.removeAttribute("data-force-dark");
+  }, [router.asPath]);
 
   return (
     <>

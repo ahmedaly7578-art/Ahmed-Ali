@@ -8,7 +8,7 @@ const Home = () => {
   return (
     <div className="bg-primary/60 min-h-screen">
       {/* Mobile Layout */}
-      <div className="xl:hidden w-full min-h-screen max-h-screen overflow-y-auto overflow-x-hidden bg-gradient-to-b from-primary/10 via-black/30 to-black/10">
+      <div className="xl:hidden w-full min-h-screen max-h-screen overflow-y-auto overflow-x-hidden bg-gradient-to-b from-primary/10 via-primary/20 to-primary/10">
         {/* Container with scroll */}
         <div className="flex flex-col items-center px-4 pt-8 pb-28">
           {/* Logo */}
@@ -64,7 +64,8 @@ const Home = () => {
             exit="hidden"
             className="text-sm text-center mb-8 text-gray-300 leading-relaxed"
           >
-             Smart, data-driven campaigns built to deliver real, scalable growth.
+            Head media buyer. I run paid campaigns on Meta, Google, Snapchat
+            and TikTok, and build the tracking that shows what is working.
 
           </motion.p>
 
@@ -81,7 +82,7 @@ const Home = () => {
       </div>
 
       {/* Desktop Layout */}
-      <div className="hidden xl:block w-full h-full bg-gradient-to-r from-primary/10 via-black/30 to-black/10">
+      <div className="hidden xl:block w-full h-full bg-gradient-to-r from-primary/10 via-primary/20 to-primary/10">
         <div className="text-center flex flex-col justify-center xl:pt-40 xl:text-left h-full container mx-auto">
           {/* title */}
           <motion.h1
@@ -103,10 +104,10 @@ const Home = () => {
             exit="hidden"
             className="max-w-sm xl:max-w-xl mx-auto xl:mx-0 mb-10 xl:mb-16"
           >
-            I turn your ad spend into real, scalable profit by creating smart,
-             data-driven campaigns that actually work. Through continuous testing,
-            clear insights, and thoughtful optimization, I make sure every 
-            dollar you invest drives measurable growth.
+            I am a head media buyer. I run paid campaigns on Meta, Google,
+            Snapchat and TikTok, and I set up the tracking behind them, so every
+            dollar of spend can be traced to a result. I also train media buying
+            teams, and teach tracking in my course, Tracking From Zero.
 
           </motion.p>
 
@@ -130,12 +131,12 @@ const Home = () => {
         {/* bg img */}
         <div
           role="img"
-          className="bg-none xl:bg-explosion xl:bg-cover xl:bg-right xl:bg-no-repeat w-full h-full absolute mix-blend-color-dodge translate-z-0"
+          className="deco bg-none xl:bg-explosion xl:bg-cover xl:bg-right xl:bg-no-repeat w-full h-full absolute mix-blend-color-dodge translate-z-0"
           aria-hidden
         />
 
         {/* particles */}
-        <ParticlesContainer />
+        <div className="deco"><ParticlesContainer /></div>
 
         {/* avatar */}
         <motion.div
