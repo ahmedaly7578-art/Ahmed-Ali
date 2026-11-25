@@ -32,7 +32,7 @@ const HomeworkForm = ({ courseId, lessonId }) => {
       <input name="link" placeholder="Link to your file (Google Drive, optional)" className={field} />
       <input name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
       <div className="flex items-center gap-x-3">
-        <button disabled={state.status === "sending"} className="px-4 py-2 rounded-lg bg-accent text-white text-sm disabled:opacity-50">
+        <button disabled={state.status === "sending"} className="px-4 py-2 rounded-lg bg-accent text-onaccent text-sm disabled:opacity-50">
           {state.status === "sending" ? "Sending..." : "Submit homework"}
         </button>
         {state.msg && <span className={`text-sm ${state.status === "ok" ? "text-green-400" : "text-red-300"}`}>{state.msg}</span>}
