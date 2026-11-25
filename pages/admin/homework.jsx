@@ -24,7 +24,7 @@ const AdminHomework = () => {
           <form onSubmit={load} className="flex gap-x-3 mt-6">
             <input type="password" value={pw} onChange={(e) => setPw(e.target.value)} placeholder="Admin password"
               className="rounded-lg bg-white/5 border border-white/10 px-3 py-2 text-sm outline-none focus:border-accent" />
-            <button className="px-4 py-2 rounded-lg bg-accent text-white text-sm">Open</button>
+            <button className="px-4 py-2 rounded-lg bg-accent text-onaccent text-sm">Open</button>
             {err && <span className="text-red-300 text-sm self-center">{err}</span>}
           </form>
         )}
