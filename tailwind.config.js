@@ -22,11 +22,9 @@ module.exports = {
     },
     extend: {
       colors: {
-        primary: "rgb(var(--c-primary) / <alpha-value>)",
-        secondary: "rgb(var(--c-secondary) / <alpha-value>)",
-        accent: "rgb(var(--c-accent) / <alpha-value>)",
-        white: "rgb(var(--c-white) / <alpha-value>)",
-        onaccent: "rgb(var(--c-onaccent) / <alpha-value>)",
+        primary: "#131424",
+        secondary: "#393A47",
+        accent: "#F13024",
       },
       backgroundImage: {
         explosion: 'url("/bg-explosion.png")',
