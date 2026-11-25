@@ -77,7 +77,7 @@ const About = () => {
         <Avatar />
       </motion.div>
 
-      <div className="container mx-auto h-full flex flex-col items-center xl:flex-row gap-x-6 px-4 xl:px-0">
+      <div className="container mx-auto h-full flex flex-col items-center xl:flex-row gap-x-6 px-4 xl:pr-[max(0px,calc(130px-(100vw-1200px)/2))] xl:pl-[max(0px,calc(250px-(100vw-1200px)/2))]">
 
         {/* ================= TEXT ================= */}
         <div className="flex-1 flex flex-col justify-center">
@@ -100,7 +100,7 @@ const About = () => {
             initial="hidden"
             animate="show"
             exit="hidden"
-            className="h2 hidden xl:block"
+            className="h2 hidden xl:block xl:max-[1439px]:!text-[40px] xl:max-[1439px]:!leading-[1.15]"
           >
             Strategic <span className="text-accent">Insights</span> create scalable growth.
           </motion.h2>
@@ -132,7 +132,7 @@ const About = () => {
           initial="hidden"
           animate="show"
           exit="hidden"
-          className="flex flex-col w-full xl:max-w-[48%] h-auto xl:h-[480px] pb-24 xl:pb-0"
+          className="flex flex-col w-full xl:max-w-[50%] xl:min-w-0 h-auto xl:h-[480px] pb-24 xl:pb-0"
         >
           <div className="flex gap-x-4 xl:gap-x-8 mx-auto xl:mx-0 mb-6">
             {aboutData.map((item, itemI) => (
@@ -157,7 +157,7 @@ const About = () => {
               >
                 <div className="font-light">{item.title}</div>
                 {item.stage && <div className="hidden md:flex">-</div>}
-                <div>{item.stage}</div>
+                <div className="md:whitespace-nowrap">{item.stage}</div>
 
                 <div className="flex gap-x-4">
                   {item.icons?.map((Icon, iconI) => (
