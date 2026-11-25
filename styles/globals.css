@@ -27,6 +27,9 @@ html[data-theme="light"]:not([data-force-dark]) .deco {
 html[data-theme="light"]:not([data-force-dark]) .round-btn {
   filter: invert(1);
 }
+html[data-theme="light"]:not([data-force-dark]) .round-btn svg {
+  filter: invert(1);
+}
 html[data-theme="light"]:not([data-force-dark]) .site-logo {
   filter: invert(1) hue-rotate(180deg);
 }
