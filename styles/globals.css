@@ -107,3 +107,11 @@ body, .page, .nav-glass, .card-surface { transition: background-color .25s ease,
 html[data-force-dark] .theme-toggle {
   display: none;
 }
+
+/* Keep small secondary text readable in both themes. */
+html[data-theme] .text-white\/40 {
+  color: rgb(var(--c-white) / 0.58);
+}
+html[data-theme="light"]:not([data-force-dark]) .text-white\/60 {
+  color: rgb(var(--c-white) / 0.72);
+}
