@@ -63,7 +63,7 @@ const About = () => {
   const [index, setIndex] = useState(0);
 
   return (
-    <div className="h-full bg-primary/30 py-32 text-center xl:text-left overflow-y-auto xl:overflow-visible">
+    <div className="about-shell bg-primary/30 pt-32 text-center xl:text-left overflow-y-auto overscroll-contain xl:overflow-visible">
       <Circles />
 
       {/* ===== AVATAR (DESKTOP ONLY – UNCHANGED) ===== */}
@@ -77,7 +77,7 @@ const About = () => {
         <Avatar />
       </motion.div>
 
-      <div className="container mx-auto h-full flex flex-col items-center xl:flex-row gap-x-6 px-4 xl:pr-[max(0px,calc(130px-(100vw-1200px)/2))] xl:pl-[max(0px,calc(250px-(100vw-1200px)/2))]">
+      <div className="container mx-auto min-h-full xl:h-full flex flex-col items-center xl:flex-row gap-x-6 px-4 xl:pr-[max(0px,calc(130px-(100vw-1200px)/2))] xl:pl-[max(0px,calc(250px-(100vw-1200px)/2))]">
 
         {/* ================= TEXT ================= */}
         <div className="flex-1 flex flex-col justify-center">
@@ -132,7 +132,7 @@ const About = () => {
           initial="hidden"
           animate="show"
           exit="hidden"
-          className="flex flex-col w-full xl:max-w-[50%] xl:min-w-0 h-auto xl:h-[480px] pb-24 xl:pb-0"
+          className="flex flex-col w-full xl:max-w-[50%] xl:min-w-0 h-auto xl:h-[480px] pb-10 xl:pb-0"
         >
           <div className="flex gap-x-4 xl:gap-x-8 mx-auto xl:mx-0 mb-6">
             {aboutData.map((item, itemI) => (
