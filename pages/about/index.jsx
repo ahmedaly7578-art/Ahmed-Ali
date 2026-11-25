@@ -29,11 +29,10 @@ export const aboutData = [
         icons: [SiGoogleads, SiMeta, SiSnapchat],
       },
       {
-        title: "Tracking: GTM, GA4, Looker Studio",
-        icons: [SiGoogleanalytics, SiGoogledatastudio, FaChartLine],
+        title: "Tracking: Google Tag Manager and GA4",
+        icons: [SiGoogleanalytics],
       },
       { title: "Attribution across platforms, and app tracking with AppsFlyer" },
-      { title: "E-commerce growth and performance reporting" },
     ],
   },
   {
