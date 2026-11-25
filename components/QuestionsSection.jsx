@@ -54,7 +54,7 @@ const QuestionsSection = ({ courseId, lessonId }) => {
         <textarea name="question" placeholder="Your question" rows={3} maxLength={2000} required className={field} />
         <input name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
         <div className="flex items-center gap-x-3 flex-wrap gap-y-2">
-          <button disabled={state.status === "sending"} className="px-4 py-2 rounded-lg bg-accent text-white text-sm disabled:opacity-50">
+          <button disabled={state.status === "sending"} className="px-4 py-2 rounded-lg bg-accent text-onaccent text-sm disabled:opacity-50">
             {state.status === "sending" ? "Sending..." : "Ask question"}
           </button>
           {state.msg && <span className={`text-sm ${state.status === "ok" ? "text-green-400" : "text-red-300"}`}>{state.msg}</span>}
