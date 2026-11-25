@@ -29,7 +29,7 @@ const Work = () => {
               exit="hidden"
               className="mb-4 max-w-[400px] mx-auto lg:mx-0"
             >
-              Selected case studies, plus an AI media plan tool. Open any card to see the details.
+              Lorem ipsum  reiciendis.
             </motion.p>
           </div>
 
